@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Search Visibility Monitoring — $99/Month | Lever AI</title>
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --navy-light: #111827;
+            --cyan: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --emerald: #10b981;
+            --indigo: #6366f1;
+            --purple: #a855f7;
+            --gold: #f59e0b;
+            --red: #ef4444;
+            --text: #f3f4f6;
+            --text-dim: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+        .hero { text-align: center; padding: 3rem 0; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.4rem 1rem; border-radius: 50px;
+            background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.2);
+            color: var(--cyan-glow); font-size: 0.75rem; font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1rem; }
+        .hero h1 span { color: var(--cyan-glow); }
+        .hero p { color: var(--text-dim); font-size: 1.15rem; max-width: 600px; margin: 0 auto 2rem; }
+
+        .free-tool-banner {
+            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(6,182,212,0.1));
+            border: 1px solid rgba(16,185,129,0.3);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .free-tool-banner h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .free-tool-banner p { color: var(--text-dim); margin-bottom: 1rem; }
+        .btn-free {
+            display: inline-block;
+            background: var(--emerald);
+            color: white; padding: 0.8rem 2rem; border-radius: 10px;
+            font-weight: 700; text-decoration: none; font-size: 1rem;
+        }
+
+        .price-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .price-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--emerald), var(--cyan), var(--indigo));
+        }
+        .price-label {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; color: var(--cyan); margin-bottom: 1rem;
+        }
+        .price-amount { font-size: 4rem; font-weight: 900; }
+        .price-amount span { font-size: 1.5rem; color: var(--text-dim); font-weight: 500; }
+        .price-sub { color: var(--text-dim); margin-bottom: 2rem; }
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+            color: white; padding: 1rem 2.5rem; border-radius: 12px;
+            font-weight: 700; text-decoration: none; font-size: 1.1rem;
+        }
+        .price-guarantee {
+            margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        .feature {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .feature-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+        .feature h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .feature p { color: var(--text-dim); font-size: 0.9rem; }
+
+        .compare-section {
+            margin: 3rem 0;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        .compare-section h2 { text-align: center; margin-bottom: 1.5rem; }
+        .compare-table { width: 100%; border-collapse: collapse; }
+        .compare-table th, .compare-table td {
+            padding: 1rem; text-align: left; border-bottom: 1px solid var(--border);
+        }
+        .compare-table th { color: var(--text-dim); font-size: 0.85rem; text-transform: uppercase; }
+        .compare-table td { font-size: 0.95rem; }
+        .check { color: var(--emerald); font-weight: 700; }
+        .xmark { color: var(--red); }
+
+        .upsell-section {
+            background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08));
+            border: 1px solid rgba(99,102,241,0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        .upsell-section h2 { margin-bottom: 1rem; }
+        .upsell-section p { color: var(--text-dim); margin-bottom: 1.5rem; }
+        .upsell-ladder {
+            display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        .ladder-step {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+        .ladder-step .price { font-size: 1.5rem; font-weight: 800; color: var(--cyan-glow); }
+        .ladder-step .label { font-size: 0.8rem; color: var(--text-dim); }
+
+        .faq { margin: 3rem 0; }
+        .faq h2 { text-align: center; margin-bottom: 2rem; }
+        .faq-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+        .faq-item p { color: var(--text-dim); font-size: 0.9rem; }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .price-amount { font-size: 3rem; }
+            .upsell-ladder { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <section class="hero">
+            <div class="hero-badge">🔍 AI Search Visibility Monitoring</div>
+            <h1>Know If AI Search Engines <span>Can Find Your Business</span></h1>
+            <p>31% of consumers now use ChatGPT, Claude, and Perplexity to find local services. Most home services companies are invisible. We watch. You win.</p>
+        </section>
+
+        <!-- FREE CALCULATOR HOOK -->
+        <div class="free-tool-banner">
+            <h3>🎁 Free Gift: Missed-Call Revenue Calculator</h3>
+            <p>Before you spend a dollar, find out how much revenue you're leaking to voicemail and AI answers that mention your competitors. Yours to embed on your website — free forever.</p>
+            <a href="https://proplum-ai-audit.netlify.app/quick-plumbing-estimator.html" class="btn-free">Get My Free Calculator</a>
+        </div>
+
+        <!-- PRICE CARD -->
+        <div class="price-card">
+            <div class="price-label">AI Search Visibility Monitor</div>
+            <div class="price-amount">$99<span>/month</span></div>
+            <div class="price-sub">Cancel anytime. No setup fees. No contracts.</div>
+            <a href="#" class="btn-primary">Start Monitoring Now</a>
+            <div class="price-guarantee">30-day money-back guarantee. If you don't see your score improve, we refund every cent.</div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3>Monthly AI Visibility Score</h3>
+                <p>We re-run your audit every 30 days and show you the trend. Are you more or less invisible than last month? You'll know.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">👁️</div>
+                <h3>Competitor Watch List</h3>
+                <p>We track 3 competitors per market. If Roto-Rooter starts showing up in AI answers and you don't, we alert you first.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚨</div>
+                <h3>Instant Alerts</h3>
+                <p>Schema breaks. Pages go 404. llms.txt disappears. We catch it within 24 hours and tell you exactly what broke.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📄</div>
+                <h3>One-Page Monthly Report</h3>
+                <p>A clean PDF scorecard you can print and hang on your wall. Proof you're doing something about the AI shift.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <h3>LLMs.txt Health Check</h3>
+                <p>We verify that ChatGPT, Claude, and Perplexity can actually read your business information. Most companies fail this.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>Priority Support</h3>
+                <p>Questions about your score? Need help interpreting the data? Email us anytime. Real human replies within 24 hours.</p>
+            </div>
+        </div>
+
+        <!-- COMPARISON -->
+        <div class="compare-section">
+            <h2>Not SEO Monitoring. <span style="color: var(--cyan-glow);">AI Search Monitoring.</span></h2>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>What You Get</th>
+                        <th>Your Current SEO Tool</th>
+                        <th style="color: var(--cyan-glow);">Lever AI Monitor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Google keyword rankings</td>
+                        <td class="check">✓</td>
+                        <td class="xmark">✗ (you have GSC for this)</td>
+                    </tr>
+                    <tr>
+                        <td>Backlink tracking</td>
+                        <td class="check">✓</td>
+                        <td class="xmark">✗ (we don't do this)</td>
+                    </tr>
+                    <tr>
+                        <td>AI search visibility score</td>
+                        <td class="xmark">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Schema markup health</td>
+                        <td class="xmark">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Competitor AI presence</td>
+                        <td class="xmark">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>llms.txt / AI crawl directives</td>
+                        <td class="xmark">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Alert when AI visibility drops</td>
+                        <td class="xmark">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly price</td>
+                        <td>$119-$599/mo</td>
+                        <td style="color: var(--cyan-glow); font-weight: 700;">$99/mo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- UPSELL LADDER -->
+        <div class="upsell-section">
+            <h2>When You're Ready to Do More Than Watch</h2>
+            <p>Monitoring shows you the problem. These fix it.</p>
+            <div class="upsell-ladder">
+                <div class="ladder-step">
+                    <div class="price">$99/mo</div>
+                    <div class="label">AI Search Monitor<br><small>Watch & Alert</small></div>
+                </div>
+                <div style="display: flex; align-items: center; color: var(--text-muted);">→</div>
+                <div class="ladder-step">
+                    <div class="price">$499/mo</div>
+                    <div class="label">AI Agent<br><small>Answer & Book Calls</small></div>
+                </div>
+                <div style="display: flex; align-items: center; color: var(--text-muted);">→</div>
+                <div class="ladder-step">
+                    <div class="price">$999/mo</div>
+                    <div class="label">Full Infrastructure<br><small>Deploy & Optimize</small></div>
+                </div>
+            </div>
+            <p style="color: var(--text-dim); font-size: 0.9rem;">Every monitor subscriber gets a 20% discount on their first upgrade. Loyalty matters.</p>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq">
+            <h2>Questions</h2>
+            <div class="faq-item">
+                <h3>What exactly does "AI search visibility" mean?</h3>
+                <p>When someone asks ChatGPT "who's the best plumber in Tampa," does it mention your business? We measure whether AI engines can find, understand, and cite your business in their answers. Traditional SEO measures Google rankings. We measure AI answer inclusion.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Do I need to install anything?</h3>
+                <p>No. We scan your public website just like Google does. No code, no plugins, no access to your internal systems. Give us your URL, we do the rest.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How is this different from Ahrefs or SEMrush?</h3>
+                <p>Those tools track Google keyword rankings and backlinks. We track whether AI search engines (ChatGPT, Claude, Perplexity) can find and cite your business. Completely different data. We don't replace your SEO tool — we cover the gap it misses.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can I cancel anytime?</h3>
+                <p>Yes. No annual contracts. No cancellation fees. If you're not seeing value, you shouldn't pay. We'll even help you export your data.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What's included in the free calculator?</h3>
+                <p>A fully embeddable missed-call revenue calculator branded for your business. It shows visitors how much money they're losing to voicemail. It includes a subtle "Powered by Lever AI" link — that's the only catch, and it's fair.</p>
+            </div>
+        </div>
+
+        <!-- FINAL CTA -->
+        <div style="text-align: center; padding: 3rem 0;">
+            <h2 style="margin-bottom: 1rem;">Start With the Free Calculator.<br>Upgrade When You're Ready.</h2>
+            <p style="color: var(--text-dim); margin-bottom: 2rem;">No credit card required for the calculator. No obligation to upgrade. Just data you can use.</p>
+            <a href="https://proplum-ai-audit.netlify.app/quick-plumbing-estimator.html" class="btn-free" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Get My Free Calculator</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Lever AI Inc. — Built for the AI search era.</p>
+        <p>Questions? jeff@proplumnetwork.com</p>
+    </footer>
+
+</body>
+</html>
