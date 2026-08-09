@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Franchise AI Visibility Audits — ProPlum Network</title>
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --navy-light: #111827;
+            --cyan: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --emerald: #10b981;
+            --red: #ef4444;
+            --gold: #f59e0b;
+            --text: #f3f4f6;
+            --text-dim: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+        .hero { text-align: center; padding: 3rem 0 2rem; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.4rem 1rem; border-radius: 50px;
+            background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+            color: var(--red); font-size: 0.75rem; font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1rem; }
+        .hero h1 span { color: var(--cyan-glow); }
+        .hero p { color: var(--text-dim); font-size: 1.15rem; max-width: 700px; margin: 0 auto 2rem; }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .case-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .case-card:hover { border-color: rgba(6,182,212,0.3); }
+
+        .case-header {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .case-logo {
+            width: 56px; height: 56px; border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: 800;
+        }
+        .case-title h3 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+        .case-title .tag {
+            font-size: 0.7rem; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
+
+        .score-ring {
+            display: flex; align-items: center; justify-content: center;
+            width: 120px; height: 120px; margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            border: 4px solid;
+            font-size: 2.5rem; font-weight: 900;
+        }
+        .score-ring.danger { border-color: var(--red); color: var(--red); }
+        .score-ring.warn { border-color: var(--gold); color: var(--gold); }
+        .score-ring.ok { border-color: var(--emerald); color: var(--emerald); }
+        .score-label {
+            text-align: center; font-size: 0.8rem; color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .metric {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-label { font-size: 0.85rem; color: var(--text-dim); }
+        .metric-value { font-weight: 700; }
+        .metric-value.leak { color: var(--red); }
+        .metric-value.good { color: var(--emerald); }
+
+        .status-bar {
+            display: flex; gap: 0.5rem; margin: 1.5rem 0;
+        }
+        .status-pill {
+            padding: 0.3rem 0.8rem; border-radius: 50px;
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+        }
+        .pill-live { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+        .pill-ready { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
+        .pill-complete { background: rgba(16,185,129,0.1); color: var(--emerald); border: 1px solid rgba(16,185,129,0.3); }
+
+        .cta-section {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+        .cta-section h2 { margin-bottom: 1rem; }
+        .cta-section p { color: var(--text-dim); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+            color: white; padding: 1rem 2.5rem; border-radius: 12px;
+            font-weight: 700; text-decoration: none; font-size: 1.1rem;
+        }
+
+        .insight-box {
+            background: rgba(6,182,212,0.05);
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .insight-box h3 { color: var(--cyan-glow); margin-bottom: 0.75rem; }
+        .insight-box p { color: var(--text-dim); font-size: 0.95rem; }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <section class="hero">
+            <div class="hero-badge">⚠️ CONFIDENTIAL AUDIT RESULTS</div>
+            <h1>We Audited <span>3 National Plumbing Franchises</span></h1>
+            <p>Every single one is leaking revenue to AI search. Here's the proof your competitors don't have.</p>
+        </section>
+
+        <div class="insight-box">
+            <h3>🎯 The Pattern</h3>
+            <p>We audited a 37-location franchise, a 70-location PE-backed network, and the 600-location industry leader. <strong>All three fail at AI visibility.</strong> The bigger they are, the worse their score. Scale creates complexity. Complexity creates blind spots. And blind spots cost millions.</p>
+        </div>
+
+        <div class="comparison-grid">
+
+            <!-- 1-TOM-PLUMBER -->
+            <div class="case-card">
+                <div class="case-header">
+                    <div class="case-logo">1T</div>
+                    <div class="case-title">
+                        <h3>1-Tom-Plumber</h3>
+                        <span class="tag">EverSmith Brands / Riverside PE</span>
+                    </div>
+                </div>
+
+                <div class="score-ring ok">56</div>
+                <div class="score-label">AI Visibility Score / 100</div>
+
+                <div class="status-bar">
+                    <span class="status-pill pill-complete">✅ Audit Complete</span>
+                    <span class="status-pill pill-complete">Live Dashboard</span>
+                </div>
+
+                <div class="metrics">
+                    <div class="metric">
+                        <span class="metric-label">Locations</span>
+                        <span class="metric-value">57 territories</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Parent</span>
+                        <span class="metric-value">The Riverside Company</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">What We Found</span>
+                        <span class="metric-value">No LocalBusiness schema on ANY location page</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">The Irony</span>
+                        <span class="metric-value">Has llms.txt but missing core schema</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Annual Leak</span>
+                        <span class="metric-value leak">$500K+</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARS -->
+            <div class="case-card">
+                <div class="case-header">
+                    <div class="case-logo">ARS</div>
+                    <div class="case-title">
+                        <h3>ARS / Rescue Rooter</h3>
+                        <span class="tag">GI Partners + Charlesbank PE</span>
+                    </div>
+                </div>
+
+                <div class="score-ring warn">42</div>
+                <div class="score-label">AI Visibility Score / 100 (est.)</div>
+
+                <div class="status-bar">
+                    <span class="status-pill pill-ready">🟡 Strategy Ready</span>
+                    <span class="status-pill pill-ready">Targets Identified</span>
+                </div>
+
+                <div class="metrics">
+                    <div class="metric">
+                        <span class="metric-label">Locations</span>
+                        <span class="metric-value">70+ service centers</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Parent</span>
+                        <span class="metric-value">GI Partners ($23B AUM)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">What We Found</span>
+                        <span class="metric-value">20+ sub-brands cannibalizing each other in AI search</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">The Irony</span>
+                        <span class="metric-value">"Be National, Act Local" — AI doesn't understand either</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Annual Leak</span>
+                        <span class="metric-value leak">$3M - $8M</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROTO-ROOTER -->
+            <div class="case-card">
+                <div class="case-header">
+                    <div class="case-logo">RR</div>
+                    <div class="case-title">
+                        <h3>Roto-Rooter</h3>
+                        <span class="tag">Chemed Corp (NYSE: CHE)</span>
+                    </div>
+                </div>
+
+                <div class="score-ring danger">22</div>
+                <div class="score-label">AI Visibility Score / 100</div>
+
+                <div class="status-bar">
+                    <span class="status-pill pill-live">🔴 Just Audited</span>
+                    <span class="status-pill pill-live">Public Company</span>
+                </div>
+
+                <div class="metrics">
+                    <div class="metric">
+                        <span class="metric-label">Locations</span>
+                        <span class="metric-value">600+ (all 50 states)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Parent</span>
+                        <span class="metric-value">Chemed Corporation (Public)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">What We Found</span>
+                        <span class="metric-value">ZERO schema markup. robots.txt is a 403 error.</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">The Irony</span>
+                        <span class="metric-value">#1 brand in America. Invisible to AI.</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Annual Leak</span>
+                        <span class="metric-value leak">$3.6M - $9M</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="insight-box">
+            <h3>📊 What This Means For You</h3>
+            <p>It doesn't matter if you're a 37-location franchise or a 600-location giant. <strong>AI search doesn't care about your brand history.</strong> It cares about structured data, answer-first content, and schema markup. The companies that fix this now will dominate the next 5 years. The ones that don't will become case studies for their competitors.</p>
+        </div>
+
+        <div class="cta-section">
+            <h2>Want Your AI Visibility Score?</h2>
+            <p>We audit multi-location service brands in 48 hours. No long-term contract. First month is the audit + fix for your top 5 markets.</p>
+            <a href="https://proplum-ai-audit.netlify.app" class="btn-primary">Get Your Free Audit</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 ProPlum Network — AI Visibility Audits for Multi-Location Service Brands</p>
+        <p>jeff@proplumnetwork.com</p>
+    </footer>
+
+</body>
+</html>
