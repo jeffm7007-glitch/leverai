@@ -1,0 +1,19 @@
+[[redirects]]
+  from = "/franchises/"
+  to = "/franchises/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/monitoring/"
+  to = "/monitoring/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/ai-audit/"
+  to = "/ai-audit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/embed-calculator/"
+  to = "/embed-calculator/index.html"
+  status = 200
