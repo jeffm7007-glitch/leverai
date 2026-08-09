@@ -1,0 +1,82 @@
+<!-- 
+  ============================================
+  MISSED CALL REVENUE CALCULATOR — EMBED CODE
+  ============================================
+  1. Copy everything below between the EMBED markers
+  2. Paste into any HTML page, WordPress post, or website
+  3. The calculator will auto-size and work on mobile/desktop
+  4. Backlinks to lever-ai.app are included (do not remove)
+  
+  Live demo: https://proplum-ai-audit.netlify.app/missed-call-revenue-calculator.html
+-->
+
+<!-- ======== EMBED START ======== -->
+<div class="lvr-calc-wrap" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;max-width:640px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.08);overflow:hidden;border:1px solid #e2e8f0;">
+  <div class="lvr-calc-header" style="background:linear-gradient(135deg,#1e3a5f 0%,#2d5a87 100%);color:#fff;padding:28px;text-align:center;">
+    <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:6px;margin-top:0;">💰 Missed Call Revenue Calculator</h2>
+    <p style="opacity:0.9;font-size:0.9rem;margin:0;">See how much money you're losing to voicemail every month.</p>
+  </div>
+  <div class="lvr-calc-body" style="padding:24px;">
+    <div class="lvr-field" style="margin-bottom:20px;">
+      <label style="display:block;font-weight:600;margin-bottom:8px;color:#2d3748;font-size:0.95rem;">Average Ticket Value ($)</label>
+      <input type="number" id="lvr-ticket" value="450" min="50" step="25" style="width:100%;padding:12px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;transition:border-color 0.2s;" onfocus="this.style.borderColor='#2d5a87';" onblur="this.style.borderColor='#e2e8f0';">
+    </div>
+    <div class="lvr-field" style="margin-bottom:20px;">
+      <label style="display:block;font-weight:600;margin-bottom:8px;color:#2d3748;font-size:0.95rem;">Calls You Get Per Day</label>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+        <input type="range" id="lvr-calls" min="1" max="50" value="8" style="flex:1;height:6px;-webkit-appearance:none;appearance:none;background:#cbd5e0;border-radius:3px;outline:none;" oninput="lvrCalc()">
+        <div id="lvr-calls-val" style="font-weight:700;color:#1e3a5f;min-width:60px;text-align:right;font-size:1.1rem;">8</div>
+      </div>
+    </div>
+    <div class="lvr-field" style="margin-bottom:20px;">
+      <label style="display:block;font-weight:600;margin-bottom:8px;color:#2d3748;font-size:0.95rem;">What % Go to Voicemail?</label>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+        <input type="range" id="lvr-vm" min="0" max="100" value="35" style="flex:1;height:6px;-webkit-appearance:none;appearance:none;background:#cbd5e0;border-radius:3px;outline:none;" oninput="lvrCalc()">
+        <div id="lvr-vm-val" style="font-weight:700;color:#1e3a5f;min-width:60px;text-align:right;font-size:1.1rem;">35%</div>
+      </div>
+    </div>
+    <div class="lvr-field" style="margin-bottom:20px;">
+      <label style="display:block;font-weight:600;margin-bottom:8px;color:#2d3748;font-size:0.95rem;">Your Close Rate on Returned Calls (%)</label>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+        <input type="range" id="lvr-close" min="0" max="100" value="40" style="flex:1;height:6px;-webkit-appearance:none;appearance:none;background:#cbd5e0;border-radius:3px;outline:none;" oninput="lvrCalc()">
+        <div id="lvr-close-val" style="font-weight:700;color:#1e3a5f;min-width:60px;text-align:right;font-size:1.1rem;">40%</div>
+      </div>
+    </div>
+    <div class="lvr-results" style="background:linear-gradient(135deg,#1e3a5f 0%,#2d5a87 100%);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-top:8px;">
+      <div style="font-size:0.85rem;opacity:0.85;text-transform:uppercase;letter-spacing:1px;">Estimated Monthly Revenue Leak</div>
+      <div id="lvr-monthly" style="font-size:2.6rem;font-weight:700;margin:8px 0;">$15,390</div>
+      <div id="lvr-yearly" style="font-size:0.9rem;opacity:0.85;margin-top:4px;">$184,680 per year</div>
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.2);text-align:left;">
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:0.9rem;"><span style="opacity:0.85;">Missed calls per month</span><span id="lvr-missed" style="font-weight:600;">84</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:0.9rem;"><span style="opacity:0.85;">Calls you actually return</span><span id="lvr-returned" style="font-weight:600;">50</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:0.9rem;"><span style="opacity:0.85;">Jobs closed from callbacks</span><span id="lvr-jobs-closed" style="font-weight:600;">20</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:0.9rem;"><span style="opacity:0.85;">Jobs lost to competitors</span><span id="lvr-jobs-lost" style="font-weight:600;">64</span></div>
+      </div>
+      <a href="https://lever-ai.app/?utm_source=calculator&utm_medium=embed&utm_campaign=revenue_leak" style="display:inline-block;margin-top:16px;background:#fff;color:#1e3a5f;font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:0.95rem;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" target="_blank" rel="noopener">🚀 Fix This With AI — Free Trial</a>
+    </div>
+  </div>
+  <div style="text-align:center;padding:16px;background:#f7fafc;border-top:1px solid #e2e8f0;font-size:0.82rem;color:#718096;">
+    Calculator by <a href="https://lever-ai.app/?utm_source=calculator&utm_medium=embed&utm_campaign=powered_by" style="color:#2d5a87;font-weight:600;text-decoration:none;" target="_blank" rel="noopener">Lever AI</a> — The AI Receptionist for Plumbing & HVAC
+  </div>
+</div>
+<script>
+function lvrCalc(){
+  var t=parseFloat(document.getElementById('lvr-ticket').value)||0,
+      c=parseInt(document.getElementById('lvr-calls').value)||0,
+      v=parseInt(document.getElementById('lvr-vm').value)||0,
+      r=parseInt(document.getElementById('lvr-close').value)||0,
+      md=c*(v/100),mm=md*30,rm=mm*0.6,cm=rm*(r/100),lm=mm-cm,leak=lm*t;
+  document.getElementById('lvr-calls-val').textContent=c;
+  document.getElementById('lvr-vm-val').textContent=v+'%';
+  document.getElementById('lvr-close-val').textContent=r+'%';
+  document.getElementById('lvr-monthly').textContent='$'+Math.round(leak).toLocaleString();
+  document.getElementById('lvr-yearly').textContent='$'+Math.round(leak*12).toLocaleString()+' per year';
+  document.getElementById('lvr-missed').textContent=Math.round(mm);
+  document.getElementById('lvr-returned').textContent=Math.round(rm);
+  document.getElementById('lvr-jobs-closed').textContent=Math.round(cm);
+  document.getElementById('lvr-jobs-lost').textContent=Math.round(lm);
+}
+document.getElementById('lvr-ticket').addEventListener('input',lvrCalc);
+lvrCalc();
+</script>
+<!-- ======== EMBED END ======== -->

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plumbing Job Pricing Calculator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .plm-calc-wrap {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    max-width: 520px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+  .plm-calc-header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+    color: #fff;
+    padding: 24px;
+    text-align: center;
+  }
+  .plm-calc-header h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+  .plm-calc-header p { opacity: 0.9; font-size: 0.85rem; }
+  .plm-calc-body { padding: 20px; }
+  .plm-job-types {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .plm-job-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .plm-job-card:hover { border-color: #2d5a87; transform: translateY(-2px); }
+  .plm-job-card.selected {
+    border-color: #1e3a5f;
+    background: #f0f7ff;
+    box-shadow: 0 0 0 3px rgba(30,58,95,0.1);
+  }
+  .plm-job-icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .plm-job-name { font-size: 0.75rem; font-weight: 600; color: #2d3748; line-height: 1.2; }
+  .plm-job-rate { font-size: 0.65rem; color: #718096; margin-top: 2px; }
+  .plm-field {
+    margin-bottom: 18px;
+  }
+  .plm-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #2d3748;
+    font-size: 0.9rem;
+  }
+  .plm-input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .plm-input-row input[type="number"] {
+    width: 100px;
+    padding: 10px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    text-align: center;
+  }
+  .plm-input-row input[type="number"]:focus {
+    outline: none;
+    border-color: #2d5a87;
+  }
+  .plm-input-row input[type="range"] {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #cbd5e0;
+    border-radius: 3px;
+    outline: none;
+  }
+  .plm-input-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #1e3a5f;
+    cursor: pointer;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .plm-calc-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 16px;
+  }
+  .plm-calc-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(30,58,95,0.3); }
+  .plm-results {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    display: none;
+  }
+  .plm-results.show { display: block; }
+  .plm-results .plm-big-num {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin: 6px 0;
+  }
+  .plm-results .plm-label {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .plm-results .plm-detail {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+  .plm-results .plm-breakdown {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    text-align: left;
+  }
+  .plm-results .plm-breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 0.85rem;
+  }
+  .plm-cta {
+    display: inline-block;
+    margin-top: 14px;
+    background: #fff;
+    color: #1e3a5f;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+  }
+  .plm-cta:hover { transform: scale(1.04); }
+  .plm-powered {
+    text-align: center;
+    padding: 14px;
+    background: #f7fafc;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #718096;
+  }
+  .plm-powered a {
+    color: #2d5a87;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .plm-powered a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="plm-calc-wrap">
+  <div class="plm-calc-header">
+    <h2>🔧 Plumbing Job Pricing Calculator</h2>
+    <p>Select a job type, adjust any numbers, and get an instant estimate.</p>
+  </div>
+  <div class="plm-calc-body">
+
+    <!-- Job Type Selection -->
+    <div class="plm-job-types" id="jobTypes">
+      <div class="plm-job-card selected" data-job="emergency" data-base="350" data-hours="2">
+        <div class="plm-job-icon">🚨</div>
+        <div class="plm-job-name">Emergency<br>Repair</div>
+        <div class="plm-job-rate">$350+</div>
+      </div>
+      <div class="plm-job-card" data-job="drain" data-base="150" data-hours="1.5">
+        <div class="plm-job-icon">🚿</div>
+        <div class="plm-job-name">Drain<br>Cleaning</div>
+        <div class="plm-job-rate">$150+</div>
+      </div>
+      <div class="plm-job-card" data-job="waterheater" data-base="500" data-hours="3">
+        <div class="plm-job-icon">🌡️</div>
+        <div class="plm-job-name">Water Heater<br>Repair</div>
+        <div class="plm-job-rate">$500+</div>
+      </div>
+      <div class="plm-job-card" data-job="pipe" data-base="400" data-hours="2.5">
+        <div class="plm-job-icon">🔩</div>
+        <div class="plm-job-name">Pipe<br>Repair</div>
+        <div class="plm-job-rate">$400+</div>
+      </div>
+      <div class="plm-job-card" data-job="toilet" data-base="200" data-hours="1.5">
+        <div class="plm-job-icon">🚽</div>
+        <div class="plm-job-name">Toilet<br>Install/Repair</div>
+        <div class="plm-job-rate">$200+</div>
+      </div>
+      <div class="plm-job-card" data-job="faucet" data-base="120" data-hours="1">
+        <div class="plm-job-icon">🚰</div>
+        <div class="plm-job-name">Faucet<br>Install/Repair</div>
+        <div class="plm-job-rate">$120+</div>
+      </div>
+      <div class="plm-job-card" data-job="sewer" data-base="2500" data-hours="6">
+        <div class="plm-job-icon">🕳️</div>
+        <div class="plm-job-name">Sewer Line<br>Repair</div>
+        <div class="plm-job-rate">$2,500+</div>
+      </div>
+      <div class="plm-job-card" data-job="repipe" data-base="4500" data-hours="16">
+        <div class="plm-job-icon">🏠</div>
+        <div class="plm-job-name">Whole House<br>Repipe</div>
+        <div class="plm-job-rate">$4,500+</div>
+      </div>
+      <div class="plm-job-card" data-job="inspection" data-base="175" data-hours="1">
+        <div class="plm-job-icon">🔍</div>
+        <div class="plm-job-name">Camera<br>Inspection</div>
+        <div class="plm-job-rate">$175+</div>
+      </div>
+    </div>
+
+    <!-- Hourly Rate -->
+    <div class="plm-field">
+      <label>Hourly Rate ($)</label>
+      <div class="plm-input-row">
+        <input type="number" id="rateInput" value="125" min="1" step="5">
+        <input type="range" id="rateSlider" min="75" max="250" value="125" step="5">
+      </div>
+    </div>
+
+    <!-- Estimated Hours -->
+    <div class="plm-field">
+      <label>Estimated Hours</label>
+      <div class="plm-input-row">
+        <input type="number" id="hoursInput" value="2" min="0.5" step="0.5">
+        <input type="range" id="hoursSlider" min="0.5" max="24" value="2" step="0.5">
+      </div>
+    </div>
+
+    <!-- Materials Cost -->
+    <div class="plm-field">
+      <label>Materials Cost ($)</label>
+      <div class="plm-input-row">
+        <input type="number" id="matInput" value="50" min="0" step="25">
+        <input type="range" id="matSlider" min="0" max="1000" value="50" step="25">
+      </div>
+    </div>
+
+    <!-- Trip/Service Fee -->
+    <div class="plm-field">
+      <label>Trip/Service Fee ($)</label>
+      <div class="plm-input-row">
+        <input type="number" id="tripInput" value="75" min="0" step="25">
+        <input type="range" id="tripSlider" min="0" max="200" value="75" step="25">
+      </div>
+    </div>
+
+    <!-- Tax Rate -->
+    <div class="plm-field">
+      <label>Tax Rate (%)</label>
+      <div class="plm-input-row">
+        <input type="number" id="taxInput" value="7" min="0" max="20" step="0.5">
+        <input type="range" id="taxSlider" min="0" max="20" value="7" step="0.5">
+      </div>
+    </div>
+
+    <!-- Calculate Button -->
+    <button class="plm-calc-btn" id="calcBtn">📊 Calculate Estimate</button>
+
+    <!-- Results -->
+    <div class="plm-results" id="results">
+      <div class="plm-label">Estimated Total</div>
+      <div class="plm-big-num" id="totalPrice">$0</div>
+      <div class="plm-detail" id="jobTypeLabel">Emergency Repair</div>
+      <div class="plm-breakdown">
+        <div class="plm-breakdown-row"><span>Labor</span><span id="laborCost">$0</span></div>
+        <div class="plm-breakdown-row"><span>Materials</span><span id="matCost">$0</span></div>
+        <div class="plm-breakdown-row"><span>Trip/Service Fee</span><span id="tripCost">$0</span></div>
+        <div class="plm-breakdown-row"><span>Subtotal</span><span id="subtotalCost">$0</span></div>
+        <div class="plm-breakdown-row"><span>Tax</span><span id="taxCost">$0</span></div>
+      </div>
+      <a href="https://lever-ai.app/?utm_source=pricingcalc&utm_medium=embed&utm_campaign=job_estimate" class="plm-cta" target="_blank" rel="noopener">
+        ⚡ Get More Booked Calls — Free Trial
+      </a>
+    </div>
+  </div>
+  <div class="plm-powered">
+    Calculator by <a href="https://lever-ai.app/?utm_source=pricingcalc&utm_medium=embed&utm_campaign=powered_by" target="_blank" rel="noopener">Lever AI</a> — The AI Receptionist for Plumbing & HVAC
+  </div>
+</div>
+
+<script>
+(function() {
+  const jobCards = document.querySelectorAll('.plm-job-card');
+
+  // Inputs and sliders
+  const rateInput = document.getElementById('rateInput');
+  const rateSlider = document.getElementById('rateSlider');
+  const hoursInput = document.getElementById('hoursInput');
+  const hoursSlider = document.getElementById('hoursSlider');
+  const matInput = document.getElementById('matInput');
+  const matSlider = document.getElementById('matSlider');
+  const tripInput = document.getElementById('tripInput');
+  const tripSlider = document.getElementById('tripSlider');
+  const taxInput = document.getElementById('taxInput');
+  const taxSlider = document.getElementById('taxSlider');
+
+  const calcBtn = document.getElementById('calcBtn');
+  const results = document.getElementById('results');
+  const totalPrice = document.getElementById('totalPrice');
+  const jobTypeLabel = document.getElementById('jobTypeLabel');
+  const laborCost = document.getElementById('laborCost');
+  const matCost = document.getElementById('matCost');
+  const tripCost = document.getElementById('tripCost');
+  const subtotalCost = document.getElementById('subtotalCost');
+  const taxCost = document.getElementById('taxCost');
+
+  let selectedJob = { name: 'Emergency Repair', base: 350, hours: 2 };
+
+  // Job card selection
+  jobCards.forEach(card => {
+    card.addEventListener('click', () => {
+      jobCards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedJob = {
+        name: card.querySelector('.plm-job-name').innerHTML.replace(/<br>/g, ' '),
+        base: parseFloat(card.dataset.base),
+        hours: parseFloat(card.dataset.hours)
+      };
+      // Update hours input and slider
+      hoursInput.value = selectedJob.hours;
+      hoursSlider.value = selectedJob.hours;
+    });
+  });
+
+  // Sync inputs and sliders
+  function sync(input, slider) {
+    input.addEventListener('input', () => { slider.value = input.value; });
+    slider.addEventListener('input', () => { input.value = slider.value; });
+  }
+  sync(rateInput, rateSlider);
+  sync(hoursInput, hoursSlider);
+  sync(matInput, matSlider);
+  sync(tripInput, tripSlider);
+  sync(taxInput, taxSlider);
+
+  // Calculate
+  calcBtn.addEventListener('click', () => {
+    const rate = parseFloat(rateInput.value) || 0;
+    const hours = parseFloat(hoursInput.value) || 0;
+    const mats = parseFloat(matInput.value) || 0;
+    const trip = parseFloat(tripInput.value) || 0;
+    const taxRate = parseFloat(taxInput.value) || 0;
+
+    const labor = rate * hours;
+    const subtotal = labor + mats + trip;
+    const tax = subtotal * (taxRate / 100);
+    const total = subtotal + tax;
+
+    totalPrice.textContent = '$' + Math.round(total).toLocaleString();
+    jobTypeLabel.textContent = selectedJob.name;
+    laborCost.textContent = '$' + Math.round(labor).toLocaleString() + ' (' + hours + ' hrs @ $' + rate + '/hr)';
+    matCost.textContent = '$' + mats;
+    tripCost.textContent = '$' + trip;
+    subtotalCost.textContent = '$' + Math.round(subtotal).toLocaleString();
+    taxCost.textContent = '$' + Math.round(tax) + ' (' + taxRate + '%)';
+
+    results.classList.add('show');
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+})();
+</script>
+
+</body>
+</html>

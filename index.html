@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lever AI — AI Search Visibility Platform for Multi-Location Brands</title>
+    <meta name="description" content="AI search visibility infrastructure for franchise networks, multi-location brands, and service enterprises. Stop losing revenue to AI search invisibility.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --navy-light: #111827;
+            --cyan: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --emerald: #10b981;
+            --indigo: #6366f1;
+            --purple: #a855f7;
+            --gold: #f59e0b;
+            --text: #f3f4f6;
+            --text-dim: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            background: rgba(11,15,25,0.9); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .header-inner {
+            max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo), var(--purple));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-text span:first-child { font-weight: 800; font-size: 1.1rem; color: white; }
+        .logo-text span:last-child { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.1em; }
+        .nav { display: flex; gap: 2rem; }
+        .nav a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav a:hover { color: var(--cyan); }
+        .header-cta {
+            background: linear-gradient(135deg, var(--emerald), var(--cyan), var(--indigo));
+            color: white; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.75rem;
+            font-weight: 700; font-family: 'JetBrains Mono', monospace; text-decoration: none;
+            letter-spacing: 0.05em; transition: transform 0.2s;
+        }
+        .header-cta:hover { transform: scale(1.03); }
+        
+        .hero {
+            padding: 140px 1.5rem 80px; text-align: center;
+            background: 
+                radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(99,102,241,0.1) 0%, transparent 50%),
+                var(--navy);
+        }
+        .hero-inner { max-width: 900px; margin: 0 auto; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.4rem 1rem; border-radius: 50px; background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.2); color: var(--cyan-glow);
+            font-size: 0.75rem; font-weight: 600; margin-bottom: 1.5rem;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 1rem; }
+        .hero h1 span { background: linear-gradient(135deg, var(--cyan-glow), var(--indigo)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.15rem; color: var(--text-dim); max-width: 600px; margin: 0 auto 2rem; }
+        .hero-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(135deg, var(--emerald), var(--cyan), var(--indigo));
+            color: white; padding: 1rem 2rem; border-radius: 12px; font-weight: 700;
+            text-decoration: none; font-size: 1rem; transition: transform 0.2s; border: none; cursor: pointer;
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(255,255,255,0.05); color: var(--text); padding: 1rem 2rem;
+            border-radius: 12px; font-weight: 600; text-decoration: none; font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+        
+        section { padding: 80px 1.5rem; }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-label {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; color: var(--cyan); margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .section-label::before { content: ''; display: inline-block; width: 20px; height: 2px; background: var(--cyan); }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
+        .section-title span { background: linear-gradient(135deg, var(--cyan-glow), var(--indigo)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-subtitle { color: var(--text-dim); font-size: 1.1rem; max-width: 600px; margin-bottom: 3rem; }
+        
+        .capabilities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .cap-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            border-radius: 16px; padding: 2rem; transition: all 0.3s;
+        }
+        .cap-card:hover { border-color: rgba(6,182,212,0.3); transform: translateY(-4px); }
+        .cap-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.5rem; }
+        .cap-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .cap-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+        .cap-card ul { list-style: none; margin-top: 1rem; }
+        .cap-card li { padding: 0.4rem 0; padding-left: 1.2rem; position: relative; color: var(--text-dim); font-size: 0.85rem; }
+        .cap-card li::before { content: '✓'; position: absolute; left: 0; color: var(--emerald); font-weight: 700; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
+        .stat-card { text-align: center; padding: 2rem; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid var(--border); }
+        .stat-number { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, var(--cyan-glow), var(--indigo)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { color: var(--text-dim); font-size: 0.85rem; margin-top: 0.5rem; }
+        
+        .cta-section {
+            padding: 100px 1.5rem; text-align: center;
+            background: radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.15) 0%, transparent 70%), var(--navy);
+        }
+        .cta-section h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; margin-bottom: 1rem; }
+        .cta-section p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin: 0 auto 2rem; }
+        
+        footer { padding: 60px 1.5rem 30px; border-top: 1px solid var(--border); }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+        .footer-brand p { color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; }
+        .footer-col h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 1rem; }
+        .footer-col a { display: block; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; padding: 0.3rem 0; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--cyan); }
+        .footer-bottom {
+            max-width: 1200px; margin: 3rem auto 0; padding-top: 2rem;
+            border-top: 1px solid var(--border); display: flex; justify-content: space-between;
+            color: var(--text-muted); font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .hero { padding: 120px 1rem 60px; }
+            .hero-cta-group { flex-direction: column; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" color="white"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+                </div>
+                <div class="logo-text">
+                    <span>Lever AI</span>
+                    <span>AI Search Visibility Platform</span>
+                </div>
+            </a>
+            <nav class="nav">
+                <a href="#solution">Solution</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#audit">Free Audit</a>
+                <a href="#about">About</a>
+            </nav>
+            <a href="https://proplum-ai-audit.netlify.app" class="header-cta">FREE AI AUDIT</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge">🔍 AI Search Visibility Infrastructure</div>
+            <h1>Your Locations Are <span>Invisible to AI Search</span></h1>
+            <p>31.3% of consumers now use AI search. If your brand isn't structured for ChatGPT, Claude, and Perplexity, you're not in the consideration set.</p>
+            <div class="hero-cta-group">
+                <a href="https://proplum-ai-audit.netlify.app" class="btn-primary">🔍 Run Free AI Visibility Audit</a>
+                <a href="#solution" class="btn-secondary">See How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="solution">
+        <div class="section-inner">
+            <div class="section-label">The Problem</div>
+            <h2 class="section-title">Traditional SEO Is <span>Dying</span></h2>
+            <p class="section-subtitle">AI platforms don't browse websites. They synthesize answers from structured data. Most multi-location brands have zero AI visibility infrastructure.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">31.3%</div>
+                    <div class="stat-label">US consumers using AI search in 2026</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.4x</div>
+                    <div class="stat-label">Higher conversion rate for AI-discovered businesses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">58%</div>
+                    <div class="stat-label">Of desktop searches are zero-click</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$4.7M</div>
+                    <div class="stat-label">Average annual revenue leak for 70-location networks</div>
+                </div>
+            </div>
+            
+            <div class="capabilities-grid" style="margin-top: 3rem;">
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(6,182,212,0.1); color: var(--cyan);">🔍</div>
+                    <h3>AI Search Audit</h3>
+                    <p>Comprehensive visibility scoring across all locations. Identify ghost pages, missing schema, and technical debt.</p>
+                    <ul>
+                        <li>8-point AI visibility scorecard</li>
+                        <li>Ghost page detection</li>
+                        <li>Schema markup analysis</li>
+                        <li>Competitive benchmarking</li>
+                    </ul>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">⚡</div>
+                    <h3>Infrastructure Deployment</h3>
+                    <p>Deploy LocalBusiness schema, llms.txt, and structured data across your entire network — not just the homepage.</p>
+                    <ul>
+                        <li>Network-wide schema deployment</li>
+                        <li>llms.txt optimization</li>
+                        <li>Technical debt remediation</li>
+                        <li>Franchisee compliance dashboard</li>
+                    </ul>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(16,185,129,0.1); color: var(--emerald);">📊</div>
+                    <h3>Ongoing Intelligence</h3>
+                    <p>Monitor competitor AI visibility, track answer capture rates, and receive alerts when your visibility changes.</p>
+                    <ul>
+                        <li>Competitor visibility tracking</li>
+                        <li>AI answer capture monitoring</li>
+                        <li>Monthly board reports</li>
+                        <li>Threat detection alerts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" style="background: linear-gradient(180deg, var(--navy) 0%, rgba(6,182,212,0.03) 50%, var(--navy) 100%);">
+        <div class="section-inner">
+            <div class="section-label">Process</div>
+            <h2 class="section-title">How It <span>Works</span></h2>
+            <p class="section-subtitle">From audit to visibility in 48 hours. No disruption to existing operations.</p>
+            
+            <div class="capabilities-grid">
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(245,158,11,0.1); color: var(--gold);">1</div>
+                    <h3>Free AI Visibility Audit</h3>
+                    <p>We scan your entire network — corporate site, location pages, schema markup, and competitive positioning. You get a 10-K style disclosure report with raw data, no conclusions.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(6,182,212,0.1); color: var(--cyan);">2</div>
+                    <h3>Remediation Planning</h3>
+                    <p>We prioritize fixes by revenue impact. Ghost pages first. Schema second. Content optimization third. Every recommendation includes estimated ROI.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(16,185,129,0.1); color: var(--emerald);">3</div>
+                    <h3>Network Deployment</h3>
+                    <p>We deploy fixes across your network — or guide your internal team. Most Tier 1 fixes (schema, redirects, llms.txt) deploy in 48 hours.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">4</div>
+                    <h3>Monitor & Optimize</h3>
+                    <p>Monthly visibility reports, competitor tracking, and ongoing optimization. Your board sees AI search metrics alongside traditional KPIs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="audit">
+        <div class="section-inner">
+            <div class="section-label">Free Tool</div>
+            <h2 class="section-title">Run Your <span>Free AI Visibility Audit</span></h2>
+            <p class="section-subtitle">Enter any website URL. Get an instant AI visibility score and see what's missing.</p>
+            
+            <div style="max-width: 600px; margin: 2rem auto; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; text-align: center;">
+                <p style="color: var(--text-dim); margin-bottom: 1.5rem;">See how visible your business is to AI search platforms like ChatGPT, Claude, and Perplexity.</p>
+                <a href="https://proplum-ai-audit.netlify.app" class="btn-primary" style="width: 100%; justify-content: center;">🔍 Start Free Audit</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-inner">
+            <div class="section-label">About</div>
+            <h2 class="section-title">Built for <span>Multi-Location Brands</span></h2>
+            <p class="section-subtitle">Lever AI is an AI search visibility platform built specifically for franchise networks, multi-location service brands, and enterprise home services.</p>
+            
+            <div class="capabilities-grid">
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(6,182,212,0.1); color: var(--cyan);">🏢</div>
+                    <h3>Franchise Networks</h3>
+                    <p>Deploy consistent AI visibility infrastructure across hundreds of locations while respecting franchisee independence.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">🏠</div>
+                    <h3>Home Services</h3>
+                    <p>Plumbing, HVAC, electrical, and related trades where local search dominance directly impacts revenue.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon" style="background: rgba(16,185,129,0.1); color: var(--emerald);">📈</div>
+                    <h3>PE-Backed Companies</h3>
+                    <p>Board-ready reporting, risk disclosures, and due diligence documentation for investment committees.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Don't Wait for Competitors to Capture Your Markets</h2>
+        <p>AI search is winner-take-most. Early movers gain compounding authority. The cost of catching up exceeds the cost of leading.</p>
+        <a href="https://proplum-ai-audit.netlify.app" class="btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">🔍 Run Free AI Visibility Audit</a>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" color="white"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+                    </div>
+                    <div class="logo-text">
+                        <span>Lever AI</span>
+                        <span>AI Search Visibility Platform</span>
+                    </div>
+                </a>
+                <p>AI search visibility infrastructure for multi-location brands, franchise networks, and enterprise service companies.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="https://proplum-ai-audit.netlify.app">AI Visibility Audit</a>
+                <a href="#">Schema Deployment</a>
+                <a href="#">Competitor Intelligence</a>
+                <a href="#">Franchise Dashboard</a>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <a href="https://proplum-franchise-case-study.netlify.app">Case Study: 1-Tom-Plumber</a>
+                <a href="#">Documentation</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Lever AI Inc. All rights reserved.</p>
+            <p>Built for the AI search era.</p>
+        </div>
+    </footer>
+</body>
+</html>

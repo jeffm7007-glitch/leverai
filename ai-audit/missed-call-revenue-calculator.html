@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missed Call Revenue Calculator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .lvr-calc-wrap {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    max-width: 640px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+  .lvr-calc-header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+    color: #fff;
+    padding: 28px;
+    text-align: center;
+  }
+  .lvr-calc-header h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+  .lvr-calc-header p { opacity: 0.9; font-size: 0.9rem; }
+  .lvr-calc-body { padding: 24px; }
+  .lvr-field {
+    margin-bottom: 20px;
+  }
+  .lvr-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2d3748;
+    font-size: 0.95rem;
+  }
+  .lvr-field input[type="number"], .lvr-field input[type="range"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+  .lvr-field input[type="number"]:focus {
+    outline: none;
+    border-color: #2d5a87;
+  }
+  .lvr-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .lvr-slider-row input[type="range"] {
+    flex: 1;
+    padding: 0;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #cbd5e0;
+    border-radius: 3px;
+    border: none;
+  }
+  .lvr-slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #1e3a5f;
+    cursor: pointer;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .lvr-slider-val {
+    font-weight: 700;
+    color: #1e3a5f;
+    min-width: 60px;
+    text-align: right;
+    font-size: 1.1rem;
+  }
+  .lvr-results {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    margin-top: 8px;
+  }
+  .lvr-results .lvr-big-num {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin: 8px 0;
+  }
+  .lvr-results .lvr-label {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .lvr-results .lvr-detail {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+  .lvr-cta {
+    display: inline-block;
+    margin-top: 16px;
+    background: #fff;
+    color: #1e3a5f;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s;
+    font-size: 0.95rem;
+  }
+  .lvr-cta:hover { transform: scale(1.04); }
+  .lvr-powered {
+    text-align: center;
+    padding: 16px;
+    background: #f7fafc;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.82rem;
+    color: #718096;
+  }
+  .lvr-powered a {
+    color: #2d5a87;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .lvr-powered a:hover { text-decoration: underline; }
+  .lvr-breakdown {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    text-align: left;
+  }
+  .lvr-breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 0.9rem;
+  }
+  .lvr-breakdown-row span:first-child { opacity: 0.85; }
+  .lvr-breakdown-row span:last-child { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- COPY EVERYTHING BELOW THIS LINE TO EMBED -->
+<div class="lvr-calc-wrap">
+  <div class="lvr-calc-header">
+    <h2>💰 Missed Call Revenue Calculator</h2>
+    <p>See how much money you're losing to voicemail every month.</p>
+  </div>
+  <div class="lvr-calc-body">
+
+    <div class="lvr-field">
+      <label>Average Ticket Value ($)</label>
+      <input type="number" id="ticketValue" value="450" min="50" step="25">
+    </div>
+
+    <div class="lvr-field">
+      <label>Calls You Get Per Day</label>
+      <div class="lvr-slider-row">
+        <input type="range" id="callsPerDay" min="1" max="50" value="8">
+        <div class="lvr-slider-val" id="callsVal">8</div>
+      </div>
+    </div>
+
+    <div class="lvr-field">
+      <label>What % Go to Voicemail?</label>
+      <div class="lvr-slider-row">
+        <input type="range" id="vmPercent" min="0" max="100" value="35">
+        <div class="lvr-slider-val" id="vmVal">35%</div>
+      </div>
+    </div>
+
+    <div class="lvr-field">
+      <label>Your Close Rate on Returned Calls (%)</label>
+      <div class="lvr-slider-row">
+        <input type="range" id="closeRate" min="0" max="100" value="40">
+        <div class="lvr-slider-val" id="closeVal">40%</div>
+      </div>
+    </div>
+
+    <div class="lvr-results">
+      <div class="lvr-label">Estimated Monthly Revenue Leak</div>
+      <div class="lvr-big-num" id="monthlyLeak">$0</div>
+      <div class="lvr-detail" id="yearlyLeak">$0 per year</div>
+
+      <div class="lvr-breakdown">
+        <div class="lvr-breakdown-row">
+          <span>Missed calls per month</span>
+          <span id="missedMonthly">0</span>
+        </div>
+        <div class="lvr-breakdown-row">
+          <span>Calls you actually return</span>
+          <span id="returnedMonthly">0</span>
+        </div>
+        <div class="lvr-breakdown-row">
+          <span>Jobs closed from callbacks</span>
+          <span id="jobsClosed">0</span>
+        </div>
+        <div class="lvr-breakdown-row">
+          <span>Jobs lost to competitors</span>
+          <span id="jobsLost">0</span>
+        </div>
+      </div>
+
+      <a href="https://lever-ai.app/?utm_source=calculator&utm_medium=embed&utm_campaign=revenue_leak" class="lvr-cta" target="_blank" rel="noopener">
+        🚀 Fix This With AI — Free Trial
+      </a>
+    </div>
+  </div>
+  <div class="lvr-powered">
+    Calculator by <a href="https://lever-ai.app/?utm_source=calculator&utm_medium=embed&utm_campaign=powered_by" target="_blank" rel="noopener">Lever AI</a> — The AI Receptionist for Plumbing & HVAC
+  </div>
+</div>
+
+<script>
+(function() {
+  const ticketInput = document.getElementById('ticketValue');
+  const callsSlider = document.getElementById('callsPerDay');
+  const vmSlider = document.getElementById('vmPercent');
+  const closeSlider = document.getElementById('closeRate');
+
+  const callsVal = document.getElementById('callsVal');
+  const vmVal = document.getElementById('vmVal');
+  const closeVal = document.getElementById('closeVal');
+
+  const monthlyLeak = document.getElementById('monthlyLeak');
+  const yearlyLeak = document.getElementById('yearlyLeak');
+  const missedMonthly = document.getElementById('missedMonthly');
+  const returnedMonthly = document.getElementById('returnedMonthly');
+  const jobsClosed = document.getElementById('jobsClosed');
+  const jobsLost = document.getElementById('jobsLost');
+
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function calc() {
+    const ticket = parseFloat(ticketInput.value) || 0;
+    const callsDay = parseInt(callsSlider.value) || 0;
+    const vmPct = parseInt(vmSlider.value) || 0;
+    const closePct = parseInt(closeSlider.value) || 0;
+
+    const missedDay = callsDay * (vmPct / 100);
+    const missedMo = missedDay * 30;
+    const returnedMo = missedMo * 0.6; // Industry avg: 60% of voicemails get returned
+    const closedMo = returnedMo * (closePct / 100);
+    const lostMo = missedMo - closedMo;
+    const leakMo = lostMo * ticket;
+    const leakYr = leakMo * 12;
+
+    callsVal.textContent = callsDay;
+    vmVal.textContent = vmPct + '%';
+    closeVal.textContent = closePct + '%';
+
+    monthlyLeak.textContent = fmt(leakMo);
+    yearlyLeak.textContent = fmt(leakYr) + ' per year';
+    missedMonthly.textContent = Math.round(missedMo);
+    returnedMonthly.textContent = Math.round(returnedMo);
+    jobsClosed.textContent = Math.round(closedMo);
+    jobsLost.textContent = Math.round(lostMo);
+  }
+
+  ticketInput.addEventListener('input', calc);
+  callsSlider.addEventListener('input', calc);
+  vmSlider.addEventListener('input', calc);
+  closeSlider.addEventListener('input', calc);
+
+  calc();
+})();
+</script>
+<!-- COPY EVERYTHING ABOVE THIS LINE TO EMBED -->
+
+</body>
+</html>

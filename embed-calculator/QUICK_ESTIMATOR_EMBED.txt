@@ -1,0 +1,451 @@
+<!-- 
+  ============================================
+  QUICK PLUMBING COST ESTIMATOR — EMBED CODE
+  ============================================
+  1. Copy everything below between the EMBED markers
+  2. Paste into any HTML page, WordPress post, or website
+  3. Backlinks to lever-ai.app are included (do not remove)
+  
+  Live demo: https://proplum-ai-audit.netlify.app/quick-plumbing-estimator.html
+-->
+
+<!-- ======== EMBED START ======== -->
+<div id="qp-calc-container">
+ <style>
+ #qp-calc-container {
+ --bg-gradient: linear-gradient(135deg, #71b1e6 0%, #317dbf 50%, #1c5285 100%);
+ --glass-bg: rgba(255, 255, 255, 0.45);
+ --glass-border: rgba(255, 255, 255, 0.7);
+ --primary-blue: #1c6ab3;
+ --dark-blue: #0f3258;
+ --text-muted: #4a6885;
+
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 30px 15px;
+ background: var(--bg-gradient);
+ border-radius: 16px;
+ box-sizing: border-box;
+ width: 100%;
+ max-width: 520px;
+ margin: 0 auto;
+ }
+
+ #qp-calc-container * {
+ box-sizing: border-box;
+ }
+
+ .qp-card {
+ background: var(--glass-bg);
+ backdrop-filter: blur(16px);
+ -webkit-backdrop-filter: blur(16px);
+ border: 2px solid var(--glass-border);
+ border-radius: 20px;
+ padding: 24px 28px;
+ width: 100%;
+ box-shadow: 0 12px 32px rgba(0, 30, 60, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+ text-align: center;
+ color: var(--dark-blue);
+ }
+
+ .qp-title {
+ font-size: 1.55rem;
+ font-weight: 800;
+ letter-spacing: 0.5px;
+ margin: 0 0 4px 0;
+ color: #0b2545;
+ text-transform: uppercase;
+ }
+
+ .qp-subtitle {
+ font-size: 0.85rem;
+ margin: 0 0 20px 0;
+ color: #2b5278;
+ font-weight: 500;
+ }
+
+ .qp-section-label {
+ font-size: 0.75rem;
+ font-weight: 800;
+ letter-spacing: 0.8px;
+ text-transform: uppercase;
+ color: #1a426e;
+ margin-bottom: 10px;
+ display: block;
+ }
+
+ /* 1. SELECT YOUR PROJECT */
+ .qp-project-grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 8px;
+ margin-bottom: 20px;
+ }
+
+ .qp-project-option input {
+ display: none;
+ }
+
+ .qp-project-card {
+ background: rgba(255, 255, 255, 0.5);
+ border: 1.5px solid rgba(255, 255, 255, 0.7);
+ border-radius: 12px;
+ padding: 10px 4px 8px 4px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: space-between;
+ height: 84px;
+ cursor: pointer;
+ position: relative;
+ transition: all 0.2s ease;
+ }
+
+ .qp-radio-dot {
+ width: 12px;
+ height: 12px;
+ border-radius: 50%;
+ border: 2px solid #88abce;
+ background: #fff;
+ position: absolute;
+ top: 6px;
+ right: 6px;
+ }
+
+ .qp-project-option input:checked + .qp-project-card {
+ background: #ffffff;
+ border-color: var(--primary-blue);
+ box-shadow: 0 4px 12px rgba(28, 106, 179, 0.2);
+ }
+
+ .qp-project-option input:checked + .qp-project-card .qp-radio-dot {
+ border-color: var(--primary-blue);
+ background: var(--primary-blue);
+ box-shadow: inset 0 0 0 2px #fff;
+ }
+
+ .qp-project-icon {
+ width: 28px;
+ height: 28px;
+ fill: none;
+ stroke: var(--dark-blue);
+ stroke-width: 1.8;
+ stroke-linecap: round;
+ stroke-linejoin: round;
+ margin-top: 6px;
+ }
+
+ .qp-project-label {
+ font-size: 0.65rem;
+ font-weight: 700;
+ color: #1a3c61;
+ text-transform: uppercase;
+ line-height: 1.1;
+ }
+
+ /* 2. ESTIMATED JOB SIZE */
+ .qp-size-group {
+ display: flex;
+ background: rgba(255, 255, 255, 0.4);
+ padding: 3px;
+ border-radius: 10px;
+ border: 1px solid rgba(255, 255, 255, 0.6);
+ margin-bottom: 20px;
+ }
+
+ .qp-size-option {
+ flex: 1;
+ }
+
+ .qp-size-option input {
+ display: none;
+ }
+
+ .qp-size-btn {
+ display: block;
+ padding: 8px 4px;
+ font-size: 0.7rem;
+ font-weight: 800;
+ color: #2b5075;
+ text-transform: uppercase;
+ border-radius: 8px;
+ cursor: pointer;
+ transition: all 0.2s ease;
+ }
+
+ .qp-size-btn span {
+ font-weight: 600;
+ text-transform: none;
+ opacity: 0.85;
+ }
+
+ .qp-size-option input:checked + .qp-size-btn {
+ background: var(--primary-blue);
+ color: #ffffff;
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+ }
+
+ /* 3. MATERIAL BUDGET SLIDER */
+ .qp-slider-container {
+ margin-bottom: 22px;
+ }
+
+ .qp-slider-wrapper {
+ position: relative;
+ margin: 10px 0;
+ }
+
+ .qp-slider {
+ -webkit-appearance: none;
+ appearance: none;
+ width: 100%;
+ height: 8px;
+ border-radius: 4px;
+ background: #c3daf1;
+ outline: none;
+ }
+
+ .qp-slider::-webkit-slider-thumb {
+ -webkit-appearance: none;
+ appearance: none;
+ width: 24px;
+ height: 24px;
+ border-radius: 50%;
+ background: var(--primary-blue);
+ border: 2px solid #ffffff;
+ cursor: pointer;
+ box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+ }
+
+ .qp-slider-labels {
+ display: flex;
+ justify-content: space-between;
+ font-size: 0.75rem;
+ font-weight: 700;
+ color: #2b5075;
+ }
+
+ /* 4. CALCULATE BUTTON */
+ .qp-calc-btn {
+ width: 100%;
+ background: rgba(255, 255, 255, 0.6);
+ border: 1.5px solid rgba(255, 255, 255, 0.9);
+ padding: 12px;
+ border-radius: 10px;
+ font-size: 0.9rem;
+ font-weight: 800;
+ letter-spacing: 0.5px;
+ color: var(--dark-blue);
+ text-transform: uppercase;
+ cursor: pointer;
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+ transition: all 0.2s ease;
+ margin-bottom: 18px;
+ }
+
+ .qp-calc-btn:hover {
+ background: rgba(255, 255, 255, 0.85);
+ transform: translateY(-1px);
+ }
+
+ /* 5. ESTIMATED COST DISPLAY */
+ .qp-result-box {
+ border-top: 1px dashed rgba(27, 73, 117, 0.3);
+ padding-top: 14px;
+ }
+
+ .qp-result-title {
+ font-size: 0.75rem;
+ font-weight: 800;
+ letter-spacing: 0.6px;
+ text-transform: uppercase;
+ color: #1a426e;
+ margin-bottom: 4px;
+ }
+
+ .qp-result-price {
+ font-size: 1.85rem;
+ font-weight: 900;
+ color: #0b2545;
+ letter-spacing: -0.5px;
+ }
+
+ .qp-disclaimer {
+ font-size: 0.65rem;
+ color: #3b5f82;
+ margin-top: 8px;
+ line-height: 1.3;
+ }
+
+ .qp-disclaimer a {
+ color: #0b2545;
+ text-decoration: underline;
+ font-weight: 600;
+ }
+
+ /* POWERED BY FOOTER */
+ .qp-powered {
+ margin-top: 16px;
+ padding-top: 12px;
+ border-top: 1px solid rgba(255,255,255,0.3);
+ font-size: 0.72rem;
+ color: #1a426e;
+ font-weight: 500;
+ }
+
+ .qp-powered a {
+ color: #0b2545;
+ font-weight: 700;
+ text-decoration: none;
+ }
+
+ .qp-powered a:hover {
+ text-decoration: underline;
+ }
+ </style>
+
+ <div class="qp-card">
+ <h2 class="qp-title">Quick Plumbing<br>Cost Estimator</h2>
+ <p class="qp-subtitle">Get an instant project range below!</p>
+
+ <!-- SELECT YOUR PROJECT -->
+ <span class="qp-section-label">Select Your Project</span>
+ <div class="qp-project-grid">
+ <label class="qp-project-option">
+ <input type="radio" name="qp_project" value="drain" checked>
+ <div class="qp-project-card">
+ <div class="qp-radio-dot"></div>
+ <svg class="qp-project-icon" viewBox="0 0 24 24"><path d="M12 2v6m-4 0h8m-6 4v10m4-10v10m-8-6h16"/></svg>
+ <span class="qp-project-label">Clogged Drain</span>
+ </div>
+ </label>
+
+ <label class="qp-project-option">
+ <input type="radio" name="qp_project" value="heater">
+ <div class="qp-project-card">
+ <div class="qp-radio-dot"></div>
+ <svg class="qp-project-icon" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><circle cx="12" cy="10" r="2"/><path d="M12 15v3"/></svg>
+ <span class="qp-project-label">Water Heater</span>
+ </div>
+ </label>
+
+ <label class="qp-project-option">
+ <input type="radio" name="qp_project" value="leak">
+ <div class="qp-project-card">
+ <div class="qp-radio-dot"></div>
+ <svg class="qp-project-icon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+ <span class="qp-project-label">Leak Repair</span>
+ </div>
+ </label>
+
+ <label class="qp-project-option">
+ <input type="radio" name="qp_project" value="installation">
+ <div class="qp-project-card">
+ <div class="qp-radio-dot"></div>
+ <svg class="qp-project-icon" viewBox="0 0 24 24"><path d="M7 11V7a5 5 0 0 1 10 0v4M4 11h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8z"/></svg>
+ <span class="qp-project-label">Installation</span>
+ </div>
+ </label>
+ </div>
+
+ <!-- ESTIMATED JOB SIZE -->
+ <span class="qp-section-label">Estimated Job Size</span>
+ <div class="qp-size-group">
+ <label class="qp-size-option">
+ <input type="radio" name="qp_size" value="small" checked>
+ <span class="qp-size-btn">Small <span>(&lt;2 hrs)</span></span>
+ </label>
+ <label class="qp-size-option">
+ <input type="radio" name="qp_size" value="medium">
+ <span class="qp-size-btn">Medium <span>(2-4 hrs)</span></span>
+ </label>
+ <label class="qp-size-option">
+ <input type="radio" name="qp_size" value="large">
+ <span class="qp-size-btn">Large <span>(4+ hrs)</span></span>
+ </label>
+ </div>
+
+ <!-- ROUGH MATERIAL BUDGET -->
+ <span class="qp-section-label">Your Rough Material Budget ($)</span>
+ <div class="qp-slider-container">
+ <div class="qp-slider-wrapper">
+ <input type="range" id="qp-material-slider" class="qp-slider" min="50" max="2000" step="25" value="150">
+ </div>
+ <div class="qp-slider-labels">
+ <span>$50</span>
+ <span id="qp-budget-val">$150</span>
+ <span>$2000</span>
+ </div>
+ </div>
+
+ <!-- CALCULATE ESTIMATE BUTTON -->
+ <button type="button" class="qp-calc-btn" id="qp-calc-trigger">Calculate Estimate</button>
+
+ <!-- ESTIMATED COST RANGE -->
+ <div class="qp-result-box">
+ <div class="qp-result-title">Your Estimated Cost Range:</div>
+ <div class="qp-result-price" id="qp-price-display">$250 - $450*</div>
+ <p class="qp-disclaimer">
+ *This is an estimate. Final pricing varies by location and scope.<br>
+ <a href="https://lever-ai.app/?utm_source=estimator&utm_medium=embed&utm_campaign=local_plumber" target="_blank" rel="noopener">Connect with a local plumber!</a>
+ </p>
+ </div>
+
+ <!-- POWERED BY LEVER AI -->
+ <div class="qp-powered">
+   Calculator by <a href="https://lever-ai.app/?utm_source=estimator&utm_medium=embed&utm_campaign=powered_by" target="_blank" rel="noopener">Lever AI</a> — The AI Receptionist for Plumbing & HVAC
+ </div>
+ </div>
+
+ <script>
+ (function() {
+ const projects = {
+ drain: { baseLow: 150, baseHigh: 300 },
+ heater: { baseLow: 450, baseHigh: 900 },
+ leak: { baseLow: 200, baseHigh: 400 },
+ installation: { baseLow: 350, baseHigh: 700 }
+ };
+
+ const sizeMultipliers = {
+ small: 1.0,
+ medium: 1.8,
+ large: 3.2
+ };
+
+ const slider = document.getElementById('qp-material-slider');
+ const budgetVal = document.getElementById('qp-budget-val');
+ const calcBtn = document.getElementById('qp-calc-trigger');
+ const priceDisplay = document.getElementById('qp-price-display');
+
+ slider.addEventListener('input', function() {
+ budgetVal.textContent = '$' + this.value;
+ });
+
+ function updateCalculation() {
+ const selectedProject = document.querySelector('input[name="qp_project"]:checked').value;
+ const selectedSize = document.querySelector('input[name="qp_size"]:checked').value;
+ const materialBudget = parseFloat(slider.value) || 0;
+
+ const pData = projects[selectedProject];
+ const mult = sizeMultipliers[selectedSize];
+
+ let minTotal = Math.round((pData.baseLow * mult) + materialBudget);
+ let maxTotal = Math.round((pData.baseHigh * mult) + (materialBudget * 1.25));
+
+ // Format numbers with commas
+ const formattedMin = minTotal.toLocaleString();
+ const formattedMax = maxTotal.toLocaleString();
+
+ priceDisplay.textContent = `$${formattedMin} - $${formattedMax}*`;
+ }
+
+ calcBtn.addEventListener('click', updateCalculation);
+
+ // Initial calculation setup
+ updateCalculation();
+ })();
+ </script>
+</div>
+<!-- ======== EMBED END ======== -->

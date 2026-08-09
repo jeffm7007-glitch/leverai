@@ -1,0 +1,163 @@
+<!-- 
+  ============================================
+  PLUMBING JOB PRICING CALCULATOR — EMBED CODE
+  ============================================
+  1. Copy everything below between the EMBED markers
+  2. Paste into any HTML page, WordPress post, or website
+  3. Backlinks to lever-ai.app are included (do not remove)
+  
+  Live demo: https://proplum-ai-audit.netlify.app/job-pricing-calculator.html
+-->
+
+<!-- ======== EMBED START ======== -->
+<div id="plm-pricing-calc" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;max-width:520px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.08);overflow:hidden;border:1px solid #e2e8f0;">
+  <div style="background:linear-gradient(135deg,#1e3a5f 0%,#2d5a87 100%);color:#fff;padding:24px;text-align:center;">
+    <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:4px;margin-top:0;">🔧 Plumbing Job Pricing Calculator</h2>
+    <p style="opacity:0.9;font-size:0.85rem;margin:0;">Select a job type, adjust any numbers, and get an instant estimate.</p>
+  </div>
+  <div style="padding:20px;">
+    <div id="plm-jobs" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+      <div class="plm-jc plm-sel" data-job="emergency" data-base="350" data-hours="2" data-name="Emergency Repair" style="border:2px solid #1e3a5f;background:#f0f7ff;box-shadow:0 0 0 3px rgba(30,58,95,0.1);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🚨</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Emergency Repair</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$350+</div>
+      </div>
+      <div class="plm-jc" data-job="drain" data-base="150" data-hours="1.5" data-name="Drain Cleaning" style="border:2px solid #e2e8f0;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🚿</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Drain Cleaning</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$150+</div>
+      </div>
+      <div class="plm-jc" data-job="waterheater" data-base="500" data-hours="3" data-name="Water Heater Repair" style="border:2px solid #e2e8f0;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🌡️</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Water Heater</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$500+</div>
+      </div>
+      <div class="plm-jc" data-job="pipe" data-base="400" data-hours="2.5" data-name="Pipe Repair" style="border:2px solid #e2e8f0;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🔩</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Pipe Repair</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$400+</div>
+      </div>
+      <div class="plm-jc" data-job="toilet" data-base="200" data-hours="1.5" data-name="Toilet Install/Repair" style="border:2px solid #e2e8f0;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🚽</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Toilet</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$200+</div>
+      </div>
+      <div class="plm-jc" data-job="faucet" data-base="120" data-hours="1" data-name="Faucet Install/Repair" style="border:2px solid #e2e8f0;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🚰</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Faucet</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$120+</div>
+      </div>
+      <div class="plm-jc" data-job="sewer" data-base="2500" data-hours="6" data-name="Sewer Line Repair" style="border:2px solid #e2e8f0;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🕳️</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Sewer Line</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$2,500+</div>
+      </div>
+      <div class="plm-jc" data-job="repipe" data-base="4500" data-hours="16" data-name="Whole House Repipe" style="border:2px solid #e2e8f0;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🏠</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Whole Repipe</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$4,500+</div>
+      </div>
+      <div class="plm-jc" data-job="inspection" data-base="175" data-hours="1" data-name="Camera Inspection" style="border:2px solid #e2e8f0;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;" onclick="plmPick(this)">
+        <div style="font-size:1.8rem;margin-bottom:6px;">🔍</div>
+        <div style="font-size:0.75rem;font-weight:600;color:#2d3748;line-height:1.2;">Camera Insp.</div>
+        <div style="font-size:0.65rem;color:#718096;margin-top:2px;">$175+</div>
+      </div>
+    </div>
+
+    <!-- Hourly Rate -->
+    <div style="margin-bottom:18px;">
+      <label style="display:block;font-weight:600;margin-bottom:6px;color:#2d3748;font-size:0.9rem;">Hourly Rate ($)</label>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <input type="number" id="plm-rate-in" value="125" min="1" step="5" style="width:90px;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;font-weight:600;color:#1e3a5f;text-align:center;" oninput="document.getElementById('plm-rate-sl').value=this.value">
+        <input type="range" id="plm-rate-sl" min="75" max="250" value="125" step="5" style="flex:1;height:6px;-webkit-appearance:none;appearance:none;background:#cbd5e0;border-radius:3px;outline:none;" oninput="document.getElementById('plm-rate-in').value=this.value">
+      </div>
+    </div>
+
+    <!-- Hours -->
+    <div style="margin-bottom:18px;">
+      <label style="display:block;font-weight:600;margin-bottom:6px;color:#2d3748;font-size:0.9rem;">Estimated Hours</label>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <input type="number" id="plm-hrs-in" value="2" min="0.5" step="0.5" style="width:90px;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;font-weight:600;color:#1e3a5f;text-align:center;" oninput="document.getElementById('plm-hrs-sl').value=this.value">
+        <input type="range" id="plm-hrs-sl" min="0.5" max="24" value="2" step="0.5" style="flex:1;height:6px;-webkit-appearance:none;appearance:none;background:#cbd5e0;border-radius:3px;outline:none;" oninput="document.getElementById('plm-hrs-in').value=this.value">
+      </div>
+    </div>
+
+    <!-- Materials -->
+    <div style="margin-bottom:18px;">
+      <label style="display:block;font-weight:600;margin-bottom:6px;color:#2d3748;font-size:0.9rem;">Materials Cost ($)</label>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <input type="number" id="plm-mat-in" value="50" min="0" step="25" style="width:90px;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;font-weight:600;color:#1e3a5f;text-align:center;" oninput="document.getElementById('plm-mat-sl').value=this.value">
+        <input type="range" id="plm-mat-sl" min="0" max="1000" value="50" step="25" style="flex:1;height:6px;-webkit-appearance:none;appearance:none;background:#cbd5e0;border-radius:3px;outline:none;" oninput="document.getElementById('plm-mat-in').value=this.value">
+      </div>
+    </div>
+
+    <!-- Trip Fee -->
+    <div style="margin-bottom:18px;">
+      <label style="display:block;font-weight:600;margin-bottom:6px;color:#2d3748;font-size:0.9rem;">Trip/Service Fee ($)</label>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <input type="number" id="plm-trip-in" value="75" min="0" step="25" style="width:90px;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;font-weight:600;color:#1e3a5f;text-align:center;" oninput="document.getElementById('plm-trip-sl').value=this.value">
+        <input type="range" id="plm-trip-sl" min="0" max="200" value="75" step="25" style="flex:1;height:6px;-webkit-appearance:none;appearance:none;background:#cbd5e0;border-radius:3px;outline:none;" oninput="document.getElementById('plm-trip-in').value=this.value">
+      </div>
+    </div>
+
+    <!-- Tax Rate -->
+    <div style="margin-bottom:18px;">
+      <label style="display:block;font-weight:600;margin-bottom:6px;color:#2d3748;font-size:0.9rem;">Tax Rate (%)</label>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <input type="number" id="plm-tax-in" value="7" min="0" max="20" step="0.5" style="width:90px;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;font-weight:600;color:#1e3a5f;text-align:center;" oninput="document.getElementById('plm-tax-sl').value=this.value">
+        <input type="range" id="plm-tax-sl" min="0" max="20" value="7" step="0.5" style="flex:1;height:6px;-webkit-appearance:none;appearance:none;background:#cbd5e0;border-radius:3px;outline:none;" oninput="document.getElementById('plm-tax-in').value=this.value">
+      </div>
+    </div>
+
+    <button onclick="plmCalc()" style="width:100%;padding:14px;background:linear-gradient(135deg,#1e3a5f 0%,#2d5a87 100%);color:#fff;font-weight:700;font-size:1rem;border:none;border-radius:10px;cursor:pointer;margin-bottom:16px;">📊 Calculate Estimate</button>
+
+    <div id="plm-res" style="background:linear-gradient(135deg,#1e3a5f 0%,#2d5a87 100%);color:#fff;border-radius:12px;padding:20px;text-align:center;display:none;">
+      <div style="font-size:0.8rem;opacity:0.85;text-transform:uppercase;letter-spacing:1px;">Estimated Total</div>
+      <div id="plm-total" style="font-size:2.4rem;font-weight:700;margin:6px 0;">$0</div>
+      <div id="plm-job" style="font-size:0.85rem;opacity:0.85;margin-top:4px;">Emergency Repair</div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.2);text-align:left;">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;"><span style="opacity:0.85;">Labor</span><span id="plm-labor" style="font-weight:600;">$0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;"><span style="opacity:0.85;">Materials</span><span id="plm-mat-d" style="font-weight:600;">$0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;"><span style="opacity:0.85;">Trip/Service Fee</span><span id="plm-trip-d" style="font-weight:600;">$0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;"><span style="opacity:0.85;">Subtotal</span><span id="plm-sub" style="font-weight:600;">$0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;"><span style="opacity:0.85;">Tax</span><span id="plm-tax-d" style="font-weight:600;">$0</span></div>
+      </div>
+      <a href="https://lever-ai.app/?utm_source=pricingcalc&utm_medium=embed&utm_campaign=job_estimate" style="display:inline-block;margin-top:14px;background:#fff;color:#1e3a5f;font-weight:700;padding:10px 24px;border-radius:8px;text-decoration:none;font-size:0.9rem;" target="_blank" rel="noopener">⚡ Get More Booked Calls — Free Trial</a>
+    </div>
+  </div>
+  <div style="text-align:center;padding:14px;background:#f7fafc;border-top:1px solid #e2e8f0;font-size:0.78rem;color:#718096;">
+    Calculator by <a href="https://lever-ai.app/?utm_source=pricingcalc&utm_medium=embed&utm_campaign=powered_by" style="color:#2d5a87;font-weight:600;text-decoration:none;" target="_blank" rel="noopener">Lever AI</a> — The AI Receptionist for Plumbing & HVAC
+  </div>
+</div>
+<script>
+var plmSel={name:'Emergency Repair',base:350,hours:2};
+function plmPick(el){
+  document.querySelectorAll('.plm-jc').forEach(function(c){
+    c.style.border='2px solid #e2e8f0';c.style.background='#fff';c.style.boxShadow='none';
+  });
+  el.style.border='2px solid #1e3a5f';el.style.background='#f0f7ff';el.style.boxShadow='0 0 0 3px rgba(30,58,95,0.1)';
+  plmSel={name:el.dataset.name,base:parseFloat(el.dataset.base),hours:parseFloat(el.dataset.hours)};
+  document.getElementById('plm-hrs-in').value=plmSel.hours;
+  document.getElementById('plm-hrs-sl').value=plmSel.hours;
+}
+function plmCalc(){
+  var rate=parseFloat(document.getElementById('plm-rate-in').value)||0;
+  var hours=parseFloat(document.getElementById('plm-hrs-in').value)||0;
+  var mats=parseFloat(document.getElementById('plm-mat-in').value)||0;
+  var trip=parseFloat(document.getElementById('plm-trip-in').value)||0;
+  var taxRate=parseFloat(document.getElementById('plm-tax-in').value)||0;
+  var labor=rate*hours;
+  var sub=labor+mats+trip;
+  var tax=sub*(taxRate/100);
+  var total=sub+tax;
+  document.getElementById('plm-total').textContent='$'+Math.round(total).toLocaleString();
+  document.getElementById('plm-job').textContent=plmSel.name;
+  document.getElementById('plm-labor').textContent='$'+Math.round(labor)+' ('+hours+' hrs @ $'+rate+'/hr)';
+  document.getElementById('plm-mat-d').textContent='$'+mats;
+  document.getElementById('plm-trip-d').textContent='$'+trip;
+  document.getElementById('plm-sub').textContent='$'+Math.round(sub).toLocaleString();
+  document.getElementById('plm-tax-d').textContent='$'+Math.round(tax)+' ('+taxRate+'%)';
+  document.getElementById('plm-res').style.display='block';
+}
+</script>
+<!-- ======== EMBED END ======== -->
