@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Plumbing & HVAC — 24/7 Emergency | Denver, CO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0B0F19;
+            color: #F3F4F6;
+            line-height: 1.6;
+        }
+        
+        /* VARIANT: More Jade/Green accent focus */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 48px;
+            border-bottom: 1px solid rgba(243,244,246,0.08);
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: #10B981; } /* JADE variant */
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+            color: rgba(243,244,246,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #10B981; }
+        .nav-cta {
+            background: linear-gradient(135deg, #10B981, #06B6D4); /* JADE + LAGOON */
+            color: #0B0F19;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        
+        .hero {
+            padding: 100px 48px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: #10B981;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero-badge .dot {
+            width: 8px; height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #10B981, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 18px;
+            color: rgba(243,244,246,0.7);
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #10B981, #06B6D4);
+            color: #0B0F19;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-secondary {
+            background: rgba(243,244,246,0.08);
+            color: #F3F4F6;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            border: 1px solid rgba(243,244,246,0.15);
+        }
+        
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 48px;
+            border-top: 1px solid rgba(243,244,246,0.08);
+            border-bottom: 1px solid rgba(243,244,246,0.08);
+        }
+        .stat-item h3 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #10B981;
+            line-height: 1;
+        }
+        .stat-item p {
+            font-size: 13px;
+            color: rgba(243,244,246,0.5);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        
+        .services {
+            padding: 80px 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #10B981;
+            margin-bottom: 12px;
+        }
+        .services h2 {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 48px;
+            letter-spacing: -1px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .service-card {
+            background: rgba(243,244,246,0.04);
+            border: 1px solid rgba(243,244,246,0.08);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+        .service-card:hover {
+            border-color: rgba(16,185,129,0.3);
+            transform: translateY(-4px);
+        }
+        .service-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .service-card p {
+            font-size: 14px;
+            color: rgba(243,244,246,0.6);
+            line-height: 1.6;
+        }
+        
+        .trust {
+            padding: 80px 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .trust h2 {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+        .trust > p {
+            color: rgba(243,244,246,0.6);
+            margin-bottom: 48px;
+            font-size: 16px;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            text-align: left;
+        }
+        .review-card {
+            background: rgba(243,244,246,0.04);
+            border: 1px solid rgba(243,244,246,0.08);
+            border-radius: 16px;
+            padding: 28px;
+        }
+        .stars { color: #FBBF24; font-size: 16px; margin-bottom: 12px; }
+        .review-text {
+            font-size: 14px;
+            color: rgba(243,244,246,0.8);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .reviewer {
+            font-size: 13px;
+            font-weight: 700;
+            color: #10B981;
+        }
+        
+        .cta {
+            padding: 100px 48px;
+            text-align: center;
+            background: linear-gradient(180deg, transparent 0%, rgba(16,185,129,0.05) 100%);
+        }
+        .cta h2 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+        .cta p {
+            font-size: 18px;
+            color: rgba(243,244,246,0.6);
+            margin-bottom: 32px;
+        }
+        .cta .btn-primary {
+            font-size: 18px;
+            padding: 18px 40px;
+        }
+        .cta-phone {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(243,244,246,0.5);
+        }
+        .cta-phone strong {
+            color: #10B981;
+            font-size: 20px;
+        }
+        
+        footer {
+            padding: 40px 48px;
+            border-top: 1px solid rgba(243,244,246,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-size: 13px;
+            color: rgba(243,244,246,0.4);
+        }
+        
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .services-grid, .reviews-grid { grid-template-columns: 1fr; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Atlas <span>Plumbing</span></div>
+    <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#about">About</a>
+    </div>
+    <a href="tel:3035550199" class="nav-cta">📞 Call Now</a>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge"><span class="dot"></span> On Call 24/7 — Including Holidays</div>
+        <h1>Denver's Fastest.<br>Denver's <span class="highlight">Smartest.</span></h1>
+        <p>We use AI to answer every call, recover every missed lead, and never let a customer hit voicemail. 18-minute average response.</p>
+        <div class="hero-buttons">
+            <a href="tel:3035550199" class="btn-primary">📞 Call (303) 555-0199</a>
+            <a href="#services" class="btn-secondary">See Services</a>
+        </div>
+    </div>
+    <div style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.15)); border-radius: 24px; height: 400px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(16,185,129,0.2);">
+        <div style="text-align: center;">
+            <div style="font-size: 80px; margin-bottom: 16px;">❄️</div>
+            <div style="font-size: 14px; color: rgba(243,244,246,0.5);">[Hero Image Placeholder]</div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-bar">
+    <div class="stat-item">
+        <h3>18 min</h3>
+        <p>Average Response Time</p>
+    </div>
+    <div class="stat-item">
+        <h3>4.8★</h3>
+        <p>Google Rating (189 Reviews)</p>
+    </div>
+    <div class="stat-item">
+        <h3>100%</h3>
+        <p>Missed Call Recovery</p>
+    </div>
+    <div class="stat-item">
+        <h3>15+</h3>
+        <p>Years in Denver Metro</p>
+    </div>
+</section>
+
+<section class="services" id="services">
+    <div class="section-label">What We Handle</div>
+    <h2>Plumbing + HVAC.<br><span style="color:#10B981">One Team.</span></h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(16,185,129,0.15);">❄️</div>
+            <h3>Furnace Repair</h3>
+            <p>Denver winters don't wait. We repair all brands, same-day service, and keep your family warm.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(6,182,212,0.15);">🔥</div>
+            <h3>Water Heaters</h3>
+            <p>Tankless upgrades, gas line installs, emergency replacements. Hot water restored fast.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(99,102,241,0.15);">🚿</div>
+            <h3>Leak Detection</h3>
+            <p>Thermal imaging and acoustic sensors. Find the leak without tearing up your floors.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(16,185,129,0.15);">🚽</div>
+            <h3>Drain Cleaning</h3>
+            <p>Hydro-jetting that actually clears the line. Camera inspection included so you see the problem.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(6,182,212,0.15);">🏔️</div>
+            <h3>High-Altitude HVAC</h3>
+            <p>Denver's altitude requires specialized calibration. We know the difference. Others don't.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(99,102,241,0.15);">📱</div>
+            <h3>AI Call Answering</h3>
+            <p>Never miss a lead again. Our AI answers 24/7, books appointments, and sends you the details.</p>
+        </div>
+    </div>
+</section>
+
+<section class="trust" id="reviews">
+    <div class="section-label">What Denver Says</div>
+    <h2>189 Reviews.<br><span style="color:#10B981">4.8 Stars.</span></h2>
+    <p style="color: rgba(243,244,246,0.6); margin-bottom: 48px;">Real Denver homeowners. Real emergencies.</p>
+    <div class="reviews-grid">
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"Furnace died at 11 PM on the coldest night of the year. Atlas answered on the first ring, had a tech at my door in 22 minutes. Fixed it in an hour. These guys are unreal."</div>
+            <div class="reviewer">— David R., Cherry Creek</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"Called 4 other plumbers for a burst pipe. Two voicemail, one said 'next week,' one quoted $800. Atlas was here in 20 minutes, fixed it for $280. Never calling anyone else."</div>
+            <div class="reviewer">— Lisa M., Capitol Hill</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"The AI answering system is wild. I called at 2 AM thinking I'd get voicemail. A real person (well, AI) took my info, sent me a text confirmation, and a human called back in 5 minutes."</div>
+            <div class="reviewer">— James T., LoDo</div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Don't Let Denver's Cold Win.</h2>
+    <p>Save our number. Your pipes (and furnace) will thank you.</p>
+    <a href="tel:3035550199" class="btn-primary">📞 (303) 555-0199</a>
+    <div class="cta-phone">Emergency line open 24/7/365 · Licensed · Insured · Bonded</div>
+</section>
+
+<footer>
+    <div>© 2026 Atlas Plumbing & HVAC · Denver, CO</div>
+    <div>Licensed #PL-2019-8847 · Insured · Bonded</div>
+</footer>
+
+</body>
+</html>

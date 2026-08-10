@@ -51,9 +51,10 @@
         .logo-text { display: flex; flex-direction: column; }
         .logo-text span:first-child { font-weight: 800; font-size: 1.1rem; color: white; }
         .logo-text span:last-child { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.1em; }
-        .nav { display: flex; gap: 2rem; }
+        .nav { display: flex; gap: 2rem; align-items: center; }
         .nav a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
         .nav a:hover { color: var(--cyan); }
+        .nav a.nav-cta-link { background: linear-gradient(135deg, var(--emerald), var(--cyan)); color: white; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; }
         .header-cta {
             background: linear-gradient(135deg, var(--emerald), var(--cyan), var(--indigo));
             color: white; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.75rem;
@@ -168,10 +169,10 @@
                 </div>
             </a>
             <nav class="nav">
-                <a href="#solution">Solution</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#audit">Free Audit</a>
-                <a href="#about">About</a>
+                <a href="/monitoring/">Pricing</a>
+                <a href="https://proplum-franchise-case-study.netlify.app">Case Study</a>
+                <a href="https://proplum-ai-audit.netlify.app">Free Audit</a>
+                <a href="mailto:jeff@proplumnetwork.com" class="nav-cta-link">Contact</a>
             </nav>
             <a href="https://proplum-ai-audit.netlify.app" class="header-cta">FREE AI AUDIT</a>
         </div>
@@ -280,6 +281,67 @@
                     <p>Monthly visibility reports, competitor tracking, and ongoing optimization. Your board sees AI search metrics alongside traditional KPIs.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="pricing" style="background: linear-gradient(180deg, var(--navy) 0%, rgba(99,102,241,0.03) 50%, var(--navy) 100%);">
+        <div class="section-inner">
+            <div class="section-label">Pricing</div>
+            <h2 class="section-title">Simple, Transparent <span>Pricing</span></h2>
+            <p class="section-subtitle">No setup fees. No annual contracts. Cancel anytime. Start with monitoring, upgrade when you're ready to fix what we find.</p>
+            
+            <div class="capabilities-grid" style="margin-top: 3rem;">
+                <div class="cap-card" style="position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--emerald), var(--cyan), var(--indigo));"></div>
+                    <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--cyan); margin-bottom: 1rem;">AI Search Visibility Monitor</div>
+                    <div style="font-size: 3.5rem; font-weight: 900; margin-bottom: 0.5rem;">$99<span style="font-size: 1.2rem; color: var(--text-dim); font-weight: 500;">/mo</span></div>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">Know where you stand. Watch competitors. Catch problems before they cost you.</p>
+                    <ul>
+                        <li>Monthly AI visibility score + trend</li>
+                        <li>3 competitor watch list per market</li>
+                        <li>Schema & llms.txt health alerts</li>
+                        <li>One-page PDF monthly report</li>
+                        <li>Priority email support (24hr)</li>
+                        <li>30-day money-back guarantee</li>
+                    </ul>
+                    <a href="/monitoring/" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">Start Monitoring</a>
+                </div>
+                
+                <div class="cap-card" style="position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--indigo), var(--purple), var(--gold));"></div>
+                    <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple); margin-bottom: 1rem;">AI Agent + Monitoring</div>
+                    <div style="font-size: 3.5rem; font-weight: 900; margin-bottom: 0.5rem;">$499<span style="font-size: 1.2rem; color: var(--text-dim); font-weight: 500;">/mo</span></div>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">Everything in Monitor, plus an AI receptionist that answers calls and books appointments.</p>
+                    <ul>
+                        <li>Everything in Monitor</li>
+                        <li>AI phone answering (24/7)</li>
+                        <li>Missed call instant text-back</li>
+                        <li>Appointment booking to your CRM</li>
+                        <li>Lead qualification filters</li>
+                        <li>Local phone number included</li>
+                    </ul>
+                    <a href="mailto:jeff@proplumnetwork.com?subject=AI%20Agent%20Upgrade" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">Talk to Sales</a>
+                </div>
+                
+                <div class="cap-card" style="position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--red), var(--purple));"></div>
+                    <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 1rem;">Full Infrastructure</div>
+                    <div style="font-size: 3.5rem; font-weight: 900; margin-bottom: 0.5rem;">$999<span style="font-size: 1.2rem; color: var(--text-dim); font-weight: 500;">/mo</span></div>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">We deploy fixes across your entire network. Schema, content, llms.txt — done for you.</p>
+                    <ul>
+                        <li>Everything in AI Agent</li>
+                        <li>Network-wide schema deployment</li>
+                        <li>llms.txt optimization</li>
+                        <li>Ghost page remediation</li>
+                        <li>Weekly intelligence reports</li>
+                        <li>Dedicated account manager</li>
+                        <li>Annual contract. Custom terms.</li>
+                    </ul>
+                    <a href="mailto:jeff@proplumnetwork.com?subject=Full%20Infrastructure%20Package" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">Talk to Sales</a>
+                </div>
+            </div>
+            
+            <p style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-size: 0.9rem;">Monitor subscribers get 20% off their first upgrade. Every plan includes a free AI visibility audit to start.</p>
         </div>
     </section>
 

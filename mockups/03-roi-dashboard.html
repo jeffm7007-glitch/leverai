@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Results Dashboard — Mike's Plumbing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0B0F19;
+            color: #F3F4F6;
+            line-height: 1.6;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 40px;
+            border-bottom: 1px solid rgba(243,244,246,0.08);
+            background: rgba(11,15,25,0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo { font-size: 20px; font-weight: 900; }
+        .logo span { color: #06B6D4; }
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+            color: rgba(243,244,246,0.6);
+        }
+        .nav-user .avatar {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, #06B6D4, #6366F1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #0B0F19;
+            font-size: 14px;
+        }
+        
+        /* DASHBOARD HEADER */
+        .dash-header {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .dash-header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        .dash-header p {
+            color: rgba(243,244,246,0.5);
+            font-size: 14px;
+        }
+        .date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.2);
+            color: #06B6D4;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+        
+        /* KPI CARDS */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 32px;
+        }
+        .kpi-card {
+            background: rgba(243,244,246,0.03);
+            border: 1px solid rgba(243,244,246,0.06);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+        .kpi-card.blue::before { background: linear-gradient(90deg, #06B6D4, #6366F1); }
+        .kpi-card.green::before { background: #10B981; }
+        .kpi-card.amber::before { background: #F59E0B; }
+        .kpi-card.red::before { background: #EF4444; }
+        
+        .kpi-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(243,244,246,0.4);
+            margin-bottom: 8px;
+        }
+        .kpi-value {
+            font-size: 36px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .kpi-change {
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .kpi-change.up { color: #10B981; }
+        .kpi-change.down { color: #EF4444; }
+        
+        /* CHART SECTION */
+        .chart-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 32px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        .chart-card {
+            background: rgba(243,244,246,0.03);
+            border: 1px solid rgba(243,244,246,0.06);
+            border-radius: 16px;
+            padding: 28px;
+        }
+        .chart-card h3 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .chart-placeholder {
+            height: 220px;
+            background: linear-gradient(180deg, rgba(6,182,212,0.1), transparent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(6,182,212,0.2);
+            color: rgba(243,244,246,0.3);
+            font-size: 13px;
+        }
+        
+        /* AI VISIBILITY SCORE */
+        .score-ring {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(#06B6D4 0% 78%, rgba(243,244,246,0.08) 78% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+        .score-ring::before {
+            content: '';
+            width: 110px; height: 110px;
+            background: #0B0F19;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .score-value {
+            position: relative;
+            font-size: 36px;
+            font-weight: 900;
+            color: #06B6D4;
+        }
+        .score-label {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(243,244,246,0.6);
+            margin-bottom: 12px;
+        }
+        .score-detail {
+            font-size: 13px;
+            color: rgba(243,244,246,0.4);
+            text-align: center;
+        }
+        
+        /* CALL LOG */
+        .table-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 40px;
+        }
+        .table-card {
+            background: rgba(243,244,246,0.03);
+            border: 1px solid rgba(243,244,246,0.06);
+            border-radius: 16px;
+            padding: 28px;
+        }
+        .table-card h3 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            color: rgba(243,244,246,0.4);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 11px;
+            border-bottom: 1px solid rgba(243,244,246,0.08);
+        }
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(243,244,246,0.04);
+            color: rgba(243,244,246,0.8);
+        }
+        tr:last-child td { border-bottom: none; }
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .status-booked { background: rgba(16,185,129,0.15); color: #10B981; }
+        .status-recovered { background: rgba(6,182,212,0.15); color: #06B6D4; }
+        .status-missed { background: rgba(239,68,68,0.15); color: #EF4444; }
+        
+        .revenue-bar {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 40px;
+        }
+        .revenue-card {
+            background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(99,102,241,0.1));
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 16px;
+            padding: 28px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .revenue-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(243,244,246,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .revenue-card .big-number {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #06B6D4, #6366F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .revenue-card p {
+            font-size: 13px;
+            color: rgba(243,244,246,0.5);
+            max-width: 400px;
+            text-align: right;
+        }
+        
+        @media (max-width: 900px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .chart-section { grid-template-columns: 1fr; }
+            .revenue-card { flex-direction: column; text-align: center; gap: 16px; }
+            .revenue-card p { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Mike's <span>Plumbing</span></div>
+    <div class="nav-user">
+        <span>Dashboard</span>
+        <div class="avatar">MP</div>
+    </div>
+</nav>
+
+<section class="dash-header">
+    <h1>Performance Dashboard</h1>
+    <p>Real-time AI receptionist and call recovery metrics</p>
+    <div class="date-badge">📅 Last 30 Days · Aug 1 – Aug 10, 2026</div>
+</section>
+
+<section class="kpi-grid">
+    <div class="kpi-card blue">
+        <div class="kpi-label">Total Calls Handled</div>
+        <div class="kpi-value" style="color:#06B6D4;">1,247</div>
+        <div class="kpi-change up">↑ 34% vs last month</div>
+    </div>
+    <div class="kpi-card green">
+        <div class="kpi-label">Missed Calls Recovered</div>
+        <div class="kpi-value" style="color:#10B981;">89</div>
+        <div class="kpi-change up">↑ 156% vs last month</div>
+    </div>
+    <div class="kpi-card amber">
+        <div class="kpi-label">Avg Response Time</div>
+        <div class="kpi-value" style="color:#F59E0B;">2.3s</div>
+        <div class="kpi-change up">↑ 12% faster</div>
+    </div>
+    <div class="kpi-card red">
+        <div class="kpi-label">Revenue at Risk</div>
+        <div class="kpi-value" style="color:#EF4444;">$0</div>
+        <div class="kpi-change up">↓ 100% (all recovered)</div>
+    </div>
+</section>
+
+<section class="revenue-bar">
+    <div class="revenue-card">
+        <div>
+            <h3>Revenue Recovered This Month</h3>
+            <div class="big-number">$14,280</div>
+        </div>
+        <p>Money you would have lost to voicemail and competitors. Your AI receptionist recovered 89 missed calls and converted 34 into booked appointments.</p>
+    </div>
+</section>
+
+<section class="chart-section">
+    <div class="chart-card">
+        <h3>Call Volume & Recovery Trend</h3>
+        <div class="chart-placeholder">
+            📊 [Line Chart: Calls (blue) vs Missed Calls Recovered (green) over 30 days]
+        </div>
+    </div>
+    <div class="chart-card">
+        <h3>AI Visibility Score</h3>
+        <div class="score-ring">
+            <div class="score-value">78</div>
+        </div>
+        <div class="score-label">Good — You're Visible</div>
+        <div class="score-detail">↑ 12 points from last month<br>Tampa, FL · 3 cities tracked</div>
+    </div>
+</section>
+
+<section class="table-section">
+    <div class="table-card">
+        <h3>Recent Calls</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Phone</th>
+                    <th>Type</th>
+                    <th>Result</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Today, 2:34 PM</td>
+                    <td>(813) 555-****</td>
+                    <td>Emergency — Burst Pipe</td>
+                    <td><span class="status status-booked">📅 Booked</span></td>
+                    <td style="color:#10B981; font-weight:700;">$450</td>
+                </tr>
+                <tr>
+                    <td>Today, 11:18 AM</td>
+                    <td>(813) 555-****</td>
+                    <td>Water Heater Install</td>
+                    <td><span class="status status-recovered">↩️ Recovered</span></td>
+                    <td style="color:#06B6D4; font-weight:700;">$2,100</td>
+                </tr>
+                <tr>
+                    <td>Today, 9:05 AM</td>
+                    <td>(813) 555-****</td>
+                    <td>Clogged Drain</td>
+                    <td><span class="status status-booked">📅 Booked</span></td>
+                    <td style="color:#10B981; font-weight:700;">$180</td>
+                </tr>
+                <tr>
+                    <td>Yesterday, 7:42 PM</td>
+                    <td>(813) 555-****</td>
+                    <td>Leak Detection</td>
+                    <td><span class="status status-missed">📞 Missed</span></td>
+                    <td style="color:#EF4444; font-weight:700;">$0</td>
+                </tr>
+                <tr>
+                    <td>Yesterday, 3:15 PM</td>
+                    <td>(813) 555-****</td>
+                    <td>Repipe Quote</td>
+                    <td><span class="status status-booked">📅 Booked</span></td>
+                    <td style="color:#10B981; font-weight:700;">$8,500</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+</body>
+</html>

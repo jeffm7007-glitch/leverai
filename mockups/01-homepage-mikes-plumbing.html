@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mike's Plumbing — 24/7 Emergency Service | Tampa, FL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0B0F19;
+            color: #F3F4F6;
+            line-height: 1.6;
+        }
+        
+        /* NAV */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 48px;
+            border-bottom: 1px solid rgba(243,244,246,0.08);
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: #06B6D4; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+            color: rgba(243,244,246,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #06B6D4; }
+        .nav-cta {
+            background: linear-gradient(135deg, #06B6D4, #6366F1);
+            color: #0B0F19;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        
+        /* HERO */
+        .hero {
+            padding: 100px 48px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.3);
+            color: #06B6D4;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero-badge .dot {
+            width: 8px; height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #06B6D4, #6366F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 18px;
+            color: rgba(243,244,246,0.7);
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #06B6D4, #6366F1);
+            color: #0B0F19;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-secondary {
+            background: rgba(243,244,246,0.08);
+            color: #F3F4F6;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            border: 1px solid rgba(243,244,246,0.15);
+        }
+        
+        /* STATS BAR */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 48px;
+            border-top: 1px solid rgba(243,244,246,0.08);
+            border-bottom: 1px solid rgba(243,244,246,0.08);
+        }
+        .stat-item h3 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #06B6D4;
+            line-height: 1;
+        }
+        .stat-item p {
+            font-size: 13px;
+            color: rgba(243,244,246,0.5);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        
+        /* SERVICES */
+        .services {
+            padding: 80px 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #06B6D4;
+            margin-bottom: 12px;
+        }
+        .services h2 {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 48px;
+            letter-spacing: -1px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .service-card {
+            background: rgba(243,244,246,0.04);
+            border: 1px solid rgba(243,244,246,0.08);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+        .service-card:hover {
+            border-color: rgba(6,182,212,0.3);
+            transform: translateY(-4px);
+        }
+        .service-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .service-card p {
+            font-size: 14px;
+            color: rgba(243,244,246,0.6);
+            line-height: 1.6;
+        }
+        
+        /* TRUST */
+        .trust {
+            padding: 80px 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .trust h2 {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+        .trust > p {
+            color: rgba(243,244,246,0.6);
+            margin-bottom: 48px;
+            font-size: 16px;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            text-align: left;
+        }
+        .review-card {
+            background: rgba(243,244,246,0.04);
+            border: 1px solid rgba(243,244,246,0.08);
+            border-radius: 16px;
+            padding: 28px;
+        }
+        .stars { color: #FBBF24; font-size: 16px; margin-bottom: 12px; }
+        .review-text {
+            font-size: 14px;
+            color: rgba(243,244,246,0.8);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .reviewer {
+            font-size: 13px;
+            font-weight: 700;
+            color: #06B6D4;
+        }
+        
+        /* CTA */
+        .cta {
+            padding: 100px 48px;
+            text-align: center;
+            background: linear-gradient(180deg, transparent 0%, rgba(6,182,212,0.05) 100%);
+        }
+        .cta h2 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+        .cta p {
+            font-size: 18px;
+            color: rgba(243,244,246,0.6);
+            margin-bottom: 32px;
+        }
+        .cta .btn-primary {
+            font-size: 18px;
+            padding: 18px 40px;
+        }
+        .cta-phone {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(243,244,246,0.5);
+        }
+        .cta-phone strong {
+            color: #06B6D4;
+            font-size: 20px;
+        }
+        
+        /* FOOTER */
+        footer {
+            padding: 40px 48px;
+            border-top: 1px solid rgba(243,244,246,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-size: 13px;
+            color: rgba(243,244,246,0.4);
+        }
+        
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .services-grid, .reviews-grid { grid-template-columns: 1fr; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Mike's <span>Plumbing</span></div>
+    <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#about">About</a>
+    </div>
+    <a href="tel:8135550147" class="nav-cta">📞 Call Now</a>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge"><span class="dot"></span> Available Now — 24/7 Emergency</div>
+        <h1>Your Pipes Broke.<br>We're <span class="highlight">Already Here.</span></h1>
+        <p>Tampa's highest-rated emergency plumbing team. Average response time: 23 minutes. No overtime charges. Ever.</p>
+        <div class="hero-buttons">
+            <a href="tel:8135550147" class="btn-primary">📞 Call (813) 555-0147</a>
+            <a href="#services" class="btn-secondary">See Our Services</a>
+        </div>
+    </div>
+    <div style="background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(99,102,241,0.15)); border-radius: 24px; height: 400px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(6,182,212,0.2);">
+        <div style="text-align: center;">
+            <div style="font-size: 80px; margin-bottom: 16px;">🚿</div>
+            <div style="font-size: 14px; color: rgba(243,244,246,0.5);">[Hero Image Placeholder]</div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-bar">
+    <div class="stat-item">
+        <h3>23 min</h3>
+        <p>Average Response Time</p>
+    </div>
+    <div class="stat-item">
+        <h3>4.9★</h3>
+        <p>Google Rating (312 Reviews)</p>
+    </div>
+    <div class="stat-item">
+        <h3>24/7</h3>
+        <p>Emergency Service</p>
+    </div>
+    <div class="stat-item">
+        <h3>$0</h3>
+        <p>Overtime Charges</p>
+    </div>
+</section>
+
+<section class="services" id="services">
+    <div class="section-label">What We Fix</div>
+    <h2>Every Emergency. <span style="color:#06B6D4">One Call.</span></h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(6,182,212,0.15);">💧</div>
+            <h3>Burst Pipes</h3>
+            <p>Shut off water, assess damage, repair or replace. Most jobs completed in under 2 hours.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(16,185,129,0.15);">🚽</div>
+            <h3>Clogged Drains</h3>
+            <p>Hydro-jetting and camera inspection. We show you the blockage before we fix it.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(99,102,241,0.15);">🔥</div>
+            <h3>Water Heaters</h3>
+            <p>Tankless, gas, electric. Repair or replace. Same-day installation available.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(6,182,212,0.15);">🏠</div>
+            <h3>Repiping</h3>
+            <p>Whole-house repipe with PEX or copper. Free estimate. Financing available.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(16,185,129,0.15);">🔧</div>
+            <h3>Leak Detection</h3>
+            <p>Electronic and thermal imaging. Find the leak without tearing up your walls.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon" style="background: rgba(99,102,241,0.15);">⚡</div>
+            <h3>Emergency Calls</h3>
+            <p>2 AM? Holiday? Weekend? We answer. Real humans. Real fast.</p>
+        </div>
+    </div>
+</section>
+
+<section class="trust" id="reviews">
+    <div class="section-label">What Tampa Says</div>
+    <h2>312 Five-Star Reviews.<br><span style="color:#06B6D4">Here's 3.</span></h2>
+    <p style="color: rgba(243,244,246,0.6); margin-bottom: 48px;">Real customers. Real emergencies. Real results.</p>
+    <div class="reviews-grid">
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"Pipe burst at 2 AM on a Sunday. Mike answered on the second ring. Had a crew at my door in 19 minutes. Fixed it before my basement flooded. These guys are lifesavers."</div>
+            <div class="reviewer">— Sarah K., Hyde Park</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"Called 3 other plumbers first. Two didn't answer. One said 'tomorrow.' Mike's Plumbing was here in 30 minutes. Fair price, clean work, no BS. My go-to from now on."</div>
+            <div class="reviewer">— Marcus T., Ybor City</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="review-text">"Water heater died right before Thanksgiving. They had a new tankless installed same day. Family dinner was saved. Worth every penny."</div>
+            <div class="reviewer">— Jennifer L., Seminole Heights</div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Don't Wait for the Flood.</h2>
+    <p>Save our number now. The next emergency won't wait.</p>
+    <a href="tel:8135550147" class="btn-primary">📞 (813) 555-0147</a>
+    <div class="cta-phone">Emergency line open 24/7/365 · Licensed · Insured · Bonded</div>
+</section>
+
+<footer>
+    <div>© 2026 Mike's Plumbing · Tampa, FL</div>
+    <div>Licensed #CFC1429836 · Insured · Bonded</div>
+</footer>
+
+</body>
+</html>
