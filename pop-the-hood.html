@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lever AI — Pop The Hood</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #08080c;
+      --surface: #0f0f16;
+      --surface-light: #16161f;
+      --border: #1e1e2a;
+      --border-glow: #2a2a3a;
+      --text: #e8e8f0;
+      --text-muted: #6b6b80;
+      --accent: #ff2d2d;
+      --accent-dim: #cc2424;
+      --accent-glow: rgba(255,45,45,0.12);
+      --success: #00d084;
+      --warning: #ff9f1c;
+      --info: #3b82f6;
+      --purple: #a855f7;
+      --cyan: #00d4ff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background */
+    .ambient {
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(255,45,45,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(0,212,255,0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .grid-lines {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header */
+    .header {
+      position: relative; z-index: 10;
+      padding: 20px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,8,12,0.8);
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 14px;
+    }
+
+    .logo-mark {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--accent), #ff5555);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 20px;
+      box-shadow: 0 0 30px rgba(255,45,45,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+      animation: sheen 3s ease-in-out infinite;
+    }
+
+    @keyframes sheen {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .logo-text h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+    .logo-text p { font-size: 11px; color: var(--text-muted); margin-top: 2px; letter-spacing: 0.5px; }
+
+    .header-tag {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 16px;
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px; font-weight: 600;
+    }
+
+    .pulse-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* Main Stage */
+    .stage {
+      position: relative; z-index: 5;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    .stage-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .stage-header h2 {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, #888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stage-header p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* The Car / Engine metaphor */
+    .engine-bay {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      min-height: 520px;
+    }
+
+    @media (max-width: 900px) {
+      .engine-bay { grid-template-columns: 1fr; }
+    }
+
+    /* Left: Customer Phone */
+    .customer-side {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .phone-mockup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-mockup::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 120px; height: 24px;
+      background: var(--surface-light);
+      border-radius: 0 0 16px 16px;
+    }
+
+    .phone-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .phone-avatar {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), #ff5555);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+    }
+
+    .phone-contact { flex: 1; }
+    .phone-contact-name { font-size: 14px; font-weight: 600; }
+    .phone-contact-status { font-size: 11px; color: var(--success); }
+
+    .message-bubble {
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 16px 16px 16px 4px;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      animation: msgIn 0.3s ease;
+    }
+
+    .message-bubble.ai {
+      background: linear-gradient(135deg, rgba(0,208,132,0.08), rgba(0,208,132,0.02));
+      border-color: rgba(0,208,132,0.2);
+      border-radius: 16px 16px 4px 16px;
+      margin-left: auto;
+      max-width: 80%;
+    }
+
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .typing-indicator {
+      display: none;
+      align-items: center; gap: 4px;
+      padding: 12px 16px;
+    }
+
+    .typing-indicator.show { display: flex; }
+
+    .typing-dot {
+      width: 6px; height: 6px;
+      background: var(--text-muted);
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-6px); }
+    }
+
+    /* Input */
+    .message-input-area {
+      margin-top: 8px;
+    }
+
+    .message-input-area label {
+      font-size: 11px; font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .preset-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      background: var(--accent-glow);
+    }
+
+    .chip-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+
+    .chip-dot.red { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    .chip-dot.blue { background: var(--info); }
+    .chip-dot.orange { background: var(--warning); }
+
+    textarea.message-input {
+      width: 100%;
+      min-height: 80px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      resize: vertical;
+    }
+
+    textarea.message-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .pop-hood-btn {
+      width: 100%;
+      padding: 16px;
+      margin-top: 12px;
+      background: linear-gradient(135deg, var(--accent), #ff4444);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pop-hood-btn:hover {
+      box-shadow: 0 0 40px rgba(255,45,45,0.25);
+      transform: translateY(-1px);
+    }
+
+    .pop-hood-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .pop-hood-btn .engine-icon {
+      font-size: 18px;
+    }
+
+    /* Right: Under The Hood */
+    .hood-side {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hood-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hood-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.5;
+    }
+
+    .hood-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .hood-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    .hood-status {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 12px;
+      background: var(--surface-light);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .hood-status.active {
+      background: rgba(0,208,132,0.1);
+      color: var(--success);
+      border-color: rgba(0,208,132,0.2);
+    }
+
+    /* Engine visualization */
+    .engine-viz {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .engine-node {
+      padding: 16px;
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .engine-node::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .engine-node.active::before {
+      background: linear-gradient(180deg, var(--accent), var(--warning));
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .engine-node.complete::before {
+      background: var(--success);
+      box-shadow: 0 0 10px var(--success);
+    }
+
+    .engine-node-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .engine-node-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .engine-node-value code {
+      background: rgba(255,255,255,0.03);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .spark-line {
+      height: 2px;
+      background: var(--border);
+      margin: 4px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spark-line::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: spark 1.5s ease-in-out;
+    }
+
+    @keyframes spark {
+      to { left: 100%; }
+    }
+
+    /* Connection lines */
+    .node-connector {
+      height: 20px;
+      position: relative;
+      margin: -6px 0;
+      z-index: 1;
+    }
+
+    .node-connector::before {
+      content: '';
+      position: absolute;
+      left: 24px; top: 0; bottom: 0; width: 2px;
+      background: var(--border);
+    }
+
+    .node-connector.active::before {
+      background: linear-gradient(180deg, var(--accent), var(--success));
+      box-shadow: 0 0 8px rgba(255,45,45,0.3);
+    }
+
+    /* Result overlay */
+    .result-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,8,12,0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .result-overlay.show {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .result-badge {
+      display: inline-block;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      animation: scaleIn 0.3s ease 0.2s both;
+    }
+
+    .result-badge.emergency {
+      background: rgba(255,45,45,0.12);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 30px rgba(255,45,45,0.15);
+    }
+
+    .result-badge.standard {
+      background: rgba(59,130,246,0.12);
+      color: var(--info);
+      border: 1px solid var(--info);
+      box-shadow: 0 0 30px rgba(59,130,246,0.15);
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .result-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 24px;
+    }
+
+    .metric {
+      animation: slideUp 0.4s ease both;
+    }
+
+    .metric:nth-child(1) { animation-delay: 0.3s; }
+    .metric:nth-child(2) { animation-delay: 0.4s; }
+    .metric:nth-child(3) { animation-delay: 0.5s; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .metric-value {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .metric-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    .result-sms {
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      text-align: left;
+      animation: slideUp 0.4s ease 0.6s both;
+    }
+
+    .result-sms-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--success);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .result-sms-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .reset-btn {
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .reset-btn:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    /* Bottom stats strip */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--border-glow);
+    }
+
+    .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+    }
+
+    .stat-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-vs {
+      font-size: 11px;
+      color: #444;
+      margin-top: 6px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 32px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+      color: var(--text-muted);
+      font-size: 12px;
+      position: relative; z-index: 5;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* Animations for engine nodes */
+    .engine-node.processing {
+      animation: nodePulse 0.5s ease;
+    }
+
+    @keyframes nodePulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,45,45,0.2); }
+      70% { box-shadow: 0 0 0 10px rgba(255,45,45,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,45,45,0); }
+    }
+
+    .node-icon {
+      width: 20px; height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient"></div>
+  <div class="grid-lines"></div>
+
+  <header class="header">
+    <div class="logo">
+      <div class="logo-mark">L</div>
+      <div class="logo-text">
+        <h1>Lever AI</h1>
+        <p>Emergency Dispatch Engine</p>
+      </div>
+    </div>
+    <div class="header-tag">
+      <span class="pulse-dot"></span>
+      Live Demo
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="stage-header">
+      <h2>Pop the Hood.</h2>
+      <p>Type an emergency message. Watch our AI engine classify, triage, and respond — in the time it takes to read this sentence.</p>
+    </div>
+
+    <div class="engine-bay">
+      <!-- Left: Customer Phone -->
+      <div class="customer-side">
+        <div class="phone-mockup">
+          <div class="phone-header">
+            <div class="phone-avatar">S</div>
+            <div class="phone-contact">
+              <div class="phone-contact-name">Sarah M. — Customer</div>
+              <div class="phone-contact-status">● Online</div>
+            </div>
+          </div>
+
+          <div id="messageThread">
+            <div class="message-bubble" id="customerMsg">
+              Help! Water is gushing from under my water heater and flooding my garage!
+            </div>
+          </div>
+
+          <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+
+        <div class="message-input-area">
+          <label>Test Messages</label>
+          <div class="preset-chips">
+            <span class="chip" onclick="setMsg('emergency1')">
+              <span class="chip-dot red"></span>
+              Burst pipe flooding
+            </span>
+            <span class="chip" onclick="setMsg('emergency2')">
+              <span class="chip-dot red"></span>
+              Sewage backup
+            </span>
+            <span class="chip" onclick="setMsg('standard1')">
+              <span class="chip-dot blue"></span>
+              Faucet quote
+            </span>
+            <span class="chip" onclick="setMsg('standard2')">
+              <span class="chip-dot blue"></span>
+              Maintenance
+            </span>
+            <span class="chip" onclick="setMsg('edge1')">
+              <span class="chip-dot orange"></span>
+              Sewer line?
+            </span>
+          </div>
+
+          <textarea class="message-input" id="msgInput" placeholder="Or type your own emergency...">Help! Water is gushing from under my water heater and flooding my garage!</textarea>
+
+          <button class="pop-hood-btn" id="popBtn" onclick="popTheHood()">
+            <span class="engine-icon">🔧</span>
+            Pop The Hood
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Under The Hood -->
+      <div class="hood-side">
+        <div class="hood-panel">
+          <div class="hood-header">
+            <span class="hood-title">🔧 Under The Hood</span>
+            <span class="hood-status" id="hoodStatus">Idle</span>
+          </div>
+
+          <div class="engine-viz" id="engineViz">
+            <div class="engine-node" id="node1">
+              <div class="engine-node-label">
+                <span class="node-icon">📡</span>
+                Inbound Webhook
+              </div>
+              <div class="engine-node-value" id="node1val">Waiting for message...</div>
+            </div>
+
+            <div class="node-connector" id="conn1"></div>
+
+            <div class="engine-node" id="node2">
+              <div class="engine-node-label">
+                <span class="node-icon">🧠</span>
+                AI Triage Engine
+              </div>
+              <div class="engine-node-value" id="node2val">Standing by</div>
+            </div>
+
+            <div class="node-connector" id="conn2"></div>
+
+            <div class="engine-node" id="node3">
+              <div class="engine-node-label">
+                <span class="node-icon">📋</span>
+                Lead Tracker
+              </div>
+              <div class="engine-node-value" id="node3val">Ready</div>
+            </div>
+
+            <div class="node-connector" id="conn3"></div>
+
+            <div class="engine-node" id="node4">
+              <div class="engine-node-label">
+                <span class="node-icon">💬</span>
+                SMS Dispatch
+              </div>
+              <div class="engine-node-value" id="node4val">Armed</div>
+            </div>
+          </div>
+
+          <!-- Result overlay -->
+          <div class="result-overlay" id="resultOverlay">
+            <div class="result-badge emergency" id="resultBadge">PRIORITY 1 — EMERGENCY</div>
+
+            <div class="result-metrics">
+              <div class="metric">
+                <div class="metric-value" style="color: var(--accent);" id="resTrade">PLUMBING</div>
+                <div class="metric-label">Trade</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value" style="color: var(--success);" id="resConf">99%</div>
+                <div class="metric-label">Confidence</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value" style="color: var(--cyan);" id="resTime">3.8s</div>
+                <div class="metric-label">Response</div>
+              </div>
+            </div>
+
+            <div class="result-sms">
+              <div class="result-sms-label">
+                <span class="pulse-dot"></span>
+                AI Reply Sent to Customer
+              </div>
+              <div class="result-sms-text" id="resSMS">
+                "Help is on the way. A plumber is being dispatched now. ETA 25 minutes. Please turn off your main water valve if safe to do so."
+              </div>
+            </div>
+
+            <button class="reset-btn" onclick="resetDemo()">↻ Run Another Test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-strip">
+      <div class="stat-card">
+        <div class="stat-number" style="color: var(--accent);">4.8s</div>
+        <div class="stat-desc">Avg Response</div>
+        <div class="stat-vs">vs 42 min industry</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color: var(--success);">88%</div>
+        <div class="stat-desc">Conversion</div>
+        <div class="stat-vs">First-responder wins</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color: var(--warning);">$14K</div>
+        <div class="stat-desc">Monthly Leak</div>
+        <div class="stat-vs">Avg plumber loss</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color: var(--cyan);">24/7</div>
+        <div class="stat-desc">AI Agent</div>
+        <div class="stat-vs">Never calls in sick</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <strong>Lever AI</strong> — AI Emergency Dispatch for Home Service Trades<br>
+    Built by <a href="https://proplumnet.com">ProPlum Network</a> · 📞 <a href="tel:8134913950">813.491.3950</a><br>
+    <span style="color: #333;">Jenni & Jeff — partners in crime ❤️‍🔥</span>
+  </footer>
+
+  <script>
+    const messages = {
+      emergency1: "Help! Water is gushing from under my water heater and flooding my garage!",
+      emergency2: "Sewage is backing up into my bathtub! This is disgusting and I need help NOW!",
+      standard1: "Hi, looking to get a quote on replacing my bathroom vanity faucet next Tuesday.",
+      standard2: "Can you schedule routine maintenance on my tankless water heater? It's been a year.",
+      edge1: "Do you guys fix main sewer lines or just drain cleaning? My neighbor said you might do trenchless."
+    };
+
+    const responses = {
+      emergency1: {
+        type: 'emergency',
+        badge: 'PRIORITY 1 — EMERGENCY',
+        badgeClass: 'emergency',
+        trade: 'PLUMBING',
+        confidence: '99%',
+        time: '3.8s',
+        sms: "Help is on the way. A plumber is being dispatched now. ETA 25 minutes. Please turn off your main water valve if safe to do so. Reply STOP to opt out.",
+        node2: 'Urgency: <code>PRIORITY_1_EMERGENCY</code><br>Trade: <code>PLUMBING</code><br>Active disaster: <code>true</code>',
+        node3: 'Contact upserted · Tags: ai-triaged, emergency, plumbing<br>Pipeline: Emergency Dispatch → Hot Lead',
+        node4: 'SMS dispatched via Telnyx · Delivered to +1 (813) 555-0192'
+      },
+      emergency2: {
+        type: 'emergency',
+        badge: 'PRIORITY 1 — EMERGENCY',
+        badgeClass: 'emergency',
+        trade: 'PLUMBING',
+        confidence: '98%',
+        time: '4.1s',
+        sms: "SEWAGE EMERGENCY acknowledged. Do NOT use water. A plumber + hazmat crew are en route. ETA 20 min. Keep pets/children away from contaminated area.",
+        node2: 'Urgency: <code>PRIORITY_1_EMERGENCY</code><br>Trade: <code>PLUMBING</code><br>Hazmat flag: <code>true</code>',
+        node3: 'Contact upserted · Tags: ai-triaged, emergency, plumbing, hazmat<br>Pipeline: Emergency Dispatch → Immediate',
+        node4: 'SMS dispatched via Telnyx · Urgent delivery mode'
+      },
+      standard1: {
+        type: 'standard',
+        badge: 'PRIORITY 2 — STANDARD',
+        badgeClass: 'standard',
+        trade: 'PLUMBING',
+        confidence: '97%',
+        time: '4.2s',
+        sms: "Thanks for reaching out! We'd be happy to help with that. Can you share your address and preferred time Tuesday? We'll get you a quote within 2 hours.",
+        node2: 'Urgency: <code>PRIORITY_2_STANDARD</code><br>Trade: <code>PLUMBING</code><br>Intent: <code>QUOTE_REQUEST</code>',
+        node3: 'Contact upserted · Tags: ai-triaged, standard, quote-request<br>Pipeline: Standard Sales → Quote Requested',
+        node4: 'SMS dispatched via Telnyx · Standard delivery'
+      },
+      standard2: {
+        type: 'standard',
+        badge: 'PRIORITY 2 — STANDARD',
+        badgeClass: 'standard',
+        trade: 'PLUMBING',
+        confidence: '96%',
+        time: '4.0s',
+        sms: "Maintenance check — got it. Our tech will inspect flushing, anode rod, and pressure relief valve. $149 flat rate. What day works best?",
+        node2: 'Urgency: <code>PRIORITY_2_STANDARD</code><br>Trade: <code>PLUMBING</code><br>Intent: <code>MAINTENANCE</code>',
+        node3: 'Contact upserted · Tags: ai-triaged, standard, maintenance<br>Pipeline: Standard Sales → Maintenance Scheduled',
+        node4: 'SMS dispatched via Telnyx · Appointment booking link included'
+      },
+      edge1: {
+        type: 'standard',
+        badge: 'PRIORITY 2 — STANDARD',
+        badgeClass: 'standard',
+        trade: 'PLUMBING',
+        confidence: '84%',
+        time: '4.6s',
+        sms: "Yes, we handle both main sewer lines and drain cleaning — including trenchless options. What's the issue you're experiencing? We can schedule a camera inspection.",
+        node2: 'Urgency: <code>PRIORITY_2_STANDARD</code><br>Trade: <code>PLUMBING</code><br>Intent: <code>INFO_REQUEST</code> · Trenchless: <code>true</code>',
+        node3: 'Contact upserted · Tags: ai-triaged, standard, info-request, trenchless<br>Pipeline: Standard Sales → Info Provided',
+        node4: 'SMS dispatched via Telnyx · Camera inspection offer attached'
+      }
+    };
+
+    function setMsg(key) {
+      document.getElementById('msgInput').value = messages[key];
+      document.getElementById('customerMsg').textContent = messages[key];
+    }
+
+    function delay(ms) {
+      return new Promise(r => setTimeout(r, ms));
+    }
+
+    function activateNode(id, value) {
+      const node = document.getElementById(id);
+      node.classList.add('active', 'processing');
+      if (value) document.getElementById(id + 'val').innerHTML = value;
+      setTimeout(() => node.classList.remove('processing'), 500);
+    }
+
+    function completeNode(id) {
+      document.getElementById(id).classList.remove('active');
+      document.getElementById(id).classList.add('complete');
+    }
+
+    function activateConnector(id) {
+      document.getElementById(id).classList.add('active');
+    }
+
+    async function popTheHood() {
+      const btn = document.getElementById('popBtn');
+      const msg = document.getElementById('msgInput').value.trim();
+      const thread = document.getElementById('messageThread');
+      const typing = document.getElementById('typingIndicator');
+      const hoodStatus = document.getElementById('hoodStatus');
+      const overlay = document.getElementById('resultOverlay');
+
+      if (!msg) { alert('Type a message first!'); return; }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="engine-icon">⚙️</span> Engine Running...';
+      overlay.classList.remove('show');
+      hoodStatus.textContent = 'Processing...';
+      hoodStatus.classList.add('active');
+
+      // Reset nodes
+      ['node1','node2','node3','node4'].forEach(id => {
+        document.getElementById(id).classList.remove('active', 'complete');
+      });
+      ['conn1','conn2','conn3'].forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+
+      // Update customer message
+      document.getElementById('customerMsg').textContent = msg;
+
+      // Determine response key
+      let key = 'emergency1';
+      const lower = msg.toLowerCase();
+      if (lower.includes('sewage') || lower.includes('backup')) key = 'emergency2';
+      else if (lower.includes('quote') || lower.includes('faucet') || lower.includes('tuesday')) key = 'standard1';
+      else if (lower.includes('maintenance') || lower.includes('check') || lower.includes('year')) key = 'standard2';
+      else if (lower.includes('sewer') || lower.includes('trenchless') || lower.includes('fix main')) key = 'edge1';
+
+      const resp = responses[key];
+
+      // Step 1: Webhook
+      await delay(300);
+      activateNode('node1', `POST /api/v1/webhooks/twilio/inbound-sms<br>From: <code>+1 (813) 555-0192</code><br>Message length: ${msg.length} chars`);
+      await delay(400);
+      activateConnector('conn1');
+
+      // Step 2: AI Triage
+      await delay(200);
+      activateNode('node2', 'Analyzing intent...');
+      await delay(600);
+      activateNode('node2', resp.node2);
+      await delay(200);
+      activateConnector('conn2');
+
+      // Step 3: CRM
+      await delay(200);
+      activateNode('node3', 'Writing to lead tracker...');
+      await delay(400);
+      activateNode('node3', resp.node3);
+      await delay(200);
+      activateConnector('conn3');
+
+      // Step 4: SMS
+      await delay(200);
+      activateNode('node4', 'Crafting reply...');
+      await delay(400);
+      activateNode('node4', resp.node4);
+
+      // Complete all
+      await delay(300);
+      ['node1','node2','node3','node4'].forEach(completeNode);
+
+      // Show typing indicator on phone
+      typing.classList.add('show');
+      await delay(1500);
+      typing.classList.remove('show');
+
+      // Show AI reply on phone
+      const aiMsg = document.createElement('div');
+      aiMsg.className = 'message-bubble ai';
+      aiMsg.textContent = resp.sms;
+      thread.appendChild(aiMsg);
+
+      // Show result overlay
+      document.getElementById('resultBadge').textContent = resp.badge;
+      document.getElementById('resultBadge').className = 'result-badge ' + resp.badgeClass;
+      document.getElementById('resTrade').textContent = resp.trade;
+      document.getElementById('resConf').textContent = resp.confidence;
+      document.getElementById('resTime').textContent = resp.time;
+      document.getElementById('resSMS').textContent = '"' + resp.sms + '"';
+
+      overlay.classList.add('show');
+      hoodStatus.textContent = 'Complete';
+      btn.disabled = false;
+      btn.innerHTML = '<span class="engine-icon">🔧</span> Pop The Hood';
+    }
+
+    function resetDemo() {
+      document.getElementById('resultOverlay').classList.remove('show');
+      document.getElementById('hoodStatus').textContent = 'Idle';
+      document.getElementById('hoodStatus').classList.remove('active');
+
+      // Reset nodes
+      ['node1','node2','node3','node4'].forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove('active', 'complete');
+      });
+      ['conn1','conn2','conn3'].forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+
+      document.getElementById('node1val').textContent = 'Waiting for message...';
+      document.getElementById('node2val').textContent = 'Standing by';
+      document.getElementById('node3val').textContent = 'Ready';
+      document.getElementById('node4val').textContent = 'Armed';
+
+      // Clear extra messages
+      const thread = document.getElementById('messageThread');
+      while (thread.children.length > 1) {
+        thread.removeChild(thread.lastChild);
+      }
+    }
+  </script>
+</body>
+</html>

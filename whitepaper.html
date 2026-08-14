@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The AI Search Visibility Imperative — Lever AI Whitepaper</title>
+    <meta name="description" content="Academic framework for AI search visibility in multi-location service brands. The PipeWrench Methodology, 8-point audit framework, and economic rationale for tiered service models.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --navy-light: #111827;
+            --cyan: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --emerald: #10b981;
+            --indigo: #6366f1;
+            --purple: #a855f7;
+            --gold: #f59e0b;
+            --red: #ef4444;
+            --text: #e5e7eb;
+            --text-dim: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Print styles */
+        @media print {
+            body { background: white; color: #1a1a1a; }
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+            .cover { background: #f8f9fa !important; }
+            .section-label { color: #0369a1 !important; }
+            h2 { color: #0369a1 !important; }
+        }
+        
+        .header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            background: rgba(11,15,25,0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .header-inner {
+            max-width: 1280px; margin: 0 auto; padding: 0.75rem 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-icon {
+            width: 32px; height: 32px; border-radius: 8px;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-text { font-weight: 800; font-size: 0.95rem; color: white; }
+        .header-nav { display: flex; gap: 1.5rem; }
+        .header-nav a { color: var(--text-dim); text-decoration: none; font-size: 0.8rem; font-weight: 500; }
+        .header-nav a:hover { color: var(--cyan); }
+        
+        .cover {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            padding: 120px 2rem 4rem;
+            background: 
+                radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 60%, rgba(99,102,241,0.08) 0%, transparent 50%),
+                var(--navy);
+        }
+        .cover-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.4rem 1rem; border-radius: 50px;
+            background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.2);
+            color: var(--cyan-glow); font-size: 0.7rem; font-weight: 600;
+            margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em;
+        }
+        .cover h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900; line-height: 1.1; margin-bottom: 1rem;
+            max-width: 800px;
+        }
+        .cover h1 span {
+            background: linear-gradient(135deg, var(--cyan-glow), var(--indigo));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .cover-subtitle {
+            font-family: 'Merriweather', Georgia, serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        .cover-meta {
+            display: flex; gap: 2rem; margin-top: 2rem;
+            font-size: 0.8rem; color: var(--text-muted);
+        }
+        .cover-meta div { text-align: center; }
+        .cover-meta strong { display: block; color: var(--text); font-size: 1rem; margin-bottom: 0.25rem; }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        section:last-child { border-bottom: none; }
+        
+        .section-label {
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; color: var(--cyan); margin-bottom: 0.5rem;
+        }
+        h2 {
+            font-size: 1.75rem; font-weight: 800; margin: 0 0 1.25rem;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        h3 {
+            font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.75rem;
+            color: var(--cyan-glow);
+        }
+        h4 {
+            font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.5rem;
+            color: var(--text);
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+        p.lead {
+            font-size: 1.1rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            color: var(--text-dim);
+        }
+        li { margin-bottom: 0.5rem; }
+        
+        .callout {
+            background: rgba(6,182,212,0.05);
+            border-left: 3px solid var(--cyan);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout.warning {
+            background: rgba(245,158,11,0.05);
+            border-left-color: var(--gold);
+        }
+        .callout.danger {
+            background: rgba(239,68,68,0.05);
+            border-left-color: var(--red);
+        }
+        .callout.success {
+            background: rgba(16,185,129,0.05);
+            border-left-color: var(--emerald);
+        }
+        .callout strong { color: var(--text); }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+        }
+        th {
+            background: var(--navy-light);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 700;
+            color: var(--cyan);
+            border-bottom: 2px solid var(--border);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-dim);
+        }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        
+        .framework-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .framework-box h4 {
+            margin-top: 0;
+            color: var(--cyan-glow);
+        }
+        
+        .tier-diagram {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+        @media (max-width: 768px) {
+            .tier-diagram { grid-template-columns: 1fr; }
+        }
+        .tier-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+        .tier-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 10px 10px 0 0;
+        }
+        .tier-box.monitor::before { background: linear-gradient(90deg, var(--emerald), var(--cyan)); }
+        .tier-box.agent::before { background: linear-gradient(90deg, var(--indigo), var(--purple)); }
+        .tier-box.infra::before { background: linear-gradient(90deg, var(--gold), var(--red)); }
+        .tier-box.enterprise::before { background: linear-gradient(90deg, var(--red), #ff6b6b); }
+        .tier-box .price {
+            font-size: 1.75rem; font-weight: 900;
+            margin: 0.5rem 0;
+        }
+        .tier-box .name {
+            font-size: 0.65rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+        .tier-box .desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 0.5rem;
+        }
+        
+        .flywheel-diagram {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+        }
+        .flywheel-step {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: rgba(6,182,212,0.08);
+            border-radius: 8px;
+            margin: 0.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--cyan-glow);
+        }
+        .flywheel-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+        
+        .citation {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            vertical-align: super;
+        }
+        
+        .case-study-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .case-study-card .meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .case-study-card .score {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--cyan-glow), var(--indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .toc {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .toc h4 { margin-top: 0; }
+        .toc a {
+            display: block;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 0.35rem 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .toc a:hover { color: var(--cyan); }
+        .toc a span { color: var(--text-muted); margin-right: 0.5rem; }
+        
+        .footer-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem; border-radius: 8px;
+            font-weight: 600; font-size: 0.85rem;
+            text-decoration: none; transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+            color: white;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn:hover { transform: translateY(-1px); }
+        
+        @media (max-width: 768px) {
+            .cover { padding: 100px 1rem 2rem; }
+            .cover-meta { flex-direction: column; gap: 1rem; }
+            .container { padding: 0 1rem; }
+            h2 { font-size: 1.4rem; }
+            section { padding: 2.5rem 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header no-print">
+    <div class="header-inner">
+        <a href="https://lever-ai.app" class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" color="white"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+            </div>
+            <span class="logo-text">Lever AI</span>
+        </a>
+        <nav class="header-nav">
+            <a href="https://lever-ai.app">Home</a>
+            <a href="https://proplum-ai-audit.netlify.app">Free Audit</a>
+            <a href="mailto:jeff@proplumnetwork.com">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- COVER -->
+<div class="cover">
+    <div class="cover-badge">Whitepaper v1.0 — August 2026</div>
+    <h1>The AI Search Visibility Imperative: <span>A Framework for Multi-Location Service Brands</span></h1>
+    <p class="cover-subtitle">Introducing the PipeWrench Methodology™ for compound authority accumulation in generative search engines</p>
+    <div class="cover-meta">
+        <div><strong>Lever AI Research</strong>Industry Analysis</div>
+        <div><strong>August 2026</strong>Publication Date</div>
+        <div><strong>22 Pages</strong>Reading Time</div>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- ABSTRACT -->
+<section id="abstract">
+    <div class="section-label">Abstract</div>
+    <p class="lead">
+        The transition from traditional search engine optimization (SEO) to AI Search Visibility (AISO) represents a structural discontinuity in how multi-location service brands acquire customers. This paper introduces the <strong>PipeWrench Methodology™</strong>, a four-phase framework for building compound authority in generative search engines, and presents the <strong>Multi-Dimensional AI Visibility Assessment (MAVA-8)</strong>, an eight-point diagnostic for quantifying brand discoverability across ChatGPT, Claude, Perplexity, and emerging AI search platforms.
+    </p>
+    <p>
+        Through case studies of 1-Tom-Plumber (57 territories, EverSmith Brands) and ARS/Rescue Rooter (70+ locations, GI Partners), we demonstrate that even PE-backed franchise networks with dedicated marketing infrastructure exhibit critical AI visibility gaps, resulting in estimated annual revenue leakage of $500K–$8M per network. We further present a tiered service architecture grounded in value-capture theory, designed to align provider investment with measurable revenue protection.
+    </p>
+    <div class="callout">
+        <strong>Key Finding:</strong> Site Quality Score — a 0-to-1 metric derived from leaked Google API documentation — functions as the gating factor for rich result eligibility. Brands scoring below 0.4 are systematically disqualified from Featured Snippets, People Also Ask, and AI Overview inclusion regardless of content quality. For multi-location brands, this threshold represents an existential barrier to visibility in the zero-click search economy.
+    </div>
+</section>
+
+<!-- TOC -->
+<section id="toc" class="no-print">
+    <div class="toc">
+        <h4>Contents</h4>
+        <a href="#introduction"><span>01</span>Introduction: The Structural Shift</a>
+        <a href="#framework"><span>02</span>The PipeWrench Methodology™</a>
+        <a href="#audit"><span>03</span>MAVA-8: The Eight-Point Audit Framework</a>
+        <a href="#case-studies"><span>04</span>Case Studies in Franchise AI Visibility</a>
+        <a href="#pricing"><span>05</span>Value-Capture Architecture: The Four-Tier Model</a>
+        <a href="#implementation"><span>06</span>Implementation Protocol & 48-Hour Sprint</a>
+        <a href="#conclusion"><span>07</span>Conclusion: First-Mover Authority</a>
+    </div>
+</section>
+
+<!-- INTRODUCTION -->
+<section id="introduction">
+    <div class="section-label">Section 01</div>
+    <h2>Introduction: The Structural Shift</h2>
+    
+    <h3>From Crawler Optimization to Synthesis Engine Visibility</h3>
+    <p>
+        Traditional search engine optimization (SEO) operates on a crawler-indexer-retriever model: Googlebot traverses hyperlinks, indexes page content, and retrieves results based on query-keyword matching. This paradigm, dominant since 1998, has created an entire industry predicated on keyword density, backlink volume, and domain authority — metrics that correlated with ranking performance but were never direct inputs into Google's ranking algorithms.
+    </p>
+    <p>
+        The emergence of generative AI search (ChatGPT, Claude, Perplexity, Gemini) has introduced a fundamentally different discovery mechanism. These platforms do not "browse" websites. They consume structured data, semantic embeddings, and citation graphs to synthesize answers. A user's query — "Who's the best plumber near me?" — does not trigger a page-ranking exercise. It triggers a confidence-weighted synthesis across multiple knowledge sources, with the AI selecting the entity it most confidently associates with the user's intent, location, and contextual needs.
+    </p>
+    
+    <div class="callout warning">
+        <strong>The Mythology of Traditional SEO:</strong> Recent analysis of 2TB of leaked Google ranking API documentation (Cook, 2024) confirms that widely held SEO beliefs — domain authority as a ranking factor, keyword density thresholds, backlink volume, and high-frequency publishing — are correlational artifacts, not causal mechanisms. Google's actual ranking infrastructure prioritizes brand signals: direct search volume, click-through rate deviation from expected norms, and natural brand mention frequency in authoritative contexts.
+    </div>
+    
+    <h3>The Zero-Click Economy</h3>
+    <p>
+        Perhaps the most consequential shift for local service businesses is the rise of zero-click search. In 2026, 58.5% of desktop searches and 77.1% of mobile searches terminate without a click — the user receives their answer directly on the search results page or within the AI interface. For plumbers, HVAC contractors, and electricians, this means that visibility is no longer about driving traffic to a website. It is about being the name the AI speaks aloud.
+    </p>
+    
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Value</th>
+            <th>Source / Year</th>
+        </tr>
+        <tr>
+            <td>US consumers using AI search</td>
+            <td>31.3%</td>
+            <td>Industry survey, 2026</td>
+        </tr>
+        <tr>
+            <td>Zero-click desktop searches</td>
+            <td>58.5%</td>
+            <td>SparkToro / Moz, 2024</td>
+        </tr>
+        <tr>
+            <td>Zero-click mobile searches</td>
+            <td>77.1%</td>
+            <td>SparkToro / Moz, 2024</td>
+        </tr>
+        <tr>
+            <td>AI Overview CTR impact on #1 organic</td>
+            <td>-65.3%</td>
+            <td>Industry analysis, 2024</td>
+        </tr>
+        <tr>
+            <td>LLM visitor conversion multiplier</td>
+            <td>4.4x</td>
+            <td>Enterprise case studies, 2025</td>
+        </tr>
+        <tr>
+            <td>Estimated revenue leak (70-location network)</td>
+            <td>$4.7M annually</td>
+            <td>Lever AI projection model</td>
+        </tr>
+    </table>
+    
+    <h3>The Site Quality Score Threshold</h3>
+    <p>
+        Leaked Google API documentation reveals a critical gating mechanism: every subdomain receives a <strong>Site Quality Score</strong> ranging from 0 to 1. This score is not merely a ranking factor — it is an eligibility threshold. Brands scoring below 0.4 are systematically excluded from rich results (Featured Snippets, People Also Ask, AI Overviews) regardless of content optimization quality.
+    </p>
+    <p>
+        Critically, Site Quality Score is not a measure of technical SEO perfection. It is a proxy for <strong>brand authority</strong> — calculated from direct search volume (do users search your brand specifically?), click-through rate deviation (do users choose you even when you're not in position #1?), and natural brand mention frequency in authoritative contexts. This represents a paradigm shift: Google is attempting to algorithmically replicate real-world human trust signals.
+    </p>
+    <p>
+        For multi-location brands, the implication is severe. A franchise network may invest millions in traditional SEO while remaining invisible to AI search engines because their Site Quality Score falls below the rich results threshold. The content is optimized; the brand is not trusted.
+    </p>
+</section>
+
+<!-- FRAMEWORK -->
+<section id="framework">
+    <div class="section-label">Section 02</div>
+    <h2>The PipeWrench Methodology™</h2>
+    
+    <p class="lead">
+        Named for the essential tool of the trades we serve, the PipeWrench Methodology is a systematic approach to building compound authority in AI search ecosystems. Unlike traditional SEO, which treats optimizations as discrete tactical interventions, PipeWrench treats each fix as a force-multiplier — where schema deployment amplifies llms.txt effectiveness, which in turn increases brand mention velocity, which elevates Site Quality Score, which unlocks rich result eligibility.
+    </p>
+    
+    <h3>The Compound Authority Flywheel</h3>
+    <p>
+        The central insight of PipeWrench is that AI search visibility is not linear. It is compounding. Each optimization does not add a fixed amount of visibility; it increases the <em>rate</em> at which future optimizations produce visibility gains. This creates a flywheel effect:
+    </p>
+    
+    <div class="flywheel-diagram">
+        <div class="flywheel-step">1. Technical Foundation</div>
+        <span class="flywheel-arrow">→</span>
+        <div class="flywheel-step">2. Structured Data</div>
+        <span class="flywheel-arrow">→</span>
+        <div class="flywheel-step">3. Content Authority</div>
+        <span class="flywheel-arrow">→</span>
+        <div class="flywheel-step">4. Brand Trust</div>
+        <br><br>
+        <span class="flywheel-arrow">↑</span>
+        <span style="color:var(--text-muted);font-size:0.8rem;margin:0 1rem;">Feedback Loop</span>
+        <span class="flywheel-arrow">↓</span>
+    </div>
+    
+    <h4>Phase 1: Technical Foundation (Crawler Access & Indexability)</h4>
+    <p>
+        Before any content or schema can be consumed by AI synthesis engines, the underlying infrastructure must be accessible. This phase ensures that AI crawlers (GPTBot, anthropic-ai, PerplexityBot, Bingbot) can traverse the site without obstruction, and that critical resources are not inadvertently blocked by robots.txt directives or meta robots tags.
+    </p>
+    <p>
+        The technical foundation also includes HTTPS enforcement, Core Web Vitals compliance, and mobile responsiveness — not because these are direct AI ranking factors, but because they influence human engagement metrics that feed back into trust signals.
+    </p>
+    
+    <h4>Phase 2: Structured Data Deployment (Schema & llms.txt)</h4>
+    <p>
+        This is where PipeWrench diverges most dramatically from traditional SEO. While conventional practice treats schema markup as a "nice to have" enhancement for rich snippets, PipeWrench treats structured data as the <em>primary communication channel</em> between the brand and AI synthesis engines.
+    </p>
+    <p>
+        The <code>llms.txt</code> file — a relatively new standard proposed for large language model consumption — functions as a site guide for AI crawlers, analogous to how <code>sitemap.xml</code> guides traditional search engines. It specifies which content is authoritative, which should be ignored, and how the site's information architecture maps to real-world entities.
+    </p>
+    <p>
+        LocalBusiness schema, deployed per-location rather than only on the homepage, is the critical differentiator. When a user asks "best plumber in Cincinnati," the AI must be able to resolve the entity "this business → Cincinnati → plumber." Without LocalBusiness schema on the Cincinnati location page, that resolution fails — regardless of how well-optimized the corporate homepage may be.
+    </p>
+    
+    <h4>Phase 3: Content Authority (Answer-First Architecture)</h4>
+    <p>
+        AI search engines classify queries into semantic categories: "short fact," "BOOLEAN" (yes/no), "how-to," "local intent," "commercial investigation," and others. A massive portion of queries fall into "short fact" and "BOOLEAN" categories — and this traffic is evaporating as AI Overviews answer these questions directly.
+    </p>
+    <p>
+        Answer-first content architecture inverts the traditional blog post model. Rather than building narrative tension and revealing the answer at the end, authoritative content for AI search leads with the answer, then provides supporting evidence, nuance, and credentials. This aligns with how AI synthesis engines extract "consensus passages" — content fragments that agree with the general web consensus on a topic.
+    </p>
+    <div class="callout">
+        <strong>Consensus Score:</strong> Google calculates a consensus score by counting passages in your content that agree, contradict, or remain neutral compared to general web consensus. For "debunking queries" (e.g., "is tankless water heater worth it"), Google limits rankings to content aligning with factual consensus. For subjective queries, it intentionally mixes consensus, neutral, and non-consensus perspectives. Perfectly optimized content can fail to rank simply because Google already has a result fulfilling that specific consensus viewpoint.
+    </div>
+    
+    <h4>Phase 4: Brand Trust (The Site Quality Score Engine)</h4>
+    <p>
+        The final phase focuses on the signals that elevate Site Quality Score above the 0.4 threshold: direct brand search volume, CTR deviation from expected norms, and natural brand mentions in authoritative contexts. This is where the flywheel achieves compounding velocity.
+    </p>
+    <p>
+        As technical foundations, structured data, and content authority work in concert, the brand becomes more discoverable. More discovery leads to more direct searches. More direct searches signal brand authority to Google's quality scoring system. Higher quality scores unlock rich results. Rich results drive more discovery. The cycle accelerates.
+    </p>
+</section>
+
+<!-- AUDIT FRAMEWORK -->
+<section id="audit">
+    <div class="section-label">Section 03</div>
+    <h2>MAVA-8: The Multi-Dimensional AI Visibility Assessment</h2>
+    
+    <p class="lead">
+        The Multi-Dimensional AI Visibility Assessment (MAVA-8) is an eight-point diagnostic framework designed to quantify a brand's discoverability across AI search platforms. Each dimension is scored independently, then aggregated into a composite AI Visibility Score (0–100). The framework distinguishes between <em>technical prerequisites</em> (dimensions 1–4) and <em>authority multipliers</em> (dimensions 5–8).
+    </p>
+    
+    <div class="framework-box">
+        <h4>Dimension 1: AI Crawler Access</h4>
+        <p><strong>Weight:</strong> 10% | <strong>Type:</strong> Binary (Pass/Fail)</p>
+        <p>Verifies that robots.txt does not block GPTBot, anthropic-ai, PerplexityBot, or other AI crawlers. Also checks for meta robots="noindex" or "nofollow" directives on critical pages. A single blocked crawler can render a site invisible to an entire synthesis engine.</p>
+    </div>
+    
+    <div class="framework-box">
+        <h4>Dimension 2: llms.txt Presence & Quality</h4>
+        <p><strong>Weight:</strong> 15% | <strong>Type:</strong> Scored (0–100)</p>
+        <p>Evaluates the presence, completeness, and accuracy of the llms.txt file at the domain root. Scoring criteria: (a) file exists, (b) correctly formatted, (c) includes site description, (d) specifies authoritative content paths, (e) excludes low-quality or duplicate content, (f) updated within 90 days.</p>
+    </div>
+    
+    <div class="framework-box">
+        <h4>Dimension 3: Schema Markup Completeness</h4>
+        <p><strong>Weight:</strong> 15% | <strong>Type:</strong> Scored (0–100)</p>
+        <p>Assesses the presence and correctness of JSON-LD structured data. Minimum viable: Organization schema on homepage. Optimal: LocalBusiness schema on every location page, Service schema on service pages, FAQPage schema on Q&A content, BreadcrumbList for navigation. Validates via Google's Rich Results Test equivalent.</p>
+    </div>
+    
+    <div class="framework-box">
+        <h4>Dimension 4: LocalBusiness Schema Per Location</h4>
+        <p><strong>Weight:</strong> 20% | <strong>Type:</strong> Scored (0–100)</p>
+        <p>The highest-weighted dimension. For multi-location brands, each location page must include LocalBusiness schema with: @type (Plumber, HVACBusiness, etc.), name, address (with geo coordinates), telephone, serviceArea, openingHours, priceRange, and aggregateRating if available. Missing or incorrect geo coordinates are weighted heavily as they directly impact local intent resolution.</p>
+    </div>
+    
+    <div class="framework-box">
+        <h4>Dimension 5: Content Freshness & Authority</h4>
+        <p><strong>Weight:</strong> 15% | <strong>Type:</strong> Scored (0–100)</p>
+        <p>Measures content update recency, depth of topical coverage, and answer-first architecture. Content older than 12 months receives penalty. Pages without clear entity declarations ("We are a plumbing company in [City]") receive penalty. Content with embedded Q&A structured as FAQPage schema receives bonus.</p>
+    </div>
+    
+    <div class="framework-box">
+        <h4>Dimension 6: GBP Optimization & NAP Consistency</h4>
+        <p><strong>Weight:</strong> 10% | <strong>Type:</strong> Scored (0–100)</p>
+        <p>Evaluates Google Business Profile completeness: business description, service categories, attributes, photos, Q&A posts, review response rate, and posting frequency. Also checks NAP (Name, Address, Phone) consistency across GBP, website, and major directories. Inconsistent NAP data fragments entity resolution in AI systems.</p>
+    </div>
+    
+    <div class="framework-box">
+        <h4>Dimension 7: Competitor Visibility Benchmark</h4>
+        <p><strong>Weight:</strong> 10% | <strong>Type:</strong> Relative (Percentile)</p>
+        <p>Compares the brand's composite score against the top three competitors in each market. A score of 50 means parity with competitors; 75 means outperforming; 25 means underperforming. This dimension introduces competitive context and urgency into the assessment.</p>
+    </div>
+    
+    <div class="framework-box">
+        <h4>Dimension 8: AI Answer Capture Potential</h4>
+        <p><strong>Weight:</strong> 5% | <strong>Type:</strong> Predictive (0–100)</p>
+        <p>Simulates AI query resolution for high-intent local queries ("best plumber in [City]," "emergency plumber near me," "water heater repair [City]"). Scores based on the probability that the brand would be included in the AI's synthesized answer, considering all other dimensions as inputs. This is a predictive metric, not a measured one.</p>
+    </div>
+    
+    <h3>Scoring Methodology</h3>
+    <p>
+        The composite AI Visibility Score is calculated as a weighted average of the eight dimensions. The 0.4 Site Quality Score threshold (from leaked Google documentation) is mapped to approximately 40/100 on the MAVA-8 scale. Brands scoring below 40 are considered "AI-invisible" — technically present but not discoverable. Brands scoring 70+ are "AI-dominant" — consistently recommended by AI search engines for relevant queries.
+    </p>
+    
+    <table>
+        <tr>
+            <th>Score Range</th>
+            <th>Classification</th>
+            <th>Business Impact</th>
+        </tr>
+        <tr>
+            <td>0–25</td>
+            <td>AI-Invisible</td>
+            <td>Not discoverable by AI search. Effectively non-existent to 31% of consumers.</td>
+        </tr>
+        <tr>
+            <td>26–40</td>
+            <td>AI-Weak</td>
+            <td>Below rich result threshold. May appear for branded queries only.</td>
+        </tr>
+        <tr>
+            <td>41–60</td>
+            <td>AI-Visible</td>
+            <td>Eligible for rich results. Competes for non-branded local queries.</td>
+        </tr>
+        <tr>
+            <td>61–80</td>
+            <td>AI-Competitive</td>
+            <td>Regularly recommended for high-intent queries. Strong local presence.</td>
+        </tr>
+        <tr>
+            <td>81–100</td>
+            <td>AI-Dominant</td>
+            <td>Default recommendation for category queries. Compound authority established.</td>
+        </tr>
+    </table>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="case-studies">
+    <div class="section-label">Section 04</div>
+    <h2>Case Studies in Franchise AI Visibility</h2>
+    
+    <h3>Case Study A: 1-Tom-Plumber (EverSmith Brands / Riverside PE)</h3>
+    <div class="case-study-card">
+        <div class="meta">
+            <span>57 Territories</span>
+            <span>22 States</span>
+            <span>37 Franchisees</span>
+            <span>Parent: EverSmith Brands</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
+            <div>
+                <div class="score">62<span style="font-size:1rem;color:var(--text-dim)">/100</span></div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Corporate AI Visibility Score</div>
+            </div>
+            <div>
+                <div class="score" style="background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;">~30<span style="font-size:1rem;color:var(--text-dim)">/100</span></div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Estimated Location Page Avg</div>
+            </div>
+        </div>
+    </div>
+    
+    <h4>The Paradox of Partial Modernization</h4>
+    <p>
+        1-Tom-Plumber presented a fascinating case: they had implemented an <code>llms.txt</code> file — a relatively advanced practice that fewer than 1% of local service brands have adopted. Their corporate homepage included Organization schema, and their robots.txt did not block AI crawlers. At first glance, they appeared to be an AI-visibility leader.
+    </p>
+    <p>
+        However, the MAVA-8 assessment revealed a critical failure pattern: while the corporate brand was moderately visible (62/100), the individual location pages — where local intent queries actually resolve — were estimated to score between 25–35/100. The reason was straightforward: LocalBusiness schema was absent from location pages.
+    </p>
+    <p>
+        When a user asks ChatGPT "best plumber in Cincinnati," the AI does not navigate to 1tomplumber.com, find the Cincinnati page, and read its content. It queries its knowledge graph for entities matching "plumber + Cincinnati" and returns the entity with the highest confidence score. Without LocalBusiness schema explicitly declaring "this page represents a plumber at 24 Whitney Dr, Cincinnati, OH," the entity resolution fails. The page exists; the entity does not.
+    </p>
+    
+    <div class="callout danger">
+        <strong>Revenue Impact:</strong> Assuming 57 territories, an average of 3 organic leads per territory per day lost to AI-invisibility, and a $450 average job value with 40% close rate, the estimated annual revenue leakage is <strong>$500,000+</strong>. This does not include lifetime value of recurring customers, referral value, or emergency premium pricing.
+    </div>
+    
+    <h4>Strategic Implications</h4>
+    <p>
+        For EverSmith Brands (owned by The Riverside Company, a global PE firm), this visibility gap represents both a risk and an opportunity. PE-backed companies are evaluated on growth metrics and brand value. "AI visibility across all territories" is a growth metric that can be reported to investment committees. Conversely, invisible territories represent brand equity erosion — franchisees in those markets receive fewer leads, become less satisfied, and churn at higher rates.
+    </p>
+    <p>
+        The remediation path is technically straightforward: deploy LocalBusiness schema with geo coordinates across all 57 location pages, optimize GBP listings for consistency, and implement FAQPage schema on service-specific content. The PipeWrench Methodology estimates a 48-hour deployment window for Tier 1 fixes, with measurable score improvements visible within 30 days.
+    </p>
+    
+    <h3>Case Study B: ARS/Rescue Rooter (GI Partners / Charlesbank Capital)</h3>
+    <div class="case-study-card">
+        <div class="meta">
+            <span>70+ Locations</span>
+            <span>24 States</span>
+            <span>~7,000 Employees</span>
+            <span>Parent: GI Partners (majority)</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
+            <div>
+                <div class="score" style="background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;">~45<span style="font-size:1rem;color:var(--text-dim)">/100</span></div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Estimated Corporate Score</div>
+            </div>
+            <div>
+                <div class="score" style="background:linear-gradient(135deg,var(--red),#ff6b6b);-webkit-background-clip:text;">~20<span style="font-size:1rem;color:var(--text-dim)">/100</span></div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Estimated Location Page Avg</div>
+            </div>
+        </div>
+    </div>
+    
+    <h4>The Multi-Brand Confusion Problem</h4>
+    <p>
+        ARS/Rescue Roster operates one of the most complex brand architectures in home services. The parent company manages 20+ sub-brands (ARS, Rescue Rooter, Blue Dot, etc.) across 70+ locations, creating significant entity fragmentation in AI knowledge graphs. When multiple brands claim the same service area without clear hierarchical relationships, AI synthesis engines struggle to resolve which entity to recommend.
+    </p>
+    <p>
+        This fragmentation is compounded by the PE ownership structure. GI Partners and Charlesbank Capital Partners acquired ARS with a mandate for operational efficiency and growth. The company's data-driven culture — they employ a full-time CTO (Divakar Jandhyala, SVP) — suggests organizational readiness for AI visibility infrastructure. The presence of a C-suite technology leader reduces the sales friction typically encountered when pitching to marketing-only organizations.
+    </p>
+    
+    <div class="callout warning">
+        <strong>Estimated Revenue Leak:</strong> For a $1B+ revenue network with 70+ locations, conservative modeling suggests an annual AI visibility revenue leak of <strong>$3M–$8M</strong>. This estimate accounts for: (a) lost organic leads from AI-invisible locations, (b) emergency call deflection to competitors, (c) franchisee churn from underperformance, and (d) reduced brand valuation at exit due to incomplete digital asset coverage.
+    </div>
+    
+    <h4>The Strategic Entry Point</h4>
+    <p>
+        The recommended engagement strategy for ARS differs from 1-Tom-Plumber due to scale and organizational complexity. Rather than a blanket infrastructure deployment, Lever AI recommends a <strong>pilot program</strong>: select 5 underperforming territories, deploy the full PipeWrench Methodology, and measure lead volume improvement over 90 days. This reduces organizational risk while generating proof-of-concept data for board presentation.
+    </p>
+    <p>
+        Primary target: Divakar Jandhyala (SVP, CTO). Secondary: Richard Hill (SVP, CMO). The pitch reframes AI visibility not as a marketing initiative but as a <strong>data infrastructure project</strong> — aligning with the CTO's mandate and leveraging the organization's existing technical sophistication.
+    </p>
+</section>
+
+<!-- PRICING ARCHITECTURE -->
+<section id="pricing">
+    <div class="section-label">Section 05</div>
+    <h2>Value-Capture Architecture: The Four-Tier Model</h2>
+    
+    <p class="lead">
+        Lever AI's service architecture is designed around a value-capture progression that mirrors the PipeWrench Methodology's four phases. Each tier corresponds to a specific stage of AI visibility maturity and addresses a distinct risk profile in the customer's revenue protection journey.
+    </p>
+    
+    <h3>Theoretical Foundation: Value-Capture Theory</h3>
+    <p>
+        Traditional SaaS pricing models optimize for feature differentiation — each tier adds more features at higher price points. Lever AI's model inverts this logic. We optimize for <strong>value capture velocity</strong>: the speed at which a customer's investment translates into protected revenue.
+    </p>
+    <p>
+        The fundamental economic insight is that AI visibility operates as a <em>defensive moat</em> rather than an offensive weapon. A plumber who is AI-visible does not necessarily capture more market share; they <em>prevent</em> the market share erosion that occurs when competitors become AI-visible first. The value proposition is therefore framed as <strong>revenue protection</strong>, not revenue generation.
+    </p>
+    
+    <div class="tier-diagram">
+        <div class="tier-box monitor">
+            <div class="name">Monitor</div>
+            <div class="price" style="color:var(--emerald)">$99</div>
+            <div class="desc">Risk Identification<br>→ Value: Information</div>
+        </div>
+        <div class="tier-box agent">
+            <div class="name">AI Agent</div>
+            <div class="price" style="color:var(--purple)">$499</div>
+            <div class="desc">Revenue Protection<br>→ Value: Automation</div>
+        </div>
+        <div class="tier-box infra">
+            <div class="name">Infrastructure</div>
+            <div class="price" style="color:var(--gold)">$999</div>
+            <div class="desc">Systematic Defense<br>→ Value: Transformation</div>
+        </div>
+        <div class="tier-box enterprise">
+            <div class="name">Enterprise</div>
+            <div class="price" style="color:var(--red)">$2,300</div>
+            <div class="desc">Network Command<br>→ Value: Moat</div>
+        </div>
+    </div>
+    
+    <h4>Tier 1: AI Search Visibility Monitor ($99/month)</h4>
+    <p>
+        <strong>Economic Rationale:</strong> The Monitor tier addresses the information asymmetry problem. Most local business owners have no objective measure of their AI visibility. They may invest in traditional SEO for years while remaining AI-invisible. The $99 price point is calibrated to eliminate friction — it is lower than the cost of a single emergency plumbing call, making the decision trivial from a risk perspective.
+    </p>
+    <p>
+        <strong>Value Capture:</strong> The customer receives monthly visibility scores, competitor benchmarking, and technical health alerts. The value is <em>information</em> — the ability to make informed decisions about marketing investment. For plumbers spending $500–$2,000/month on conventional advertising, the Monitor tier provides a diagnostic that reveals whether that spend is reaching the 31% of consumers using AI search.
+    </p>
+    <p>
+        <strong>Strategic Function:</strong> The Monitor tier serves as the top of the PipeWrench funnel. It creates a low-risk entry point that establishes trust and demonstrates expertise. Historical data from similar B2B service models suggests 15–25% of Monitor subscribers upgrade to higher tiers within 90 days when presented with concrete evidence of revenue leakage.
+    </p>
+    
+    <h4>Tier 2: AI Agent + Monitoring ($499/month)</h4>
+    <p>
+        <strong>Economic Rationale:</strong> The AI Agent tier introduces active revenue protection through automation. The pricing is anchored to the customer's own economics: a plumber receiving 8 calls per day, missing 35% to voicemail, closing 40% of conversations at $450 average job value, loses approximately $28,728/month to missed calls alone. The $499 price represents 1.7% of the protected revenue — a highly favorable ROI.
+    </p>
+    <p>
+        <strong>Value Capture:</strong> The customer receives everything in Monitor plus an AI phone agent that answers calls 24/7, qualifies leads via SMS within 80 milliseconds of missed calls, and books appointments directly into their CRM. The value is <em>automation</em> — the elimination of a known revenue leak through immediate response.
+    </p>
+    <p>
+        <strong>Strategic Function:</strong> This tier represents the first active intervention in the PipeWrench Methodology. It generates immediate, measurable results ("You missed 12 calls this week; we booked 4 of them"), creating the proof-of-concept necessary for Infrastructure tier upsells. The AI Agent also generates structured data interactions — each booked appointment, each SMS conversation, each qualified lead — that feed back into the brand's entity graph, marginally improving AI visibility over time.
+    </p>
+    
+    <h4>Tier 3: Full Infrastructure ($999/month)</h4>
+    <p>
+        <strong>Economic Rationale:</strong> The Infrastructure tier addresses the root cause of AI invisibility rather than its symptoms. It is priced for multi-truck operations where the cost of invisibility compounds across multiple technicians and territories. At $999/month ($11,988 annually), the break-even point is approximately 27 protected leads per year — a threshold most multi-crew operations exceed in the first quarter.
+    </p>
+    <p>
+        <strong>Value Capture:</strong> The customer receives everything in AI Agent plus network-wide schema deployment, llms.txt optimization, ghost page remediation, and weekly intelligence reports. The value is <em>transformation</em> — the systematic elimination of technical barriers to AI discoverability.
+    </p>
+    <p>
+        <strong>Strategic Function:</strong> This tier activates Phase 2 and Phase 3 of the PipeWrench Methodology (Structured Data and Content Authority). It is designed for customers who have experienced the AI Agent's immediate impact and are now ready to invest in compounding visibility gains. The dedicated account manager ensures that schema deployments align with the brand's specific service taxonomy and geographic coverage.
+    </p>
+    
+    <h4>Tier 4: Enterprise ($2,300/month)</h4>
+    <p>
+        <strong>Economic Rationale:</strong> The Enterprise tier is priced for franchise networks, PE-backed portfolios, and multi-market operators where AI visibility is a <em>balance sheet risk</em> rather than a marketing expense. For a 70-location network, $2,300/month ($27,600 annually) represents 0.28% of a $10M revenue base — a rounding error in the context of franchise operations, but a material investment in brand protection.
+    </p>
+    <p>
+        <strong>Value Capture:</strong> The customer receives everything in Infrastructure plus unlimited multi-location dashboard access, franchisee compliance monitoring, custom AI voice clones per location, board-ready monthly reports, API access, and a dedicated success manager with SLA guarantees. The value is <em>moat construction</em> — the establishment of AI visibility dominance that competitors cannot easily replicate.
+    </p>
+    <p>
+        <strong>Strategic Function:</strong> Enterprise engagements activate the full PipeWrench flywheel. The multi-location dashboard provides visibility into territory-level performance, enabling resource reallocation to underperforming markets. Franchisee compliance monitoring ensures that local operators maintain schema and GBP standards. Board-ready reports translate technical metrics into financial language that PE investment committees understand.
+    </p>
+    
+    <div class="callout success">
+        <strong>Pricing Integrity:</strong> These four prices are non-negotiable. Discounting destroys the value signal. If a prospect objects to price, the correct response is not reduction but repositioning: "The Monitor tier at $99 will show you exactly what you're losing. When the math makes sense, upgrade." Enterprise at $2,300 is invite-only — prospects must demonstrate organizational readiness before engagement.
+    </div>
+    
+    <h3>Commission & Territory Economics</h3>
+    <table>
+        <tr>
+            <th>Month</th>
+            <th>Commission Rate</th>
+            <th>Example: $499/mo</th>
+            <th>Example: $2,300/mo</th>
+        </tr>
+        <tr>
+            <td>Month 1</td>
+            <td>20%</td>
+            <td>$99.80</td>
+            <td>$460.00</td>
+        </tr>
+        <tr>
+            <td>Months 2–6</td>
+            <td>10%</td>
+            <td>$49.90/mo</td>
+            <td>$230.00/mo</td>
+        </tr>
+        <tr>
+            <td>Month 7+</td>
+            <td>5% (lifetime)</td>
+            <td>$24.95/mo</td>
+            <td>$115.00/mo</td>
+        </tr>
+    </table>
+    
+    <p>
+        Territory exclusivity — one plumber per market — creates artificial scarcity that accelerates decision velocity. Zip codes are locked upon contract signature. The 48-hour lead exclusivity rule ensures that prospects receive immediate attention without creating indefinite holding patterns.
+    </p>
+</section>
+
+<!-- IMPLEMENTATION -->
+<section id="implementation">
+    <div class="section-label">Section 06</div>
+    <h2>Implementation Protocol: The 48-Hour Sprint</h2>
+    
+    <p class="lead">
+        Speed-to-value is the critical success factor in AI visibility deployment. A plumber who sees measurable results within 48 hours becomes a referral engine. One who waits 90 days for "SEO to kick in" churns. The 48-Hour Sprint is designed to deliver immediate, visible impact while establishing the infrastructure for compound authority accumulation.
+    </p>
+    
+    <h3>Phase 0: Pre-Sprint Intelligence (Day -1)</h3>
+    <p>
+        Before contract signature, the MAVA-8 assessment is run against the customer's domain and top three competitors. This produces a baseline AI Visibility Score, identifies the highest-impact fixes, and generates the "before" snapshot for ROI reporting. The assessment is shared with the customer as a vulnerability report — not a sales document, but a diagnostic.
+    </p>
+    
+    <h3>Day 0: Contract & Kickoff</h3>
+    <ul>
+        <li><strong>Automated welcome sequence</strong> fires via email and SMS, confirming service tier, territory lock, and next steps.</li>
+        <li><strong>Calendar booking link</strong> sent for 30-minute kickoff call within 24 hours.</li>
+        <li><strong>Access credentials collected:</strong> Google Business Profile login, website CMS access (WordPress/Squarespace/Wix/Weebly), competitor list (3 names), CRM preference.</li>
+    </ul>
+    
+    <h3>Day 1: Technical Foundation & Schema Deployment</h3>
+    <ul>
+        <li><strong>Crawler audit:</strong> Verify robots.txt allows GPTBot, anthropic-ai, PerplexityBot. Remediate any blocks.</li>
+        <li><strong>llms.txt creation/update:</strong> Generate or optimize llms.txt with site description, authoritative content paths, and exclusion rules for low-quality pages.</li>
+        <li><strong>LocalBusiness schema deployment:</strong> Deploy per-location JSON-LD with geo coordinates, service area, opening hours, and price range. For single-location plumbers, this is one schema block. For multi-location brands, this is the highest-value intervention.</li>
+        <li><strong>Organization schema:</strong> Verify on homepage with correct name, logo, URL, and sameAs links to GBP and social profiles.</li>
+    </ul>
+    
+    <h3>Day 2: Content Authority & GBP Optimization</h3>
+    <ul>
+        <li><strong>FAQPage schema:</strong> Extract 5–10 common customer questions from existing content or customer service logs. Structure as FAQPage schema with answer-first formatting.</li>
+        <li><strong>GBP optimization:</strong> Update business description, verify service categories, add attributes ("24/7," "emergency service," "free estimates"), and ensure NAP consistency with website.</li>
+        <li><strong>Content freshness signal:</strong> Add "Last Updated" timestamps to key pages. Update at least one high-traffic page with current information.</li>
+    </ul>
+    
+    <h3>Day 3: AI Agent Activation (Tier 2+)</h3>
+    <ul>
+        <li><strong>CloudTalk webhook configuration:</strong> Connect customer's phone number to AI triage system.</li>
+        <li><strong>Missed-call SMS template deployment:</strong> Configure 80ms auto-response with qualification flow (emergency vs. routine, scheduling vs. immediate need).</li>
+        <li><strong>CRM integration:</strong> Connect to ServiceTitan, Housecall Pro, Jobber, or Google Calendar for appointment booking.</li>
+        <li><strong>Test call protocol:</strong> Place 3 test calls to verify AI response quality, SMS delivery, and CRM logging.</li>
+    </ul>
+    
+    <h3>Day 4: Findings Review & Handoff</h3>
+    <ul>
+        <li><strong>10-K style report delivered:</strong> Baseline score, post-deployment score, competitor comparison, and prioritized remediation backlog.</li>
+        <li><strong>Customer training:</strong> 15-minute walkthrough of the dashboard, report interpretation, and escalation procedures.</li>
+        <li><strong>First weekly report scheduled:</strong> Automated delivery every Monday at 8 AM local time.</li>
+    </ul>
+    
+    <div class="callout">
+        <strong>Quality Gate:</strong> No deployment is considered complete without (a) a test call confirming AI agent functionality, (b) Google Rich Results Test passing for LocalBusiness schema, and (c) customer acknowledgment of the 10-K report. These three gates prevent the "deployed but not working" scenario that destroys trust.
+    </div>
+    
+    <h3>Ongoing: The Compound Authority Cycle</h3>
+    <p>
+        Post-sprint, the PipeWrench flywheel enters its compound phase. Monthly MAVA-8 rescoring tracks progress. Schema adjustments respond to algorithm changes. Content updates maintain freshness signals. Competitor monitoring identifies new threats. Each iteration adds velocity to the flywheel, increasing the rate at which visibility compounds.
+    </p>
+    <p>
+        The customer receives monthly board-ready reports (Tier 1–2) or weekly intelligence briefings (Tier 3–4) that translate technical metrics into business language: "You were recommended in 3 AI searches this week, up from 1 last week." "Your competitor in [City] gained visibility; here's our response." "Your Site Quality Score crossed the 0.4 threshold; you are now eligible for rich results."
+    </p>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+    <div class="section-label">Section 07</div>
+    <h2>Conclusion: First-Mover Authority in the AI Search Era</h2>
+    
+    <p class="lead">
+        AI search is not an incremental evolution of traditional search. It is a structural discontinuity that redefines how local service brands acquire customers, how franchise networks protect brand equity, and how private equity firms evaluate digital asset portfolios. The brands that establish AI visibility infrastructure in 2026 will enjoy compounding authority that late entrants cannot easily replicate.
+    </p>
+    
+    <p>
+        The PipeWrench Methodology provides a systematic framework for building this compound authority. The MAVA-8 assessment quantifies the gap between current state and AI discoverability. The four-tier service architecture aligns investment with value capture velocity. The 48-Hour Sprint delivers immediate, measurable results that build trust and justify ongoing investment.
+    </p>
+    
+    <p>
+        But the most important insight is this: AI search is winner-take-most. When a homeowner asks ChatGPT for "the best plumber near me," the AI does not return a ranked list of 10 options. It returns one recommendation, maybe two. The business that achieves AI-dominant visibility captures that recommendation consistently. The business that remains AI-invisible captures nothing.
+    </p>
+    
+    <p>
+        For franchise networks, the stakes are existential. A PE-backed brand with 70 locations cannot afford to have 30 of them invisible to 31% of consumers. The marketing fund collects 2% of revenue from every franchisee; if half those territories are invisible, the fund is not working. The franchisor's obligation to protect brand value across the network is compromised.
+    </p>
+    
+    <p>
+        For individual plumbers, the opportunity is asymmetric. A single-truck operator with AI visibility can outrank a 50-location franchise in local AI search because the AI does not care about scale. It cares about entity resolution — and a single well-structured LocalBusiness schema block can outperform a corporate homepage with missing geo coordinates.
+    </p>
+    
+    <div class="callout success">
+        <strong>The Lever AI Thesis:</strong> We do not sell SEO. We sell <em>visibility in the conversation</em> — the assurance that when a customer asks an AI for a plumber, your name is the one spoken. This is not a marketing expense. It is revenue protection infrastructure. And in the zero-click economy, it is the only kind of visibility that matters.
+    </div>
+    
+    <div class="footer-actions no-print">
+        <a href="https://proplum-ai-audit.netlify.app" class="btn btn-primary">🔍 Run Free AI Visibility Audit</a>
+        <a href="https://proplum-franchise-case-study.netlify.app" class="btn btn-secondary">📊 View 1-Tom-Plumber Case Study</a>
+        <a href="mailto:jeff@proplumnetwork.com?subject=Enterprise%20Inquiry" class="btn btn-secondary">📧 Enterprise Inquiry</a>
+    </div>
+    
+    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-muted); text-align: center;">
+        <p><strong>Lever AI Research</strong> — Published August 2026</p>
+        <p>This whitepaper is a living document. Methodologies, case studies, and pricing are updated as the AI search landscape evolves.</p>
+        <p style="margin-top: 0.5rem; font-style: italic;">"AI search is winner-take-most. Early movers gain compounding authority. The cost of catching up exceeds the cost of leading."</p>
+    </div>
+</section>
+
+</div>
+
+</body>
+</html>

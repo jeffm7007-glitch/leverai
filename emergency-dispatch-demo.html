@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lever AI — Emergency Dispatch Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface-light: #1a1a24;
+      --border: #22222e;
+      --text: #e8e8f0;
+      --text-muted: #8888a0;
+      --accent: #ff3333;
+      --accent-glow: rgba(255,51,51,0.15);
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+      --purple: #a855f7;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .header {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--accent), #ff6666);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px; color: white;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .logo-text h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+    .logo-text p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .badge {
+      background: var(--accent-glow); color: var(--accent);
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      border: 1px solid var(--accent);
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+    .hero {
+      text-align: center; padding: 40px 20px;
+    }
+    .hero h2 {
+      font-size: 36px; font-weight: 800; letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--text) 0%, #aaa 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { font-size: 16px; color: var(--text-muted); margin-top: 8px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    .grid { display: grid; gap: 20px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.2s;
+    }
+    .card:hover { border-color: #333340; }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Simulator */
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .preset-btn {
+      padding: 12px 16px;
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .preset-btn:hover { border-color: var(--accent); background: var(--accent-glow); }
+    .preset-btn .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-emergency { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+    .dot-standard { background: var(--info); }
+    .dot-edge { background: var(--warning); }
+
+    .input-area {
+      margin-bottom: 16px;
+    }
+    .input-area label {
+      display: block;
+      font-size: 12px; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .input-area textarea {
+      width: 100%; min-height: 80px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      color: var(--text);
+      font-size: 14px; font-family: 'Inter', sans-serif;
+      resize: vertical;
+    }
+    .input-area textarea:focus { outline: none; border-color: var(--accent); }
+
+    .run-btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--accent), #ff4444);
+      border: none; border-radius: 10px;
+      color: white; font-size: 15px; font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .run-btn:hover { box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-1px); }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* Terminal */
+    .terminal {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.8;
+      min-height: 200px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .terminal-line {
+      display: flex; gap: 8px;
+      opacity: 0;
+      animation: fadeIn 0.3s forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .timestamp { color: #444; min-width: 60px; }
+    .tag-webhook { color: var(--info); }
+    .tag-ai { color: var(--purple); }
+    .tag-crm { color: var(--warning); }
+    .tag-sms { color: var(--success); }
+    .tag-done { color: var(--accent); font-weight: 700; }
+
+    /* Result Card */
+    .result-card {
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+      display: none;
+    }
+    .result-card.show { display: block; animation: slideUp 0.3s ease; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .result-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .badge-emergency { background: rgba(255,51,51,0.15); color: var(--accent); border: 1px solid var(--accent); }
+    .badge-standard { background: rgba(59,130,246,0.15); color: var(--info); border: 1px solid var(--info); }
+
+    .result-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .meta-item { text-align: center; }
+    .meta-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+    .meta-value { font-size: 18px; font-weight: 700; }
+
+    .sms-preview {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 12px;
+      position: relative;
+    }
+    .sms-preview::before {
+      content: 'AI REPLY SENT TO CUSTOMER';
+      position: absolute; top: -8px; left: 12px;
+      background: var(--surface-light);
+      padding: 0 8px;
+      font-size: 10px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .sms-text { font-size: 14px; color: var(--text); }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+    .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-vs { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    footer {
+      text-align: center; padding: 40px 20px;
+      color: var(--text-muted); font-size: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    .pulse {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+      margin-right: 6px;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">L</div>
+      <div class="logo-text">
+        <h1>Lever AI</h1>
+        <p>Emergency Dispatch Engine — Demo Mode</p>
+      </div>
+    </div>
+    <div class="badge"><span class="pulse"></span>Live Simulator</div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <h2>"The call comes at 2 AM. The system already caught it."</h2>
+      <p>Type any emergency message below and watch Lever AI classify, triage, and respond in under 5 seconds.</p>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Left: Simulator -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🧪 Live Simulator</span>
+        </div>
+
+        <div class="preset-grid">
+          <button class="preset-btn" onclick="setPreset('emergency1')">
+            <span class="dot dot-emergency"></span>
+            Burst pipe flooding garage
+          </button>
+          <button class="preset-btn" onclick="setPreset('emergency2')">
+            <span class="dot dot-emergency"></span>
+            Sewage backing up into tub
+          </button>
+          <button class="preset-btn" onclick="setPreset('standard1')">
+            <span class="dot dot-standard"></span>
+            Faucet quote next Tuesday
+          </button>
+          <button class="preset-btn" onclick="setPreset('standard2')">
+            <span class="dot dot-standard"></span>
+            Water heater maintenance
+          </button>
+          <button class="preset-btn" onclick="setPreset('edge1')">
+            <span class="dot dot-edge"></span>
+            Do you fix main sewer lines?
+          </button>
+          <button class="preset-btn" onclick="setPreset('edge2')">
+            <span class="dot dot-edge"></span>
+            No heat — furnace down
+          </button>
+        </div>
+
+        <div class="input-area">
+          <label>Or type your own message:</label>
+          <textarea id="customerMessage" placeholder="Example: Water is gushing from under my water heater and flooding my garage!">Help! Water is gushing out from under my water heater and flooding my garage!</textarea>
+        </div>
+
+        <button class="run-btn" id="runBtn" onclick="runTriage()">
+          ⚡ Run AI Triage Engine
+        </button>
+
+        <div class="result-card" id="resultCard">
+          <div id="resultBadge" class="result-badge badge-emergency">PRIORITY 1 — EMERGENCY</div>
+          <div class="result-meta">
+            <div class="meta-item">
+              <div class="meta-label">Trade</div>
+              <div class="meta-value" id="resultTrade" style="color: var(--accent);">PLUMBING</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Confidence</div>
+              <div class="meta-value" id="resultConfidence" style="color: var(--success);">99%</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Response Time</div>
+              <div class="meta-value" id="resultTime" style="color: var(--info);">4.2s</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Revenue At Risk</div>
+              <div class="meta-value" id="resultRevenue" style="color: var(--accent);">$1,850</div>
+            </div>
+          </div>
+          <div class="sms-preview">
+            <div class="sms-text" id="resultSMS">
+              "Help is on the way. A plumber is being dispatched now. ETA 25 minutes. Please turn off your main water valve if safe to do so."
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Terminal -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🔧 Under The Hood</span>
+          <span class="card-title" id="terminalStatus">Waiting...</span>
+        </div>
+        <div class="terminal" id="terminal">
+          <div class="terminal-line" style="opacity: 1;">
+            <span class="timestamp">--:--</span>
+            <span style="color: var(--text-muted);">Ready. Select a preset or type a message to begin.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-value" style="color: var(--accent);">4.8s</div>
+        <div class="stat-label">Avg Response Time</div>
+        <div class="stat-vs">vs 42 min industry avg</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" style="color: var(--success);">88%</div>
+        <div class="stat-label">Conversion Rate</div>
+        <div class="stat-vs">First-responder advantage</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" style="color: var(--warning);">$14,200</div>
+        <div class="stat-label">Uncaptured Revenue</div>
+        <div class="stat-vs">Monthly leak for avg plumber</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" style="color: var(--purple);">24/7</div>
+        <div class="stat-label">AI Agent Active</div>
+        <div class="stat-vs">Never sleeps, never calls in sick</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <strong>Lever AI</strong> — AI Emergency Dispatch for Home Service Trades<br>
+    <a href="https://proplumnet.com">proplumnet.com</a> · 📞 <a href="tel:8134913950">813.491.3950</a><br>
+    <span style="color: #444;">Built by Jenni for Jeff ❤️‍🔥</span>
+  </footer>
+
+  <script>
+    const presets = {
+      emergency1: "Help! Water is gushing out from under my water heater and flooding my garage!",
+      emergency2: "Sewage is backing up into my bathtub and overflowing onto the floor! This is disgusting and I need help NOW!",
+      standard1: "Hi, I'm looking to get a quote on replacing my bathroom vanity faucet next Tuesday. No rush.",
+      standard2: "Can you schedule a routine maintenance check on my tankless water heater? It's been a year.",
+      edge1: "Do you guys fix main sewer lines or just drain cleaning? My neighbor said you might do trenchless.",
+      edge2: "My furnace stopped working last night and it's freezing in here. No heat at all."
+    };
+
+    const triageResponses = {
+      emergency: {
+        badge: "PRIORITY 1 — EMERGENCY",
+        badgeClass: "badge-emergency",
+        trade: "PLUMBING",
+        confidence: "99%",
+        time: "3.8s",
+        revenue: "$1,850",
+        sms: "Help is on the way. A plumber is being dispatched now. ETA 25 minutes. Please turn off your main water valve if safe to do so. Reply STOP to opt out."
+      },
+      standard: {
+        badge: "PRIORITY 2 — STANDARD",
+        badgeClass: "badge-standard",
+        trade: "PLUMBING",
+        confidence: "97%",
+        time: "4.1s",
+        revenue: "$0",
+        sms: "Thanks for reaching out! We'd be happy to help with that. Can you share your address and preferred time? We'll get you a quote within 2 hours."
+      },
+      edge: {
+        badge: "PRIORITY 2 — STANDARD",
+        badgeClass: "badge-standard",
+        trade: "PLUMBING",
+        confidence: "84%",
+        time: "4.6s",
+        revenue: "$0",
+        sms: "Yes, we handle both main sewer lines and drain cleaning — including trenchless options. What's the issue you're experiencing? We can schedule a camera inspection."
+      },
+      hvac: {
+        badge: "PRIORITY 1 — EMERGENCY",
+        badgeClass: "badge-emergency",
+        trade: "HVAC",
+        confidence: "96%",
+        time: "4.2s",
+        revenue: "$2,400",
+        sms: "No heat emergency noted. An HVAC tech is being dispatched. ETA 30 minutes. Please ensure access to your furnace room and keep pets secured."
+      }
+    };
+
+    function setPreset(key) {
+      document.getElementById('customerMessage').value = presets[key];
+    }
+
+    function getTime() {
+      const now = new Date();
+      return now.toTimeString().slice(0, 5);
+    }
+
+    function addTerminalLine(timestamp, tag, text, tagClass) {
+      const terminal = document.getElementById('terminal');
+      const line = document.createElement('div');
+      line.className = 'terminal-line';
+      line.innerHTML = `<span class="timestamp">${timestamp}</span><span class="${tagClass}">[${tag}]</span> ${text}`;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function clearTerminal() {
+      const terminal = document.getElementById('terminal');
+      terminal.innerHTML = '';
+    }
+
+    async function runTriage() {
+      const btn = document.getElementById('runBtn');
+      const message = document.getElementById('customerMessage').value.trim();
+      const resultCard = document.getElementById('resultCard');
+      const status = document.getElementById('terminalStatus');
+
+      if (!message) {
+        alert("Type a message first!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = "⚡ Running...";
+      resultCard.classList.remove('show');
+      clearTerminal();
+      status.textContent = "Processing...";
+
+      // Simulate pipeline
+      const startTime = Date.now();
+
+      addTerminalLine(getTime(), "WEBHOOK", "Inbound SMS received from +1 (813) 555-0192", "tag-webhook");
+      await delay(400);
+
+      addTerminalLine(getTime(), "PARSE", `Message body: "${message.slice(0, 60)}${message.length > 60 ? '...' : ''}"`, "tag-webhook");
+      await delay(300);
+
+      addTerminalLine(getTime(), "AI", "Sending to Lever AI Triage Engine...", "tag-ai");
+      await delay(600);
+
+      // Determine response type
+      let type = 'standard';
+      const lower = message.toLowerCase();
+      if (lower.includes('heat') || lower.includes('furnace') || lower.includes('ac ') || lower.includes('hvac')) {
+        type = 'hvac';
+      } else if (lower.includes('gushing') || lower.includes('flooding') || lower.includes('burst') || lower.includes('sewage') || lower.includes('backup') || lower.includes('leaking') || lower.includes('emergency') || lower.includes('help') || lower.includes('now')) {
+        type = 'emergency';
+      } else if (lower.includes('quote') || lower.includes('maintenance') || lower.includes('schedule') || lower.includes('tuesday') || lower.includes('next week')) {
+        type = 'standard';
+      } else if (lower.includes('do you') || lower.includes('fix') || lower.includes('trenchless')) {
+        type = 'edge';
+      }
+
+      const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+      addTerminalLine(getTime(), "AI", `Classification complete in ${elapsed}s — ${type.toUpperCase()}`, "tag-ai");
+      await delay(300);
+
+      addTerminalLine(getTime(), "CRM", "Upserting contact in lead tracker...", "tag-crm");
+      await delay(250);
+      addTerminalLine(getTime(), "CRM", `Tagged: ai-triaged, ${type}, plumbing`, "tag-crm");
+      await delay(200);
+
+      addTerminalLine(getTime(), "SMS", "Crafting AI reply...", "tag-sms");
+      await delay(300);
+      addTerminalLine(getTime(), "SMS", "Reply sent via Telnyx", "tag-sms");
+      await delay(150);
+
+      addTerminalLine(getTime(), "DONE", "Pipeline complete. Customer handled.", "tag-done");
+      status.textContent = "Complete";
+
+      // Show result
+      const resp = triageResponses[type];
+      document.getElementById('resultBadge').textContent = resp.badge;
+      document.getElementById('resultBadge').className = `result-badge ${resp.badgeClass}`;
+      document.getElementById('resultTrade').textContent = resp.trade;
+      document.getElementById('resultConfidence').textContent = resp.confidence;
+      document.getElementById('resultTime').textContent = resp.time;
+      document.getElementById('resultRevenue').textContent = resp.revenue;
+      document.getElementById('resultSMS').textContent = `"${resp.sms}"`;
+
+      resultCard.classList.add('show');
+      btn.disabled = false;
+      btn.innerHTML = "⚡ Run AI Triage Engine";
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+  </script>
+</body>
+</html>

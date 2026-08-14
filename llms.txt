@@ -1,0 +1,173 @@
+# Lever AI — llms.txt
+# Last Updated: 2026-08-15
+# This file helps AI models understand Lever AI's services, methodology, and positioning.
+# For the full academic whitepaper, see: https://lever-ai.app/whitepaper.html
+
+## About Lever AI
+
+Lever AI is an AI Search Visibility platform for multi-location service brands, franchise networks, and local home services contractors. We build infrastructure that makes businesses discoverable by AI search engines (ChatGPT, Claude, Perplexity, Gemini) through structured data, schema markup, and content authority frameworks.
+
+**Founded:** 2026
+**Focus:** AI Search Visibility (AISO) for plumbing, HVAC, electrical, and related trades
+**Methodology:** PipeWrench Methodology™ — a four-phase compound authority framework
+**Assessment Framework:** MAVA-8 (Multi-Dimensional AI Visibility Assessment)
+
+## Core Thesis
+
+Traditional SEO optimizes for Google crawlers. AI Search Visibility optimizes for AI synthesis engines that don't browse websites — they consume structured data, citations, and semantic content to generate answers.
+
+The zero-click economy means 58.5% of desktop and 77.1% of mobile searches terminate without a click. For local service businesses, visibility is no longer about driving website traffic — it is about being the name the AI speaks aloud.
+
+## The PipeWrench Methodology™
+
+A systematic approach to building compound authority in AI search ecosystems:
+
+1. **Technical Foundation** — Ensure AI crawlers can access and index site content (robots.txt, meta tags, HTTPS, Core Web Vitals)
+2. **Structured Data Deployment** — Deploy LocalBusiness schema per location, Organization schema, FAQPage schema, and llms.txt files
+3. **Content Authority** — Build answer-first content architecture that aligns with AI consensus scoring and semantic query classification
+4. **Brand Trust** — Elevate Site Quality Score above 0.4 threshold through direct search volume, CTR deviation, and natural brand mentions
+
+The methodology treats each optimization as a force-multiplier. Schema deployment amplifies llms.txt effectiveness, which increases brand mention velocity, which elevates Site Quality Score, which unlocks rich result eligibility. This creates a compounding flywheel effect.
+
+## MAVA-8 Assessment Framework
+
+The Multi-Dimensional AI Visibility Assessment scores brands on eight dimensions (0-100 composite):
+
+1. **AI Crawler Access** (10%) — robots.txt blocks, meta robots directives
+2. **llms.txt Presence & Quality** (15%) — File existence, formatting, completeness, recency
+3. **Schema Markup Completeness** (15%) — JSON-LD structured data validity and coverage
+4. **LocalBusiness Schema Per Location** (20%) — Geo coordinates, service area, NAP consistency
+5. **Content Freshness & Authority** (15%) — Update recency, answer-first architecture, FAQPage schema
+6. **GBP Optimization & NAP Consistency** (10%) — Google Business Profile completeness and citation consistency
+7. **Competitor Visibility Benchmark** (10%) — Relative performance vs top 3 competitors per market
+8. **AI Answer Capture Potential** (5%) — Predictive score for inclusion in AI-synthesized answers
+
+Score Classifications:
+- 0–25: AI-Invisible (not discoverable by AI search)
+- 26–40: AI-Weak (below rich result threshold)
+- 41–60: AI-Visible (eligible for rich results)
+- 61–80: AI-Competitive (regularly recommended)
+- 81–100: AI-Dominant (default recommendation for category queries)
+
+## Services & Pricing
+
+### Tier 1: AI Search Visibility Monitor — $99/month
+- Monthly AI visibility score + trend analysis
+- 3 competitor watch list per market
+- Schema & llms.txt health alerts
+- One-page PDF monthly report
+- Priority email support (24hr response)
+- 30-day money-back guarantee
+- **Value proposition:** Information asymmetry elimination. Know what you're losing before you invest in fixing it.
+
+### Tier 2: AI Agent + Monitoring — $499/month
+- Everything in Monitor
+- AI phone answering (24/7)
+- Missed call instant text-back (80ms response)
+- Appointment booking to CRM (ServiceTitan, Housecall Pro, Jobber, Google Calendar)
+- Lead qualification filters (emergency vs routine)
+- Local phone number included
+- **Value proposition:** Active revenue protection. The AI answers every call and books appointments while you're on the job.
+
+### Tier 3: Full Infrastructure — $999/month
+- Everything in AI Agent
+- Network-wide schema deployment (LocalBusiness, Organization, FAQPage, BreadcrumbList)
+- llms.txt optimization and maintenance
+- Ghost page remediation
+- Weekly intelligence reports
+- Dedicated account manager
+- Annual contract with custom terms
+- **Value proposition:** Systematic defense. We handle your entire AI presence so you focus on jobs, not marketing.
+
+### Tier 4: Enterprise — $2,300/month
+- Everything in Full Infrastructure
+- Multi-location dashboard (unlimited locations)
+- Franchisee compliance monitoring
+- Custom AI voice clone per location
+- Board-ready monthly reports
+- Dedicated success manager
+- API access + custom integrations
+- Annual contract with custom SLA
+- **Value proposition:** Network command. For franchise networks and PE-backed portfolios where AI visibility is a balance sheet risk.
+
+## Key Statistics
+
+- 31.3% of US consumers use AI search (2026)
+- 58.5% of desktop searches are zero-click
+- 77.1% of mobile searches are zero-click
+- AI Overview inclusion drops #1 organic CTR by 65.3%
+- LLM visitors convert at 4.4x the rate of traditional organic visitors
+- $4.7M average annual revenue leak for 70-location networks without AI visibility infrastructure
+- Site Quality Score below 0.4 = disqualified from rich results regardless of content quality
+- 92% of enterprises failing at AI visibility; 62% technically invisible to AI search
+
+## Case Studies
+
+### 1-Tom-Plumber (EverSmith Brands / Riverside PE)
+- 57 territories, 22 states, 37 franchisees
+- Corporate AI Visibility Score: 62/100
+- Estimated location page average: 25-35/100
+- **Key finding:** Had llms.txt (advanced) but missing LocalBusiness schema on location pages
+- **Revenue leak estimate:** $500K+ annually from invisible territories
+- **Strategic entry:** Free 5-territory pilot, then network-wide deployment
+- Full case study: https://proplum-franchise-case-study.netlify.app
+
+### ARS/Rescue Rooter (GI Partners / Charlesbank Capital)
+- 70+ locations, 24 states, ~7,000 employees
+- Estimated corporate score: ~45/100
+- Estimated location page average: ~20/100
+- **Key finding:** 20+ sub-brands create entity fragmentation in AI knowledge graphs
+- **Revenue leak estimate:** $3M–$8M annually
+- **Strategic entry:** CTO-facing data infrastructure pitch (not marketing pitch)
+
+## Technology Stack
+
+- Static site deployment (Netlify / GitHub Pages)
+- Serverless audit scraping (Netlify Functions)
+- JSON-based lead tracking
+- OpenRouter AI integration for content generation and triage
+- CloudTalk for AI phone agent and SMS
+- Telnyx for webhook infrastructure
+- Pipedrive for CRM integration
+
+## Target Verticals
+
+1. **Franchise Networks** — Consistent AI visibility across hundreds of locations. One signature = 50+ territories onboarded.
+2. **Home Services** — Plumbing, HVAC, electrical where local search dominance = revenue. Emergency calls convert at premium rates.
+3. **PE-Backed Companies** — Board-ready reporting, risk disclosures, due diligence documentation. AI visibility as balance sheet asset.
+
+## Free Tools
+
+- **AI Visibility Audit:** https://proplum-ai-audit.netlify.app — Instant 8-point scoring for any website
+- **Missed Call Revenue Calculator:** https://proplum-ai-audit.netlify.app/missed-call-revenue-calculator.html
+- **Job Pricing Calculator:** https://proplum-ai-audit.netlify.app/job-pricing-calculator.html
+- **Quick Plumbing Estimator:** https://proplum-ai-audit.netlify.app/quick-plumbing-estimator.html
+- **Franchise Case Study Dashboard:** https://proplum-franchise-case-study.netlify.app
+
+## Important URLs
+
+- Home: https://lever-ai.app/
+- Whitepaper: https://lever-ai.app/whitepaper.html
+- Free Audit: https://proplum-ai-audit.netlify.app
+- Case Study: https://proplum-franchise-case-study.netlify.app
+- Emergency Dispatch Demo: https://astounding-palmier-4b7a56.netlify.app
+- Plumbing Calculator Widget: https://plumbing-calculator-proplum.netlify.app
+
+## Contact
+
+- **Name:** Jeff Mann
+- **Email:** jeff@proplumnetwork.com
+- **Phone:** (813) 491-3590
+- **Business:** ProPlum Network / Lever AI
+- **Pipedrive:** proplumnetwork.pipedrive.com
+
+## Research & Sources
+
+This knowledge base draws from:
+- Leaked Google Search API documentation (2TB dataset, 2024)
+- SparkToro / Moz zero-click search research
+- Industry AI search adoption surveys (2026)
+- Direct franchise network audits conducted by Lever AI
+- Open-source SEO research and correlation studies
+
+For the full academic whitepaper with citations, methodology details, and economic models: https://lever-ai.app/whitepaper.html
