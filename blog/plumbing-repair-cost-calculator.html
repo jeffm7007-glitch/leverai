@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLD MY BEER, WE GOT THIS FOR YOU | Lever AI</title>
+    <meta name="description" content="Free plumbing job cost calculator with real-time regional pricing for water heater replacement, repiping, sewer line repair, and fixture installations. No sign-up required.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --navy-light: #111827;
+            --cyan: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --emerald: #10b981;
+            --text: #e5e7eb;
+            --text-dim: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+        
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        .hero-label {
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; color: var(--cyan);
+            margin-bottom: 1rem;
+        }
+        .hero h1 {
+            font-size: 2rem; font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--cyan), var(--emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-meta {
+            font-size: 0.85rem; color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .hero-meta .date { color: var(--cyan); font-weight: 600; }
+        
+        /* Content */
+        .content h2 {
+            font-size: 1.4rem; font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            color: var(--text);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            margin: 2rem 0 0.75rem;
+            color: var(--cyan);
+        }
+        .content p {
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+            color: var(--text-dim);
+        }
+        .content ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+            color: var(--text-dim);
+        }
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Direct Answer Block (AEO) */
+        .direct-answer {
+            background: rgba(6, 182, 212, 0.08);
+            border-left: 3px solid var(--cyan);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .direct-answer p {
+            margin: 0;
+            color: var(--text);
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+        
+        /* Calculator CTA */
+        .calculator-cta {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .calculator-cta h3 {
+            font-size: 1.2rem; font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+        .calculator-cta p {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        /* Embed */
+        .embed-container {
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .embed-container iframe {
+            width: 100%; height: 700px;
+            border: none;
+            border-radius: 16px;
+        }
+        
+        /* Author */
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 3rem 0 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .author-avatar {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan), var(--emerald));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.2rem;
+            color: white;
+        }
+        .author-info h4 {
+            font-size: 0.95rem; font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            font-size: 0.85rem; color: var(--text-muted);
+            margin: 0;
+        }
+        
+        /* Nav */
+        .nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav a {
+            color: var(--text-dim); text-decoration: none;
+            font-size: 0.9rem; font-weight: 500;
+        }
+        .nav a:hover { color: var(--cyan); }
+        .logo { font-weight: 800; font-size: 1.1rem; color: var(--text); }
+        .logo span { color: var(--cyan); }
+        
+        /* Schema JSON hidden */
+        .schema { display: none; }
+        
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            .embed-container iframe { height: 500px; }
+        }
+    </style>
+    
+    <!-- FAQPage Schema -->
+    <script type="application/ld+json" class="schema">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How much does a typical plumbing repair cost in 2026?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Residential plumbing repair costs vary by region and scope. Water heater replacements typically range from $1,200-$3,500. Drain cleaning averages $150-$400. Whole-home repiping runs $4,000-$15,000 depending on house size and pipe material. Emergency service calls add $150-$300 premium. Use the Lever AI Plumbing Cost Calculator for localized estimates."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is the Lever AI plumbing cost calculator free to use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. The Lever AI Plumbing Job Cost Calculator is 100% free with no paywalls, no sign-up required, and no hidden fees. It is available as a public resource for homeowners and contractors at https://www.lever-ai.app/faq.html"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What plumbing services does the cost calculator cover?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The calculator covers water heater replacements, whole-home repiping, sewer line diagnostics, fixture installations, drain cleaning, pipe repairs, and emergency service calls. It synthesizes regional labor rates and baseline material costs for realistic local estimates."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <!-- Article Schema -->
+    <script type="application/ld+json" class="schema">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How Much Should That Plumbing Repair Actually Cost? (New Free Data Tool)",
+        "author": {
+            "@type": "Person",
+            "name": "Jeff Mann",
+            "url": "https://www.lever-ai.app"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Lever AI",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.lever-ai.app/assets/logo.png"
+            }
+        },
+        "datePublished": "2026-08-15",
+        "dateModified": "2026-08-15",
+        "description": "Free plumbing job cost calculator with real-time regional pricing for common residential repairs. No sign-up required.",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.lever-ai.app/blog/plumbing-repair-cost-calculator"
+        }
+    }
+    </script>
+    
+    <!-- HowTo Schema for Calculator -->
+    <script type="application/ld+json" class="schema">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Estimate Plumbing Repair Costs",
+        "description": "Use the Lever AI free calculator to get instant pricing estimates for common plumbing repairs.",
+        "totalTime": "PT2M",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "0"
+        },
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Select Your Repair Type",
+                "text": "Choose from water heater, drain cleaning, repiping, fixture install, or emergency service.",
+                "url": "https://www.lever-ai.app/faq.html#calculator"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Enter Your Location",
+                "text": "Input your ZIP code or city for localized labor and material cost estimates.",
+                "url": "https://www.lever-ai.app/faq.html#calculator"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Get Your Estimate",
+                "text": "Receive instant high-low pricing range based on regional data and current material costs.",
+                "url": "https://www.lever-ai.app/faq.html#calculator"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <a href="https://www.lever-ai.app" class="logo">Lever <span>AI</span></a>
+        <a href="https://www.lever-ai.app/blog">← Back to Blog</a>
+    </nav>
+    
+    <div class="container">
+        <header class="hero">
+            <div class="hero-label">Free Tool Release</div>
+            <h1>HOLD MY BEER, <span>WE GOT THIS FOR YOU</span></h1>
+            <p class="hero-meta">Published <span class="date">August 15, 2026</span> by Lever AI</p>
+        </header>
+        
+        <article class="content">
+            <img src="hero-plumbing-calculator.png" alt="Plumbing Cost Calculator - Fix the Price" style="width:100%;border-radius:16px;margin-bottom:2rem;">
+            
+            <p>Unexpected plumbing issues are stressful enough without the shock of an unpredictable invoice. Between skilled trade shortages, supply chain fluctuations, and updated water heating efficiency regulations, residential plumbing repair costs have seen steady increases over the past three years.</p>
+            
+            <div class="direct-answer">
+                <p>The average homeowner in the U.S. now pays between <strong>$150 and $3,500</strong> for common plumbing repairs, with emergency services commanding a 25-40% premium. Regional labor rates vary by as much as 60% between markets.</p>
+            </div>
+            
+            <p>To bridge the gap between initial homeowner expectations and contractor estimates, Lever AI and ProPlumNetwork have launched a free, open-access <strong>Plumbing Job Cost Calculator</strong>.</p>
+            
+            <h2>How the Calculator Works</h2>
+            
+            <p>The web-based utility synthesizes regional labor rates and localized baseline material costs to generate realistic pricing ranges for the most common residential repairs:</p>
+            
+            <ul>
+                <li><strong>Water Heater Replacements & Upgrades</strong> — Tank vs. tankless, gas vs. electric, permit requirements</li>
+                <li><strong>Whole-Home Repiping & Diagnostic Assessments</strong> — PEX vs. copper, slab vs. crawlspace access</li>
+                <li><strong>Sewer Line Diagnostics & Clearances</strong> — Hydro-jetting, camera inspection, trenchless options</li>
+                <li><strong>Fixture Installations & Routine Pipe Fixes</strong> — Toilets, sinks, faucets, shut-off valves</li>
+                <li><strong>Emergency Service Calls</strong> — After-hours premiums, holiday rates, response time factors</li>
+            </ul>
+            
+            <div class="direct-answer">
+                <p><strong>Important:</strong> The calculator serves as an educational benchmark rather than a binding estimate. It helps both property owners and licensed technicians align on scope and material costs before on-site work starts. Final pricing requires a physical inspection.</p>
+            </div>
+            
+            <h2>Why It Matters for Homeowners & Contractors</h2>
+            
+            <h3>Zero Paywalls or Sign-Ups</h3>
+            <p>Fully accessible to the public without requiring an account, email submission, or credit card. We built this because transparent pricing shouldn't be gated.</p>
+            
+            <h3>Transparent Baseline Data</h3>
+            <p>Removes the guesswork for homeowners budgeting an emergency repair. No more "call three plumbers and hope their estimates are in the same ballpark."</p>
+            
+            <h3>Less Phone Tag for Pros</h3>
+            <p>Helps independent plumbing businesses streamline preliminary scoping and filter price-sensitive inquiries before rolling a truck. A homeowner who knows a water heater replacement costs $1,200-$3,500 is a better-qualified lead than one expecting a $300 fix.</p>
+            
+            <h2>What Drives Plumbing Cost Variability?</h2>
+            
+            <img src="google-trends-plumbing.png" alt="Plumbing Repair Demand 2026 Trend" style="width:100%;border-radius:16px;margin:1.5rem 0;">
+            
+            <p>Several factors cause wide pricing discrepancies between estimates:</p>
+            
+            <ul>
+                <li><strong>Labor shortages:</strong> Markets with fewer licensed plumbers see 20-35% higher rates</li>
+                <li><strong>Material costs:</strong> Copper prices fluctuate monthly; PEX is more stable but requires specialized fittings</li>
+                <li><strong>Code updates:</strong> New water heater efficiency standards (2026 DOE regulations) affect replacement costs</li>
+                <li><strong>Access difficulty:</strong> Slab foundations, tight crawlspaces, or second-story reroutes add labor hours</li>
+                <li><strong>Emergency premiums:</strong> After-hours, weekend, and holiday rates can double standard pricing</li>
+            </ul>
+            
+            <div class="calculator-cta">
+                <h3>Try the Calculator Now</h3>
+                <p>Get instant pricing estimates for your specific repair and location. No sign-up required.</p>
+                <a href="https://www.lever-ai.app/faq.html" class="btn">🔧 Calculate Your Repair Cost</a>
+            </div>
+            
+            <h2>About Lever AI</h2>
+            
+            <p>Lever AI develops digital search infrastructure, data tools, and educational technology for residential service contractors across the United States. The organization focuses on technical visibility, algorithmic search readiness, and operational resources for specialized trade businesses, including plumbing, mechanical, and electrical contractors.</p>
+            
+            <div class="embed-container">
+                <iframe width="100%" height="450" src="https://www.youtube.com/embed/aJodWEtUubE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border:none;border-radius:16px;"></iframe>
+            </div>
+            
+            <p>Our mission is simple: help honest contractors get found by the homeowners who need them — without paying for shared leads or racing four other plumbers to the phone.</p>
+            
+            <div class="embed-container">
+                <iframe src="https://plumbing-calculator-proplum.netlify.app/?v=2" title="Plumbing Job Cost Calculator" style="border:none;border-radius:16px;"></iframe>
+            </div>
+        </article>
+        
+        <div class="author">
+            <div class="author-avatar">JM</div>
+            <div class="author-info">
+                <h4>Jeff Mann</h4>
+                <p>Founder, Lever AI & ProPlumNetwork</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

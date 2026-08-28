@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Free Model Labor Pool | Jeff Mann</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #222;
+            background: #fff;
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+        h1 {
+            font-size: 2.2em;
+            font-weight: 800;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        .subtitle {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .byline {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #000;
+        }
+        h2 {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin: 40px 0 16px;
+        }
+        p {
+            margin-bottom: 16px;
+            font-size: 1.05em;
+        }
+        .lead {
+            font-size: 1.15em;
+            font-weight: 500;
+            color: #000;
+        }
+        .pullquote {
+            background: #000;
+            color: #fff;
+            padding: 30px;
+            margin: 30px 0;
+            font-size: 1.3em;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .pullquote cite {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.75em;
+            font-weight: 400;
+            color: #aaa;
+            font-style: normal;
+        }
+        .numbers {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .number-box {
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .number-box .big {
+            font-size: 2.5em;
+            font-weight: 800;
+            display: block;
+        }
+        .number-box .label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            font-weight: 600;
+            background: #f5f5f5;
+        }
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .section-break {
+            text-align: center;
+            margin: 40px 0;
+            color: #ccc;
+            font-size: 1.5em;
+        }
+        .highlight-box {
+            background: #fffbe6;
+            border-left: 4px solid #f4d03f;
+            padding: 20px;
+            margin: 24px 0;
+        }
+        @media (max-width: 500px) {
+            .numbers { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Free Model Labor Pool</h1>
+        <p class="subtitle">How I run 200 markets for $22/month</p>
+        <p class="byline">Jeff Mann, ProPlum Network &mdash; August 2026</p>
+
+        <p class="lead">I used to think AI was expensive. Then I built something that proved me wrong.</p>
+
+        <p>Four months ago I started ProPlum Network to help plumbers get found online. I needed to manage 200 city pages, respond to reviews, research competitors, and qualify leads. A marketing agency quoted me $3,000 a month. I don't have $3,000 a month. I'm bootstrapping this.</p>
+
+        <p>So I found another way.</p>
+
+        <h2>What I Actually Built</h2>
+
+        <p>It's not fancy. It's 500 lines of JavaScript that does one thing: takes a task, picks the right free AI model for that task, and returns the result.</p>
+
+        <p>That's it. No custom agents. No training. No API bills.</p>
+
+        <p>Here's what happened when I tested it on four real tasks:</p>
+
+        <div class="numbers">
+            <div class="number-box">
+                <span class="big">4</span>
+                <span class="label">Tasks done</span>
+            </div>
+            <div class="number-box">
+                <span class="big">$0</span>
+                <span class="label">Total cost</span>
+            </div>
+            <div class="number-box">
+                <span class="big">45s</span>
+                <span class="label">Time elapsed</span>
+            </div>
+            <div class="number-box">
+                <span class="big">8.6</span>
+                <span class="label">Avg quality score</span>
+            </div>
+        </div>
+
+        <p>Task one: A one-star review for a plumber in Roanoke. "Waited three hours. Never again." The system wrote a response that sounded human, took responsibility, and offered to make it right. Quality score: 9/10.</p>
+
+        <p>Task two: Write a 500-word SEO page for Hendersonville, NC. Done. Quality: 8/10.</p>
+
+        <p>Task three: A lead came in through the calculator. Name, phone, wants a water heater quote. The system scored it priority hot and drafted a text message. Quality: 9/10.</p>
+
+        <p>Task four: Research the competition in High Point, NC. Roto-Rooter, Mr. Rooter, Benjamin Franklin. The system found complaints, gaps, and opportunities. Quality: 8.5/10.</p>
+
+        <p>All of this used to take two hours of human work. I did it in 45 seconds for free.</p>
+
+        <h2>The Models I Use (All Free)</h2>
+
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Free Tier</th>
+                <th>I Use It For</th>
+            </tr>
+            <tr>
+                <td><strong>Gemini 1.5 Flash</strong></td>
+                <td>1,500/day</td>
+                <td>Content, GBP posts, review replies, HTML pages</td>
+            </tr>
+            <tr>
+                <td><strong>Claude 3.5 Sonnet</strong></td>
+                <td>Limited free</td>
+                <td>Customer messages that need empathy and nuance</td>
+            </tr>
+            <tr>
+                <td><strong>Perplexity Sonar</strong></td>
+                <td>100/day</td>
+                <td>Competitor research, market intel, fact-checking</td>
+            </tr>
+            <tr>
+                <td><strong>DeepSeek V4</strong></td>
+                <td>Open source</td>
+                <td>Code, structured data, anything sensitive</td>
+            </tr>
+            <tr>
+                <td><strong>Kimi K3</strong></td>
+                <td>1M tokens/day</td>
+                <td>Long documents, full city analysis in one pass</td>
+            </tr>
+            <tr>
+                <td><strong>Qwen (Alibaba)</strong></td>
+                <td>Open source</td>
+                <td>Spanish content, technical writing, cheap scale</td>
+            </tr>
+        </table>
+
+        <p>Combined capacity: 2,800 tasks per day. Cost: zero dollars.</p>
+
+        <h2>The Part Nobody Talks About</h2>
+
+        <p>Here's what every US agency is missing: the Chinese models are better for specific jobs, and they're free.</p>
+
+        <p>DeepSeek scored 89.2% on standard benchmarks. GPT-4 scored 86.4%. DeepSeek is open source, so I can run it locally when a client doesn't want their data leaving my server. Try doing that with OpenAI.</p>
+
+        <p>Kimi has a context window five times longer than Claude's. I can feed it an entire city's competitive landscape &mdash; fifty reviews, twenty pages, six months of data &mdash; and get analysis back in one shot.</p>
+
+        <p>Qwen is five to seventeen times cheaper than GPT-4 and handles Spanish natively. Hispanic contractors are massively underserved. I can reach them without paying translation costs.</p>
+
+        <p>And here's the kicker: most US agencies don't even know these exist. They're still debating Claude versus GPT-4 while I'm routing tasks to six models they haven't heard of.</p>
+
+        <p>My clients never see model names. They see results. If DeepSeek writes a better Google review response than Gemini, I use it. End of story.</p>
+
+        <div class="pullquote">
+            "Open source with OpenRouter killed the closed system model. Period."
+            <cite>&mdash; Jeff Mann, Founder, ProPlum Network</cite>
+        </div>
+
+        <h2>The Money Part</h2>
+
+        <p>My monthly infrastructure bill:</p>
+
+        <table>
+            <tr>
+                <th>What</th>
+                <th>Cost</th>
+            </tr>
+            <tr>
+                <td>Hosting (Render)</td>
+                <td>$7</td>
+            </tr>
+            <tr>
+                <td>Database (Supabase free)</td>
+                <td>$0</td>
+            </tr>
+                <td>Domain + CDN (Cloudflare free)</td>
+                <td>$0</td>
+            </tr>
+            <tr>
+                <td>SMS (Telnyx credits)</td>
+                <td>$0</td>
+            </tr>
+            <tr>
+                <td>CRM (Pipedrive starter)</td>
+                <td>$15</td>
+            </tr>
+            <tr>
+                <td>AI models</td>
+                <td>$0</td>
+            </tr>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td><strong>$22/month</strong></td>
+            </tr>
+        </table>
+
+        <p>I charge $499/month for the Growth tier. One client covers my infrastructure for twenty-two months. Ten clients is $4,990 a month on $22 of costs.</p>
+
+        <p>That's not a margin. That's a different business entirely.</p>
+
+        <h2>What You Get</h2>
+
+        <table>
+            <tr>
+                <th>Tier</th>
+                <th>Price</th>
+                <th>What's Included</th>
+            </tr>
+            <tr>
+                <td><strong>Starter</strong></td>
+                <td>$299/mo</td>
+                <td>Missed call text-back, 1 high-authority backlink, GBP review responses, 1 location page/month</td>
+            </tr>
+            <tr>
+                <td><strong>Growth</strong></td>
+                <td>$499/mo</td>
+                <td>Everything in Starter + daily GBP monitoring, 4 location pages/month, competitor intel, lead qualification</td>
+            </tr>
+            <tr>
+                <td><strong>Enterprise</strong></td>
+                <td>$999/mo</td>
+                <td>Everything in Growth + unlimited content, custom AI agents, real-time alerts, priority support</td>
+            </tr>
+        </table>
+
+        <p>One Starter client at $299 covers my infrastructure for thirteen months. Ten clients is $2,990 a month on $22 of costs.</p>
+
+        <h2>Why Cloudflare Matters</h2>
+
+        <p>I run this on Cloudflare Workers, which isn't just hosting. It's 300+ cities worldwide. My orchestrator doesn't live in one data center. It lives everywhere my plumbers are.</p>
+
+        <p>And the crazy part? It's free. Workers, Durable Objects, KV storage, queues, analytics &mdash; all free tier. Zero dollars for infrastructure.</p>
+
+        <h2>What I'm Actually Building</h2>
+
+        <p>I'm not building a better marketing agency. Agencies scale linearly. More clients means more people. More people means thinner margins.</p>
+
+        <p>I'm building something that doesn't work that way. Each new client costs me zero extra dollars. The margin stays the same whether I have one client or a hundred.</p>
+
+        <p>The defensibility isn't the code. The code is 500 lines. Anyone can copy it.</p>
+
+        <p>The defensibility is the dataset I've built across 200 cities. The prompts I've tested and refined. The integrations I've wired up. The feedback loop that makes every output better than the last.</p>
+
+        <h2>The Bet</h2>
+
+        <p>Worst case: I learn A2A orchestration, keep my templates, and rebuild in a weekend.</p>
+
+        <p>Best case: I become the category leader in zero-cost AI labor for local businesses. The Amazon Mechanical Turk of AI agents, except the workers are free and the quality is better.</p>
+
+        <p>I'll take that bet.</p>
+
+        <div class="highlight-box" style="text-align:center; margin: 40px 0;">
+            <p style="font-size: 1.2em; font-weight: 600; margin-bottom: 15px;">Want to see what this looks like for your business?</p>
+            <a href="https://calendly.com/jeff-proplum" style="display:inline-block; background:#1a73e8; color:#fff; padding: 14px 32px; border-radius: 6px; text-decoration:none; font-weight: 600; font-size: 1.1em;">📅 Book a Free Strategy Call</a>
+            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">15 minutes. No pitch. Just show and tell.</p>
+        </div>
+
+        <div class="section-break">&bull; &bull; &bull;</div>
+
+        <p><strong>Jeff Mann</strong><br>
+        Founder, ProPlum Network<br>
+        proplumnetwork@gmail.com<br>
+        (813) 491-3590<br>
+        <a href="https://www.lever-ai.app">lever-ai.app</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plumber AI Visibility Progress Tracker | Lever AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --cyan: #06b6d4;
+            --emerald: #10b981;
+            --gold: #f59e0b;
+            --red: #ef4444;
+            --text: #e5e7eb;
+            --text-dim: #9ca3af;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            padding: 2rem 1rem;
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        h1 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        h1 span {
+            background: linear-gradient(135deg, var(--cyan), var(--emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .tracker-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .tracker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .tracker-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .tracker-score {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .tracker-score.good { color: var(--emerald); }
+        .tracker-score.warning { color: var(--gold); }
+        .tracker-score.bad { color: var(--red); }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .progress-fill.good { background: linear-gradient(90deg, var(--emerald), var(--cyan)); }
+        .progress-fill.warning { background: linear-gradient(90deg, var(--gold), var(--red)); }
+        .progress-fill.bad { background: linear-gradient(90deg, var(--red), #ff6b6b); }
+
+        .tracker-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .comparison-box {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .comparison-box h3 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+        .comparison-box.now h3 { color: var(--red); }
+        .comparison-box.optimized h3 { color: var(--emerald); }
+        .comparison-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .comparison-box li {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            padding: 0.35rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .comparison-box li:last-child { border-bottom: none; }
+        .comparison-box li::before {
+            content: '•';
+            margin-right: 0.5rem;
+            color: var(--text-dim);
+        }
+        .comparison-box.now li::before { color: var(--red); }
+        .comparison-box.optimized li::before { color: var(--emerald); }
+
+        .cta {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+        .cta h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .cta p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+            color: white;
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .comparison { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your AI Visibility <span>Progress Tracker</span></h1>
+        <p class="subtitle">See exactly where your plumbing business stands — and what optimized looks like</p>
+
+        <!-- AI Crawler Access -->
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <span class="tracker-title">🤖 AI Crawler Access</span>
+                <span class="tracker-score bad">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill bad" style="width: 5%"></div>
+            </div>
+            <div class="tracker-labels">
+                <span>Blocked</span>
+                <span>Optimized (100%)</span>
+            </div>
+        </div>
+
+        <!-- Google Business Profile -->
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <span class="tracker-title">📍 Google Business Profile</span>
+                <span class="tracker-score warning">45%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill warning" style="width: 45%"></div>
+            </div>
+            <div class="tracker-labels">
+                <span>Basic listing</span>
+                <span>Fully optimized (100%)</span>
+            </div>
+        </div>
+
+        <!-- Schema Markup -->
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <span class="tracker-title">🏷️ Schema Markup</span>
+                <span class="tracker-score bad">10%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill bad" style="width: 10%"></div>
+            </div>
+            <div class="tracker-labels">
+                <span>None / Broken</span>
+                <span>Complete (100%)</span>
+            </div>
+        </div>
+
+        <!-- Review Velocity -->
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <span class="tracker-title">⭐ Review Velocity</span>
+                <span class="tracker-score warning">30%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill warning" style="width: 30%"></div>
+            </div>
+            <div class="tracker-labels">
+                <span>0-1 per month</span>
+                <span>5+ per week (100%)</span>
+            </div>
+        </div>
+
+        <!-- Content Architecture -->
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <span class="tracker-title">📝 Answer-First Content</span>
+                <span class="tracker-score bad">15%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill bad" style="width: 15%"></div>
+            </div>
+            <div class="tracker-labels">
+                <span>Brochure-style</span>
+                <span>AI-optimized (100%)</span>
+            </div>
+        </div>
+
+        <!-- NAP Consistency -->
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <span class="tracker-title">📋 NAP Consistency</span>
+                <span class="tracker-score warning">55%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill warning" style="width: 55%"></div>
+            </div>
+            <div class="tracker-labels">
+                <span>Inconsistent</span>
+                <span>Perfect match (100%)</span>
+            </div>
+        </div>
+
+        <!-- Emergency Signals -->
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <span class="tracker-title">🚨 Emergency Response Signals</span>
+                <span class="tracker-score bad">20%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill bad" style="width: 20%"></div>
+            </div>
+            <div class="tracker-labels">
+                <span>Hidden / Missing</span>
+                <span>Prominent (100%)</span>
+            </div>
+        </div>
+
+        <!-- AI Search Testing -->
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <span class="tracker-title">🔍 AI Search Presence</span>
+                <span class="tracker-score bad">5%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill bad" style="width: 5%"></div>
+            </div>
+            <div class="tracker-labels">
+                <span>Not mentioned</span>
+                <span>Top recommendation (100%)</span>
+            </div>
+        </div>
+
+        <!-- Comparison -->
+        <div class="comparison">
+            <div class="comparison-box now">
+                <h3>⚠️ Your Current State</h3>
+                <ul>
+                    <li>AI crawlers blocked</li>
+                    <li>No structured data</li>
+                    <li>12 Google reviews (stagnant)</li>
+                    <li>Generic website content</li>
+                    <li>Inconsistent NAP data</li>
+                    <li>No emergency call signals</li>
+                    <li>AI search: invisible</li>
+                    <li>Shared lead dependency</li>
+                </ul>
+            </div>
+            <div class="comparison-box optimized">
+                <h3>✅ Optimized State</h3>
+                <ul>
+                    <li>All AI crawlers welcome</li>
+                    <li>Full LocalBusiness schema</li>
+                    <li>5+ new reviews weekly</li>
+                    <li>Answer-first AI content</li>
+                    <li>Perfect NAP consistency</li>
+                    <li>24/7 emergency prominent</li>
+                    <li>AI search: top recommendation</li>
+                    <li>100% exclusive inbound calls</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta">
+            <h2>Ready to close the gap?</h2>
+            <p>Get a free audit showing your exact scores and a prioritized fix list. No sales pitch — just data.</p>
+            <a href="https://proplum-ai-audit.netlify.app" class="btn">🔍 Run Free AI Visibility Audit</a>
+        </div>
+
+        <div class="disclaimer">
+            <p>Progress scores shown are examples. Your actual scores may vary.<br>
+            Powered by <a href="https://lever-ai.app" style="color: var(--cyan); text-decoration: none;">Lever AI</a> — AI Search Visibility for Local Plumbers</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,3 +1,11 @@
+[build]
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/dialer/:splat"
+  status = 200
+
 [[redirects]]
   from = "/franchises/"
   to = "/franchises/index.html"

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plumbing Calculator Media Kit — Lever AI</title>
+    <meta name="description" content="Pre-packaged media kit for trade publications and influencers. Ready-to-run blurbs, screenshots, and expert quotes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --navy-light: #111827;
+            --cyan: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --emerald: #10b981;
+            --gold: #f59e0b;
+            --text: #f3f4f6;
+            --text-dim: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            background: rgba(11,15,25,0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .header-inner {
+            max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--cyan), #6366f1, #a855f7);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: white; font-size: 1.2rem;
+        }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-text span:first-child { font-weight: 800; font-size: 1.1rem; color: white; }
+        .logo-text span:last-child { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        .content {
+            max-width: 800px; margin: 0 auto; padding: 120px 1.5rem 80px;
+        }
+        h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-dim); font-size: 1.1rem; margin-bottom: 2rem; }
+        
+        h2 {
+            font-size: 1.4rem; font-weight: 800; margin: 2.5rem 0 1rem;
+            color: white; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 0.75rem;
+            color: var(--cyan-glow);
+        }
+        p { margin-bottom: 1rem; color: var(--text-dim); }
+        p strong { color: var(--text); }
+        
+        .copy-box {
+            background: var(--navy-light); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1.25rem; margin: 1rem 0;
+            position: relative;
+        }
+        .copy-box pre {
+            color: var(--text-dim); font-family: 'Inter', sans-serif;
+            font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;
+            margin: 0;
+        }
+        .copy-btn {
+            position: absolute; top: 0.75rem; right: 0.75rem;
+            background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.2);
+            color: var(--cyan); padding: 0.25rem 0.75rem; border-radius: 4px;
+            font-size: 0.75rem; font-weight: 600; cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn:hover { background: rgba(6,182,212,0.2); }
+        
+        .tag {
+            display: inline-block; background: rgba(245,158,11,0.1); color: var(--gold);
+            padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem;
+            font-weight: 600; margin-bottom: 1rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(99,102,241,0.08));
+            border: 1px solid rgba(6,182,212,0.2); border-radius: 12px;
+            padding: 1.5rem; margin: 1.5rem 0;
+        }
+        .highlight-box h3 { margin-top: 0; }
+        
+        table {
+            width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 0.75rem 1rem; text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--navy-light); color: var(--cyan-glow);
+            font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        td { color: var(--text-dim); }
+        td strong { color: white; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        
+        .divider {
+            height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 2rem 0;
+        }
+        
+        .footer {
+            padding: 2rem 1.5rem; text-align: center;
+            border-top: 1px solid var(--border); color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-inner { flex-wrap: wrap; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon">L</div>
+                <div class="logo-text">
+                    <span>Lever AI</span>
+                    <span>Media Kit</span>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <div class="content">
+        
+        <span class="tag">📋 Pre-Packaged Value</span>
+        <h1>Plumbing Calculator Outreach Kit</h1>
+        <p class="subtitle">For trade media, influencers, and industry publications. Copy, paste, publish.</p>
+        
+        <div class="divider"></div>
+        
+        <h2>Ready-to-Run Blurb (Copy/Paste)</h2>
+        
+        <h3>Headline Options</h3>
+        <div class="copy-box">
+            <button class="copy-btn" onclick="copyText(this)">Copy</button>
+            <pre><strong>Option A (Direct):</strong>
+Free Plumbing Job Cost Calculator Launches — No Paywall, No Sign-Up
+
+<strong>Option B (Pain-Focused):</strong>
+Tired of Price-Shock Calls? This Free Calculator Pre-Qualifies Homeowners Before They Dial
+
+<strong>Option C (Industry Angle):</strong>
+New Open-Access Tool Helps Plumbers Eliminate "Carbon Paper Quoting" and Win More Jobs</pre>
+        </div>
+        
+        <h3>Body Blurb (150 words — ready to publish)</h3>
+        <div class="copy-box">
+            <button class="copy-btn" onclick="copyText(this)">Copy</button>
+            <pre>Lever AI and ProPlum Network have released a free, web-based Plumbing Job Cost Calculator designed to bridge the gap between homeowner expectations and contractor estimates. The tool synthesizes regional labor rates and localized material baselines to generate realistic pricing ranges for common residential repairs — water heater replacements, whole-home repiping, sewer line diagnostics, and fixture installations.
+
+"The calculator serves as an educational benchmark, not a binding estimate," says founder Jeff Mann. "It helps homeowners budget realistically and helps plumbers avoid the tire-kicker calls that waste dispatch time."
+
+The tool requires no account, no email, and no paywall. Contractors can request embed code to add the calculator directly to their own websites.
+
+<strong>Try it:</strong> https://www.lever-ai.app/faq.html</pre>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <h2>The "Carbon Paper Quoting" Problem</h2>
+        
+        <div class="copy-box">
+            <button class="copy-btn" onclick="copyText(this)">Copy</button>
+            <pre>Most plumbers still quote like it's 1985 — scribbling numbers on carbon paper, hoping the customer doesn't flinch at the price. The problem? Homeowners with zero baseline knowledge call three plumbers, pick the lowest bid, and the pro with fair pricing loses to the guy cutting corners. The calculator fixes this by educating the homeowner <em>before</em> the first phone call, so they understand why a water heater replacement costs $1,200-$2,800 before they ever dial a number.</pre>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <h2>Expert Quote / Q&A Offer</h2>
+        
+        <p><strong>Available for your publication:</strong></p>
+        
+        <p>Jeff Mann, founder of Lever AI and ProPlum Network, is available for:</p>
+        <ul style="margin: 0 0 1rem 1.5rem; color: var(--text-dim);">
+            <li>A short Q&A on why labor transparency is becoming a competitive advantage for plumbing contractors</li>
+            <li>A quote on how AI tools are reshaping lead qualification in the trades</li>
+            <li>A guest perspective on why the "race to the bottom" pricing model is killing independent plumbers</li>
+        </ul>
+        
+        <div class="highlight-box">
+            <h3>Contact</h3>
+            <p><strong>Jeff Mann</strong><br>
+            Founder, Lever AI<br>
+            📧 jeff@tommytheroofer.com<br>
+            🔗 linkedin.com/in/jeff-mann-573b283b1</p>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <h2>Target List with Angles</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Target</th>
+                    <th>Type</th>
+                    <th>Best Angle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>phcppros.com</strong></td>
+                    <td>Trade publication</td>
+                    <td>"Tool of the Month" feature</td>
+                </tr>
+                <tr>
+                    <td><strong>plumbermag.com</strong></td>
+                    <td>Industry magazine</td>
+                    <td>Regulatory/educational angle</td>
+                </tr>
+                <tr>
+                    <td><strong>rogerwakefield.com</strong></td>
+                    <td>Plumbing influencer</td>
+                    <td>Video collab — "Reacting to the calculator"</td>
+                </tr>
+                <tr>
+                    <td><strong>plumbingperspective.com</strong></td>
+                    <td>Trade blog</td>
+                    <td>Guest post + calculator embed</td>
+                </tr>
+                <tr>
+                    <td><strong>milliondollarplumber.com</strong></td>
+                    <td>Podcast/media</td>
+                    <td>Interview guest — "Why most plumbers undercharge"</td>
+                </tr>
+                <tr>
+                    <td><strong>getjobber.com/academy</strong></td>
+                    <td>SaaS + education</td>
+                    <td>Integration angle — pair with Jobber for pre-qualification</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="divider"></div>
+        
+        <h2>Outreach Email Template</h2>
+        
+        <div class="copy-box">
+            <button class="copy-btn" onclick="copyText(this)">Copy</button>
+            <pre><strong>Subject:</strong> Free tool for your readers — no pitch, just value
+
+Hi [Name],
+
+I came across [specific article/show] and thought this might be useful for your audience.
+
+We just built a <strong>free plumbing job cost calculator</strong> — no paywall, no signup, no strings. It gives homeowners realistic price estimates for common repairs (water heaters, repipes, sewer lines) based on regional labor and material data.
+
+<strong>Why plumbers care:</strong> It eliminates "carbon paper quoting" — where homeowners call with zero baseline knowledge, waste your time, and price-shop you against three other guys. This tool educates them <em>before</em> they dial.
+
+<strong>What's in it for you:</strong> I've attached a ready-to-run blurb, screenshots, and an offer for an exclusive quote or short Q&A if you want to feature it. Zero work on your end.
+
+Live tool: https://www.lever-ai.app/faq.html
+
+Let me know if you want the embed code or have questions.
+
+Jeff Mann
+Founder, Lever AI
+jeff@tommytheroofer.com</pre>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <h2>Follow-Up Sequence</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Day 3</strong></td>
+                    <td>Quick follow-up</td>
+                    <td>"Happy to send embed code or jump on a 5-min call"</td>
+                </tr>
+                <tr>
+                    <td><strong>Day 7</strong></td>
+                    <td>Your readers are asking about this</td>
+                    <td>"Your readers are asking about pricing transparency. This tool answers it."</td>
+                </tr>
+                <tr>
+                    <td><strong>Day 14</strong></td>
+                    <td>Last touch</td>
+                    <td>"Calculator's getting traction with [contractor name]. Want in?"</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="divider"></div>
+        
+        <div class="highlight-box">
+            <h3>📸 Calculator Screenshots</h3>
+            <p><strong>Screenshot 1 — Hero Interface:</strong><br>
+            Clean input form with service type dropdown, location field, "Get Estimate" button, result card showing price range.</p>
+            <p><strong>Screenshot 2 — Results View:</strong><br>
+            Low/Mid/High price breakdown, "This is an estimate only" disclaimer, CTA to contact a local pro.</p>
+            <p style="margin: 0;"><em>Capture at: https://www.lever-ai.app/faq.html — press Ctrl+Shift+S or use browser dev tools</em></p>
+        </div>
+        
+    </div>
+    
+    <footer class="footer">
+        &copy; 2026 Lever AI. Built for contractors who don't have time to wait.
+    </footer>
+    
+    <script>
+        function copyText(btn) {
+            const box = btn.parentElement;
+            const text = box.querySelector('pre').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+    </script>
+    
+</body>
+</html>

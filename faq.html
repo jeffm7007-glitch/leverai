@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ — How Plumbing Contractors Get Exclusive High-Ticket Leads | Lever AI</title>
+    <meta name="description" content="Real answers to real questions plumbing contractors ask about lead quality, Google ranking, speed to lead, database reactivation, and agency accountability.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --navy-light: #111827;
+            --cyan: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --emerald: #10b981;
+            --indigo: #6366f1;
+            --gold: #f59e0b;
+            --text: #e5e7eb;
+            --text-dim: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: rgba(11,15,25,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+        }
+        .header-inner {
+            max-width: 1280px; margin: 0 auto;
+            padding: 0.75rem 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-icon {
+            width: 32px; height: 32px; border-radius: 8px;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-text { font-weight: 800; font-size: 0.95rem; color: white; }
+        .header-nav { display: flex; gap: 1.5rem; align-items: center; }
+        .header-nav a { color: var(--text-dim); text-decoration: none; font-size: 0.8rem; font-weight: 500; }
+        .header-nav a:hover { color: var(--cyan); }
+        .header-nav .cta {
+            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+            color: #fff; padding: 0.4rem 1rem; border-radius: 6px;
+            font-weight: 600; font-size: 0.8rem;
+        }
+
+        .hero {
+            padding: 120px 1.5rem 60px;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.12) 0%, transparent 50%),
+                var(--navy);
+        }
+        .hero h1 {
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
+            font-weight: 900; line-height: 1.15;
+            max-width: 700px; margin: 0 auto 1rem;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--cyan-glow), var(--indigo));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 600px; margin: 0 auto;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem 4rem;
+        }
+
+        .faq-section {
+            margin: 3rem 0;
+        }
+        .faq-section-label {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; color: var(--cyan);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .faq-section h2 {
+            font-size: 1.4rem; font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .faq-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.25rem 3rem 1.25rem 1.5rem;
+            cursor: pointer;
+            display: block;
+            text-align: center;
+            font-weight: 600; font-size: 0.95rem;
+            position: relative;
+            transition: background 0.2s;
+        }
+        .faq-question:hover { background: rgba(255,255,255,0.02); }
+        .faq-question .chevron {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: transform 0.2s;
+            font-size: 1.2rem;
+        }
+        .faq-item.open .chevron { transform: translateY(-50%) rotate(180deg); }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.open .faq-answer { max-height: 800px; }
+        .faq-answer-inner {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .faq-answer-inner p { margin-bottom: 0.75rem; }
+        .faq-answer-inner strong { color: var(--text); }
+        .faq-answer-inner ul {
+            margin: 0.75rem 0; padding-left: 1.25rem;
+        }
+        .faq-answer-inner li { margin-bottom: 0.4rem; }
+
+        .callout {
+            background: rgba(6,182,212,0.05);
+            border-left: 3px solid var(--cyan);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+        }
+        .callout strong { color: var(--text); }
+        .callout.gold {
+            background: rgba(245,158,11,0.05);
+            border-left-color: var(--gold);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            margin: 3rem 0;
+            border: 1px solid var(--border);
+        }
+        .cta-section h3 {
+            font-size: 1.5rem; font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+        .cta-section p {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            max-width: 500px; margin-left: auto; margin-right: auto;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.9rem 2rem; border-radius: 8px;
+            font-weight: 700; font-size: 0.9rem;
+            text-decoration: none; transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+            color: white;
+        }
+        .btn:hover { transform: translateY(-2px); }
+
+        .calculator-embed {
+            margin: 2rem auto;
+            max-width: 560px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .calculator-embed iframe {
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 100px 1rem 40px; }
+            .header-nav a:not(.cta) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="https://lever-ai.app" class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" color="white"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+            </div>
+            <span class="logo-text">Lever AI</span>
+        </a>
+        <nav class="header-nav">
+            <a href="https://lever-ai.app">Home</a>
+            <a href="https://proplum-ai-audit.netlify.app">Free Audit</a>
+            <a href="https://calendly.com/jeff-proplum" class="cta">📅 Book a Call</a>
+        </nav>
+    </div>
+</header>
+
+<div class="hero">
+    <h1>The Questions Contractors Actually Ask — <span>Answered Straight</span></h1>
+    <p>No jargon. No "it depends." Just real answers to the questions that keep plumbing business owners up at night.</p>
+    <div class="calculator-embed">
+        <iframe src="https://plumbing-calculator-proplum.netlify.app/?v=2" width="100%" height="700" style="border:none;border-radius:16px;" title="Plumbing Job Pricing Calculator"></iframe>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-top:1rem;">🔧 Try the calculator above — select a job type, adjust labor and materials, and see what high-ticket work actually pays.</p>
+</div>
+
+<div class="container">
+
+<!-- SECTION 1: LEAD QUALITY -->
+<div class="faq-section">
+    <div class="faq-section-label">Lead Quality & Cost</div>
+    <h2>Why am I paying for leads I'm racing 4 other guys to call?</h2>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Why am I paying for shared leads that 5 other contractors get at the same time?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>You're not paying for leads. You're paying for the privilege of racing to the bottom.</strong></p>
+                <p>Platforms like Angi and Thumbtack sell the same lead to 3-5 contractors simultaneously. The homeowner gets 4 calls in 10 minutes. You're now competing on who calls fastest and who quotes lowest. That's not lead generation — that's a gladiator pit.</p>
+                <p>Here's what actually happens: the platform builds their brand ("I found them on Angi"), you build nothing, and the homeowner remembers the platform — not you — next time they need a plumber.</p>
+                <div class="callout">
+                    <strong>The fix:</strong> Exclusive leads that come directly to your phone, pre-qualified for high-ticket work (water heaters, repipes, sewer lines). One contractor per zone. No races. No races to the bottom.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            What should my target Cost Per Acquisition (CPA) actually be?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Emergency repair calls:</strong> $40-80 per booked call is healthy. <strong>High-ticket replacements:</strong> $150-300 per booked call is still extremely profitable when the job is $8,000-15,000.</p>
+                <p>The mistake most contractors make: they optimize for lowest CPA, which attracts $99 drain snaking calls. Then they wonder why their revenue is flat.</p>
+                <p>Real numbers from our contractor partners:</p>
+                <ul>
+                    <li>$99 drain cleaning → $80 CPA → 50% margin → $10 profit</li>
+                    <li>Water heater replacement → $200 CPA → 40% margin → $1,200 profit</li>
+                    <li>Whole-home repipe → $300 CPA → 35% margin → $3,500 profit</li>
+                </ul>
+                <div class="callout gold">
+                    <strong>Bottom line:</strong> A higher CPA for the right job is better than a low CPA for the wrong job. We target high-ticket exclusively.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How do I target high-ticket jobs instead of $99 drain snaking calls?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>You change what the AI recommends when homeowners ask for help.</strong></p>
+                <p>When someone's water heater fails at 11 PM, they don't Google "$99 plumber." They Google "water heater replacement [City]" or "emergency plumber near me." The AI (ChatGPT, Perplexity, Google's AI Overviews) synthesizes an answer from what it knows about local plumbers.</p>
+                <p>If your website and Google Business Profile are optimized for "water heater installation," "tankless water heater," and "whole-home repipe" — and your competitors are optimized for "cheap plumber" — guess who the AI recommends?</p>
+                <p>This is the core of what we do: <strong>we structure your digital presence so AI search engines associate your brand with high-ticket services in your exact service area.</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 2: SEARCH VISIBILITY -->
+<div class="faq-section">
+    <div class="faq-section-label">Search & Local Visibility</div>
+    <h2>How do I rank where it actually matters?</h2>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How do I rank in the Google Local 3-Pack for my actual service area?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>The 3-Pack is won or lost before you ever show up in search results.</strong></p>
+                <p>Google's Local 3-Pack algorithm weighs three things:</p>
+                <ul>
+                    <li><strong>Relevance:</strong> Does your GBP category match the search? ("Plumber" not "Home Services")</li>
+                    <li><strong>Distance:</strong> Are you within the searcher's service area? (This is why your address matters less than your service area definition)</li>
+                    <li><strong>Prominence:</strong> How authoritative is your brand online? (Reviews, citations, website authority, brand mentions)</li>
+                </ul>
+                <p>Most contractors lose on prominence. They have 12 reviews while the franchise down the street has 400. They have no website schema. Their NAP (Name, Address, Phone) is inconsistent across directories.</p>
+                <div class="callout">
+                    <strong>What we do:</strong> Deploy LocalBusiness schema with geo coordinates on every service page, synchronize NAP across 50+ directories, and implement automated review request workflows that trigger right after job completion.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Are Google Local Services Ads (LSAs) better than traditional Google Search Ads (PPC)?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>LSAs are better for trust. PPC is better for volume. You need both, but LSAs first.</strong></p>
+                <p>Google LSAs (the "Google Guaranteed" badge) put you at the very top of search results with a trust badge that says Google vetted you. Homeowners click that before anything else.</p>
+                <p>But LSAs have limits: you pay per lead (not click), Google controls the price, and you can't target specific services. PPC lets you target "tankless water heater installation" specifically, but you're competing in an auction and paying for clicks from tire-kickers.</p>
+                <div class="callout gold">
+                    <strong>Our approach:</strong> We use LSAs for immediate trust and visibility while building your organic AI search authority so you depend less on paid ads over time. The goal is to own your market, not rent it.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How many Google reviews do I need per week to stay ahead of regional franchises?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Velocity matters more than total count.</strong></p>
+                <p>A franchise with 500 reviews from 2019-2023 looks stagnant. A local contractor with 80 reviews, 15 of them from this month, looks active and trustworthy. Google's algorithm weights recency heavily.</p>
+                <p>Target: <strong>3-5 new reviews per week minimum.</strong> 8-10 if you're in a competitive market.</p>
+                <p>The trick isn't asking for reviews. It's <em>when</em> you ask. Right after you solve their emergency, while the relief is still fresh — that's when you send the review request. We automate this with SMS that triggers when your tech marks the job complete.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 3: SPEED TO LEAD -->
+<div class="faq-section">
+    <div class="faq-section-label">Lead Capture & Speed to Lead</div>
+    <h2>How do I stop losing calls to my competitor?</h2>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How do I stop losing emergency calls when my techs or dispatchers are tied up?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Your competitor answers in 30 seconds. You answer in 5 minutes. The homeowner already booked someone else.</strong></p>
+                <p>Here's the math: <strong>Response time over 2-5 minutes drops close rates by 60-80%.</strong> In emergency plumbing, the first responder wins.</p>
+                <p>Three layers of protection:</p>
+                <ul>
+                    <li><strong>Missed-call text-back:</strong> Caller gets an instant SMS: "We saw you called — emergency? Reply YES and we're dispatching now."</li>
+                    <li><strong>AI after-hours answering:</strong> 24/7 AI that triages emergencies, books appointments, and notifies your on-call tech.</li>
+                    <li><strong>Speed-to-lead automation:</strong> Inbound form fills trigger an instant call to your dispatcher + an SMS to the homeowner within 60 seconds.</li>
+                </ul>
+                <div class="callout">
+                    <strong>The reality:</strong> Most "emergency" calls aren't actually emergencies. The AI filters non-emergencies ("my faucet drips") from true emergencies ("my basement is flooding"), so your techs only get woken up for real emergencies.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            What is the average response time required to actually close an inbound lead?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Under 60 seconds for emergency calls. Under 5 minutes for standard inquiries.</strong></p>
+                <p>Data from thousands of contractor calls:</p>
+                <ul>
+                    <li><strong>0-60 seconds:</strong> 85% contact rate, 45% close rate</li>
+                    <li><strong>1-5 minutes:</strong> 60% contact rate, 30% close rate</li>
+                    <li><strong>5-30 minutes:</strong> 35% contact rate, 15% close rate</li>
+                    <li><strong>30+ minutes:</strong> 10% contact rate, 5% close rate</li>
+                </ul>
+                <p>The homeowner called 3 plumbers. The first one to respond gets the job 70% of the time. It's not about being the best plumber. It's about being the first plumber they talk to.</p>
+                <div class="callout gold">
+                    <strong>Our system:</strong> Every inbound lead triggers an instant call to your dispatcher and an SMS to the homeowner within 60 seconds. No leads sit in an inbox. No forms go unanswered.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 4: REACTIVATION -->
+<div class="faq-section">
+    <div class="faq-section-label">Database Reactivation & Retention</div>
+    <h2>How do I get repeat work without paying for new ads?</h2>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How do I get repeat work out of past customers without paying for new ads?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Your customer database is worth 3-5x more than your ad budget.</strong></p>
+                <p>The average homeowner needs a plumber 2-3 times per year. Water heater maintenance, drain cleaning, fixture upgrades. If you're not systematically staying in front of past customers, you're leaving money on the table — and they're calling your competitor.</p>
+                <p>Three reactivation plays:</p>
+                <ul>
+                    <li><strong>Seasonal SMS campaigns:</strong> "It's water heater flush season — book yours before cold weather hits. Reply FLUSH for $50 off."</li>
+                    <li><strong>Maintenance club:</strong> $15/month for priority scheduling, 10% off repairs, annual inspection. Predictable revenue + locked-in loyalty.</li>
+                    <li><strong>Anniversary touch:</strong> "It's been a year since we fixed your main line. Everything flowing okay? Reply YES for $25 off your next service."</li>
+                </ul>
+                <div class="callout">
+                    <strong>Our system:</strong> We build automated reactivation sequences based on job type and date. A customer who got a water heater install gets a flush reminder at 10 months. A customer who got emergency drain cleaning gets a "preventive maintenance" offer at 90 days.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How do I structure a plumbing maintenance club that homeowners actually buy?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Don't call it a "membership." Call it a "protection plan."</strong></p>
+                <p>Homeowners don't want to join a club. They want to avoid emergency bills at midnight. Frame it around protection, not membership.</p>
+                <p>Winning structure:</p>
+                <ul>
+                    <li><strong>Price:</strong> $15-25/month ($180-300/year)</li>
+                    <li><strong>What they get:</strong> Annual inspection, priority scheduling, 10-15% off repairs, no after-hours fees</li>
+                    <li><strong>What you get:</strong> Predictable monthly revenue, locked-in customer, higher lifetime value</li>
+                </ul>
+                <p>The pitch: "For less than a Netflix subscription, you never pay an after-hours fee again and you get priority scheduling when your neighbor is waiting 3 days."</p>
+                <p>Typical contractor with 200 maintenance club members: <strong>$3,000-5,000/month in predictable recurring revenue</strong> — before they dispatch a single truck.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 5: AGENCY ACCOUNTABILITY -->
+<div class="faq-section">
+    <div class="faq-section-label">Agency & Vendor Accountability</div>
+    <h2>How do I know if my marketing agency is actually delivering?</h2>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How can I tell if my marketing agency is delivering real booked calls or vanity traffic?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>If your agency's report shows "impressions" and "clicks" but not "booked calls," you're buying vanity metrics.</strong></p>
+                <p>The only metrics that matter for a plumbing contractor:</p>
+                <ul>
+                    <li><strong>Booked calls:</strong> How many calls resulted in a scheduled appointment?</li>
+                    <li><strong>Cost per booked call:</strong> Total spend ÷ booked calls</li>
+                    <li><strong>Revenue per booked call:</strong> Average job value × close rate</li>
+                    <li><strong>ROI:</strong> (Revenue - Ad Spend) ÷ Ad Spend</li>
+                </ul>
+                <p>Your agency should be able to tell you: "You spent $2,000 this month. We generated 28 booked calls. Your average job is $800. Your close rate is 40%. You made $8,960. Your ROI is 348%."</p>
+                <p>If they can't connect ad spend to booked revenue, they're hiding something.</p>
+                <div class="callout gold">
+                    <strong>Our transparency:</strong> Every call is recorded and logged. You see exactly how many calls came in, which ones booked, which ones didn't, and why. No vanity metrics. Just booked calls and revenue.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Should I build an in-house dispatch/booking team or outsource my lead generation entirely?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Start outsourced, build in-house once you hit $3M+ revenue.</strong></p>
+                <p>At under $2M, you need every dollar working. Hiring a full-time dispatcher ($40K+ salary + benefits + training + turnover) is expensive. Outsourcing lead generation to a performance-based partner means you only pay for results.</p>
+                <p>The transition point: when you're getting 15+ qualified leads per week consistently. At that volume, a dedicated dispatcher pays for themselves.</p>
+                <p>Even then, <strong>don't outsource your brand.</strong> Own your website. Own your Google Business Profile. Own your customer database. The lead generation partner should feed your system, not replace it.</p>
+                <div class="callout">
+                    <strong>Our model:</strong> We partner with one contractor per zone and feed leads directly into your dispatch system. You own the customer relationship. We own the lead generation. At 15+ leads/week, we help you hire and train a dispatcher.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- SECTION 6: GOOGLE RATINGS -->
+<div class="faq-section">
+    <div class="faq-section-label">Google Ratings & Reviews</div>
+    <h2>How do I own my reputation on Google Maps?</h2>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How do I remove a fake or unfair 1-star review?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>You probably can't remove it. But you can make it irrelevant.</strong></p>
+                <p>Google only removes reviews that violate their policies (spam, off-topic, hate speech, conflict of interest). A bad review from a real customer — even if unfair — stays. Fighting it wastes energy.</p>
+                <p>The strategy: <strong>drown it in good reviews.</strong> One 1-star review among 200 5-star reviews is a blip. One 1-star review among 12 total reviews is a disaster.</p>
+                <p>Response template for unfair reviews (public, professional, brief):</p>
+                <div class="callout">"We're sorry your experience didn't meet expectations. We take feedback seriously — please call us at [NUMBER] so we can make this right. We stand behind our work."</div>
+                <p>Never argue. Never blame. Every response is an ad to the next customer reading your reviews.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Why are my new customer reviews not showing up on my profile?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Google filters reviews aggressively.</strong> Reviews get flagged if:</p>
+                <ul>
+                    <li>The reviewer used the same IP as your business</li>
+                    <li>The reviewer left multiple reviews for the same business</li>
+                    <li>The review contains a URL, phone number, or promotional content</li>
+                    <li>The review came from a brand-new Google account with no other activity</li>
+                    <li>Google's algorithm suspects the review was solicited in bulk</li>
+                </ul>
+                <p>The fix: ask for reviews via SMS (not email), sent 30-60 minutes after job completion, from the customer's own phone. Don't offer incentives. Don't ask from your office WiFi.</p>
+                <div class="callout gold">
+                    <strong>Our system:</strong> Automated SMS review requests triggered when your tech marks the job complete. Each request is personalized with the customer's name and job type. No bulk blasts. No filtering.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Does responding to reviews actually help my ranking?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Yes — but not for the reason you think.</strong></p>
+                <p>Google has never confirmed that review responses are a direct ranking factor. But here's what happens when you respond to every review:</p>
+                <ul>
+                    <li>Your GBP shows "Responds to reviews" — a trust signal to homeowners</li>
+                    <li>You can naturally include location and service keywords in responses</li>
+                    <li>Active engagement signals to Google that your business is alive and managed</li>
+                    <li>Prospective customers see you care — conversion rate goes up</li>
+                </ul>
+                <p>Respond to every review within 24-48 hours. Use the customer's name. Mention the service. Keep it under 3 sentences. This is free marketing.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How many reviews do I need to beat the top plumber in my city?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Velocity beats volume. Recency beats total count.</strong></p>
+                <p>A plumber with 500 reviews from 2019-2023 looks dead. A plumber with 80 reviews, 20 from this month, looks hot.</p>
+                <p>Google's local algorithm weights:</p>
+                <ul>
+                    <li><strong>Review velocity:</strong> How many reviews per week? (Target: 3-5 minimum)</li>
+                    <li><strong>Review recency:</strong> How recent is the latest review? (Target: within 7 days)</li>
+                    <li><strong>Review diversity:</strong> Do reviews mention different services? (Not just "great plumber")</li>
+                    <li><strong>Response rate:</strong> Do you respond to 100% of reviews?</li>
+                </ul>
+                <p>If the top plumber in your city has 200 reviews but only gets 1 per month, you can overtake them in 6 months with 5 reviews per week.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 7: MISSED CALLS -->
+<div class="faq-section">
+    <div class="faq-section-label">Missed Calls & Revenue Leak</div>
+    <h2>How much money am I losing to missed calls?</h2>
+
+    <div class="calculator-embed">
+        <iframe src="https://proplum-ai-audit.netlify.app/missed-call-revenue-calculator.html" width="100%" height="750" style="border:none;border-radius:16px;" title="Missed Call Revenue Calculator"></iframe>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-muted);text-align:center;margin:0.5rem 0 2rem;">☝️ Use the calculator above. Enter your average calls per day, close rate, and job value. See exactly how much missed calls cost you monthly.</p>
+
+    <div class="calculator-embed">
+        <iframe width="100%" height="450" src="https://www.youtube.com/embed/aJodWEtUubE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border:none;border-radius:16px;"></iframe>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-muted);text-align:center;margin:0.5rem 0 2rem;">🎥 Watch: How AI handles emergency calls in real-time</p>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            What is a "missed call text-back" and how does it save an emergency job?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>It's an automated SMS sent the instant you miss a call.</strong></p>
+                <p>The homeowner calls you. You're under a sink. The call goes to voicemail. Before they can dial your competitor, they get this text:</p>
+                <div class="callout">"Hi [Name], we saw you called [Business Name]. Is this an emergency? Reply URGENT and we'll dispatch a tech in under 30 minutes. — [Dispatcher Name]"</div>
+                <p>Result: Instead of moving to the next Google result, the homeowner replies. You now have a live text conversation. You can assess the situation, quote a range, and book the call — all while your tech is still on the job.</p>
+                <p>Recovery rate: <strong>35-50% of missed calls convert to booked jobs</strong> with instant text-back. Without it: 0%.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How can I track which specific Google keyword caused the phone to ring?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Dynamic Number Insertion (DNI).</strong></p>
+                <p>Here's how it works: every visitor to your website sees a unique phone number based on how they found you:</p>
+                <ul>
+                    <li>Google Ads click for "emergency plumber" → sees (555) 010-EMRG</li>
+                    <li>Organic search for "water heater replacement" → sees (555) 010-H2O</li>
+                    <li>Direct visit to your homepage → sees (555) 010-MAIN</li>
+                </ul>
+                <p>All numbers ring the same line. But in your dashboard, you see: "12 calls from emergency plumber campaign, 8 from organic water heater search, 3 from direct."</p>
+                <p>This tells you which keywords actually produce calls — not clicks, not impressions, but <strong>real phone calls</strong>. Kill the campaigns that don't ring. Double down on the ones that do.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Will Google lower my Map Pack ranking if my office misses calls after hours?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Indirectly, yes.</strong></p>
+                <p>Google tracks call-through rates from your GBP. If homeowners click "Call" but hang up after 5 seconds (because it went to voicemail), Google interprets this as a poor user experience. Over time, this can suppress your ranking.</p>
+                <p>More importantly: <strong>every missed call is a lead that went to your competitor.</strong> Even if Google doesn't penalize you directly, the lost revenue is penalty enough.</p>
+                <div class="callout gold">
+                    <strong>The real solution:</strong> 24/7 answering — either AI-powered after-hours triage or a live virtual receptionist. When a homeowner's basement is flooding at 11 PM, they don't leave voicemails. They call the next plumber on Google.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 8: MISSED CALL TEXT BACK VS LIVE RECEPTIONIST -->
+<div class="faq-section">
+    <div class="faq-section-label">Speed-to-Lead Solutions Compared</div>
+    <h2>Missed Call Text-Back vs. Live Virtual Receptionist</h2>
+
+    <div class="faq-item open">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Which is better for my plumbing business?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Depends on your call volume and budget. Here's the honest breakdown:</strong></p>
+
+                <table style="font-size:0.85rem;">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Missed Call Text-Back</th>
+                        <th>Live Virtual Receptionist</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Monthly Cost</strong></td>
+                        <td>$49-99/mo (software)</td>
+                        <td>$300-800/mo (service)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Response Time</strong></td>
+                        <td>Instant (automated SMS)</td>
+                        <td>3-5 rings (human pickup)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>24/7 Coverage</strong></td>
+                        <td>Yes, always on</td>
+                        <td>Yes, with after-hours fees</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Emergency Triage</strong></td>
+                        <td>AI filters non-emergencies</td>
+                        <td>Human asks questions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Booking Appointments</strong></td>
+                        <td>SMS link to self-book</td>
+                        <td>Direct calendar scheduling</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Personal Touch</strong></td>
+                        <td>Low (automated)</td>
+                        <td>High (human conversation)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>1-3 person shops, under $1M</td>
+                        <td>$1M+ shops with dispatch team</td>
+                    </tr>
+                </table>
+
+                <h4 style="color:var(--cyan-glow);margin-top:1.5rem;">The Hybrid Approach (What We Recommend)</h4>
+                <p>Don't choose one — layer them:</p>
+                <ul>
+                    <li><strong>Business hours (7 AM - 6 PM):</strong> Live virtual receptionist answers, books appointments, screens non-emergencies</li>
+                    <li><strong>After hours & weekends:</strong> Missed call text-back + AI triage handles emergencies, defers non-emergencies to morning</li>
+                    <li><strong>Overflow:</strong> When receptionist is on another call, text-back catches the overflow instantly</li>
+                </ul>
+                <p>This gives you human touch when it matters most, automated backup when humans aren't available, and zero missed emergencies.</p>
+                <div class="callout">
+                    <strong>Bottom line:</strong> A live receptionist who misses calls is worse than a text-back that never does. Start with text-back. Add live reception when you can afford both.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 9: SEO -->
+<div class="faq-section">
+    <div class="faq-section-label">SEO & AI Search Visibility</div>
+    <h2>How do I actually show up when homeowners search?</h2>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            How long will it take for my website to show up on the first page of Google?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Local SEO: 3-6 months. AI search visibility: 30-60 days.</strong></p>
+                <p>Traditional organic SEO (blog posts, backlinks, domain authority) is a slow game. Google's sandbox period for new sites is real — expect 3-6 months before you rank for competitive terms.</p>
+                <p>But AI search is different. ChatGPT, Perplexity, and Google's AI Overviews don't rank pages. They synthesize answers from structured data. If you deploy LocalBusiness schema, optimize your GBP, and create answer-first content, you can be recommended by AI search within 30-60 days — even with a new website.</p>
+                <div class="callout gold">
+                    <strong>Our 48-hour sprint:</strong> Schema deployment, GBP optimization, and llms.txt setup can put you in AI search results before traditional SEO even kicks in.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Why is my business showing up in the Map Pack at my office, but disappearing 5 miles away?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Google uses your registered address as the center of a radius.</strong> Beyond that radius, your ranking drops off a cliff.</p>
+                <p>This is why service-area businesses get destroyed by competitors who list multiple addresses (legitimate locations or virtual offices). Google prioritizes proximity — the closer the searcher is to your address, the higher you rank.</p>
+                <p>Two fixes:</p>
+                <ul>
+                    <li><strong>Service area pages:</strong> Create dedicated pages for each city/suburb you serve, with LocalBusiness schema and geo coordinates for that area</li>
+                    <li><strong>GBP service areas:</strong> In your Google Business Profile, explicitly set service areas (up to 20) rather than relying on your address radius</li>
+                </ul>
+                <p>Example: instead of one page for "Plumber in Tampa," create pages for "Plumber in Brandon," "Plumber in Riverview," "Plumber in Wesley Chapel" — each with unique schema, unique content, and unique geo targeting.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Should I create separate pages for every town and suburb I service?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Yes — but don't spam.</strong></p>
+                <p>Google's "doorway page" penalty hits businesses that create 50 near-identical pages with only the city name changed. But legitimate service-area pages — each with unique content about that market — are exactly what Google wants.</p>
+                <p>Good service-area page includes:</p>
+                <ul>
+                    <li>Specific neighborhoods and landmarks in that city</li>
+                    <li>Local plumbing issues common to that area (hard water, old pipes, septic vs sewer)</li>
+                    <li>Customer testimonials from that city</li>
+                    <li>LocalBusiness schema with geo coordinates for that service area</li>
+                    <li>Unique photos (not stock images) from jobs in that area</li>
+                </ul>
+                <p>Rule of thumb: if you can't write 300+ unique words about a city, don't create a page for it. Quality per page beats quantity of pages.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            What keywords have the highest booking intent — "plumber near me" or specific services?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Specific service keywords convert 3-5x higher than generic "plumber near me."</strong></p>
+                <p>Here's the intent hierarchy:</p>
+                <ul>
+                    <li><strong>Emergency + service:</strong> "emergency water heater repair [city]" — highest intent, highest ticket</li>
+                    <li><strong>Specific service:</strong> "tankless water heater installation [city]" — high intent, known need</li>
+                    <li><strong>Brand + service:</strong> "best plumber for sewer line replacement [city]" — comparison shopping</li>
+                    <li><strong>Generic local:</strong> "plumber near me" — low intent, price shopping, often emergency</li>
+                </ul>
+                <p>The best strategy: own the specific service keywords your competitors ignore. Everyone fights for "plumber near me." Few optimize for "whole-home repipe," "hydro jetting," or "tankless water heater install."</p>
+                <div class="callout">
+                    <strong>Our approach:</strong> We research your market's highest-ticket, lowest-competition keywords. Then we structure your entire digital presence — website, GBP, schema, content — to own those keywords before your competitors even know they exist.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            Why am I getting plenty of web traffic but my phone still isn't ringing?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>Traffic doesn't pay bills. Booked calls do.</strong></p>
+                <p>Common reasons for high traffic / low calls:</p>
+                <ul>
+                    <li><strong>Wrong keywords:</strong> You're ranking for "DIY drain unclogging" when homeowners want "emergency plumber"</li>
+                    <li><strong>No click-to-call:</strong> Your phone number is buried in the footer. Mobile users need a thumb-sized call button</li>
+                    <li><strong>Slow load time:</strong> Over 3 seconds = 50% bounce rate on mobile</li>
+                    <li><strong>No trust signals:</strong> No reviews, no license number, no "available 24/7" badge</li>
+                    <li><strong>Generic content:</strong> "We provide quality plumbing services" vs "Water heater installation starting at $1,200 — same-day available"</li>
+                </ul>
+                <p>The fix: optimize for <strong>commercial intent</strong>, not just traffic. Every page should have a clear offer, a visible phone number, and a reason to call now (not later).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            What is the difference between standard SEO and Google Local Service Ads (LSAs)?
+            <span class="chevron">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-answer-inner">
+                <p><strong>SEO is farming. LSAs are hunting. You need both.</strong></p>
+                <p>Standard SEO (organic rankings):</p>
+                <ul>
+                    <li>Takes 3-6 months to see results</li>
+                    <li>Free clicks (no cost per click)</li>
+                    <li>Builds long-term brand authority</li>
+                    <li>Competitive — everyone wants position #1</li>
+                </ul>
+                <p>Google LSAs (Local Services Ads):</p>
+                <ul>
+                    <li>Immediate visibility — live within 48 hours</li>
+                    <li>Pay per lead, not per click</li>
+                    <li>Google Guaranteed badge = instant trust</li>
+                    <li>Appears ABOVE organic results and PPC</li>
+                </ul>
+                <div class="callout gold">
+                    <strong>Strategy:</strong> Run LSAs for immediate lead flow while building organic SEO for long-term dominance. As your organic rankings improve, you can reduce LSA spend. The goal: own the entire first page — LSAs at top, organic #1, Map Pack #1.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+    <h3>Still have questions?</h3>
+    <p>Book a 15-minute call. We'll audit your current lead flow and tell you exactly where the leaks are — no pitch, no pressure.</p>
+    <a href="https://calendly.com/jeff-proplum" class="btn btn-primary">📅 Book a Free Strategy Call</a>
+</div>
+
+</div>
+
+</body>
+</html>
