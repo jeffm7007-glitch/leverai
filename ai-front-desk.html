@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Front Desk for Plumbers — Never Miss Another $5K Job</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      border-radius: 16px;
+      margin-bottom: 40px;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #e94560, #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.2em;
+      color: #b0b0c0;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+    .price-tag {
+      display: inline-block;
+      background: #e94560;
+      color: #fff;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    .price-tag span { font-size: 0.5em; font-weight: normal; opacity: 0.8; }
+    .cta-btn {
+      display: inline-block;
+      background: #00d9ff;
+      color: #0a0a0f;
+      padding: 16px 48px;
+      border-radius: 8px;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: transform 0.2s;
+    }
+    .cta-btn:hover { transform: scale(1.05); }
+    .section { margin-bottom: 50px; }
+    .section h2 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #e94560;
+    }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .pain-card {
+      background: #1a1a2e;
+      padding: 24px;
+      border-radius: 12px;
+      border-left: 4px solid #e94560;
+    }
+    .pain-card h3 { color: #ff6b6b; margin-bottom: 10px; }
+    .pain-card p { color: #b0b0c0; }
+    .what-you-get {
+      background: #1a1a2e;
+      border-radius: 16px;
+      padding: 40px;
+      margin: 30px 0;
+    }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid #2a2a3e;
+      display: flex;
+      align-items: flex-start;
+    }
+    .feature-list li:last-child { border-bottom: none; }
+    .feature-list .check {
+      color: #00d9ff;
+      font-size: 1.4em;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .math-box {
+      background: linear-gradient(135deg, #16213e, #0f3460);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      margin: 30px 0;
+    }
+    .math-box h3 { color: #00d9ff; margin-bottom: 20px; }
+    .math-row {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .math-item { text-align: center; }
+    .math-item .number { font-size: 2em; font-weight: bold; color: #e94560; }
+    .math-item .label { color: #b0b0c0; font-size: 0.9em; }
+    .upgrade-section {
+      background: #1a1a2e;
+      border-radius: 16px;
+      padding: 40px;
+      margin: 40px 0;
+      border: 2px solid #00d9ff;
+    }
+    .upgrade-section h2 { color: #00d9ff; }
+    .sam-preview {
+      background: #0a0a0f;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+      font-family: monospace;
+      border: 1px solid #2a2a3e;
+    }
+    .sam-preview .timestamp { color: #666; font-size: 0.85em; }
+    .sam-preview .caller { color: #e94560; }
+    .sam-preview .agent { color: #00d9ff; }
+    .footer-cta {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-radius: 16px;
+      margin-top: 40px;
+    }
+    .footer-cta h2 { margin-bottom: 20px; }
+    .guarantee {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 30px 0;
+      text-align: center;
+      border: 1px solid #e94560;
+    }
+    .guarantee h3 { color: #e94560; margin-bottom: 10px; }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8em; }
+      .price-tag { font-size: 1.2em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HERO -->
+    <div class="hero">
+      <h1>Your AI Front Desk</h1>
+      <p>Missed calls are missed money. Every plumber loses 5-15 calls a week to voicemail. At $2,500 average ticket, that's $12,500-37,500 walking to your competitor <em>every month</em>.</p>
+      <div class="price-tag">$799<span>/month</span></div>
+      <br>
+      <a href="#start" class="cta-btn">Start Capturing Leads →</a>
+      <p style="margin-top: 16px; font-size: 0.9em; color: #888;">Cancel anytime. First 30 days guaranteed or full refund.</p>
+    </div>
+
+    <!-- THE PAIN -->
+    <div class="section">
+      <h2>The Problem Every Plumber Faces</h2>
+      <div class="pain-grid">
+        <div class="pain-card">
+          <h3>📵 Missed Calls = Missed Jobs</h3>
+          <p>You're on a job. Phone rings. Customer goes to the next plumber in the Google results. Gone forever.</p>
+        </div>
+        <div class="pain-card">
+          <h3>💸 Shared Leads Are a Race to the Bottom</h3>
+          <p>Angi sends the same lead to 4 contractors. First to call wins — usually the cheapest. You don't want cheap jobs.</p>
+        </div>
+        <div class="pain-card">
+          <h3>😴 After-Hours = Dead Zone</h3>
+          <p>6 PM hits. Your phone stops ringing. But homeowners with burst pipes are still searching. They call the guy who answers at 10 PM.</p>
+        </div>
+        <div class="pain-card">
+          <h3>🕐 Speed to Lead Is Everything</h3>
+          <p>Call back in 5 minutes? 78% close rate. Call back in 30 minutes? 15%. After 2 hours? Forget it.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT YOU GET -->
+    <div class="section">
+      <h2>What $799/Month Gets You</h2>
+      <div class="what-you-get">
+        <ul class="feature-list">
+          <li>
+            <span class="check">✓</span>
+            <div><strong>Instant Missed-Call Text-Back</strong><br>Customer calls, you miss it → AI texts them in 8 seconds: "Sorry we missed you — are you dealing with an emergency?"</div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div><strong>Free Plumbing Job Calculator</strong><br>Custom-branded calculator for your website. Homeowners get instant estimates. You get their contact info before they call anyone else.</div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div><strong>Exclusive Lead Pipeline</strong><br>Zero shared leads. Every lead is yours alone. No racing 3 other guys to the bottom.</div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div><strong>Monthly AI Visibility Report</strong><br>We scan your Google Business Profile, reviews, and local search presence. You get a scorecard + exactly what to fix.</div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div><strong>Sam: Your AI Assistant (Preview)</strong><br>Every estimate includes "Book Now with Sam 24/7." When you're ready to upgrade, Sam answers callbacks, qualifies leads, and books demos while you work.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- THE MATH -->
+    <div class="math-box">
+      <h3>🧮 The Math That Matters</h3>
+      <div class="math-row">
+        <div class="math-item">
+          <div class="number">$799</div>
+          <div class="label">Per Month</div>
+        </div>
+        <div class="math-item">
+          <div class="number">$2,500</div>
+          <div class="label">Average Plumbing Job</div>
+        </div>
+        <div class="math-item">
+          <div class="number">3:1</div>
+          <div class="label">Minimum ROI</div>
+        </div>
+      </div>
+      <p style="color: #b0b0c0; margin-top: 20px;">One booked job from recovered missed calls pays for 3 months. Everything after that is profit.</p>
+    </div>
+
+    <!-- UPGRADE: SAM -->
+    <div class="upgrade-section" id="sam">
+      <h2>🔮 Meet Sam: Your AI Voice Agent</h2>
+      <p>Starter gets you text-back + calculator. But the real money is when Sam starts answering your callbacks.</p>
+      
+      <div class="sam-preview">
+        <p class="timestamp">Call transcript — Tuesday 2:47 PM (you were on a water heater job)</p>
+        <p><span class="caller">Caller:</span> "Yeah I got a leak under my sink, water everywhere..."</p>
+        <p><span class="agent">Sam:</span> "I understand this is urgent. First, do you know where your main water shut-off is?"</p>
+        <p><span class="caller">Caller:</span> "Uh, in the basement I think?"</p>
+        <p><span class="agent">Sam:</span> "Go shut that off clockwise right now. I'm paging the on-call tech — they'll call you within 5 minutes. What's your address?"</p>
+        <p class="timestamp" style="margin-top: 16px;">✅ Emergency flagged → Tech notified → Address captured → Lead logged</p>
+      </div>
+
+      <p style="margin-top: 20px;"><strong>Sam is included as a preview</strong> in your Starter calculator. When you're ready, upgrade to Growth ($1,499/mo) and Sam answers every callback, books demos, and never takes a day off.</p>
+      
+      <p style="color: #888; font-size: 0.9em;">*Upgrade available after 30 days. No pressure — we prove it works first.</p>
+    </div>
+
+    <!-- GUARANTEE -->
+    <div class="guarantee">
+      <h3>🛡️ 30-Day "Show Me the Leads" Guarantee</h3>
+      <p>If you don't get at least 5 qualified leads in your first 30 days, I'll refund every penny. No questions, no hassle. I'm that confident this works.</p>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <h2>How It Works (3 Minutes to Live)</h2>
+      <ol style="padding-left: 24px; color: #b0b0c0;">
+        <li><strong>Text FREE CAL to 877-775-0851</strong> — We'll customize your calculator and send your branded link</li>
+        <li><strong>Paste it on your site</strong> — One line of code. Works on WordPress, Wix, Squarespace, anything.</li>
+        <li><strong>Missed calls auto-text back</strong> — Configure your ProPlum number. Done.</li>
+        <li><strong>Watch leads roll in</strong> — Google Sheet updates in real-time. You see every interaction.</li>
+      </ol>
+    </div>
+
+    <!-- FOOTER CTA -->
+    <div class="footer-cta" id="start">
+      <h2>Stop Losing Jobs to Voicemail</h2>
+      <p style="color: #b0b0c0; margin-bottom: 30px;">Every day you wait is another $2,500 job your competitor books.</p>
+      <div class="price-tag">$799<span>/month</span></div>
+      <br>
+      <a href="sms:+18777750851?body=FREE%20CAL" class="cta-btn">Text FREE CAL to 877-775-0851 →</a>
+      <p style="margin-top: 16px; color: #888; font-size: 0.9em;">Or call 813-491-3590 and ask for Jeff</p>
+    </div>
+
+    <p style="text-align: center; color: #555; margin-top: 40px; font-size: 0.85em;">
+      © 2026 ProPlum Network. 1 plumber per market. No shared leads. No spam.
+    </p>
+  </div>
+</body>
+</html>
