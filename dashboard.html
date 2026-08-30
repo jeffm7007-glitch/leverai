@@ -1,458 +1,722 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Answers AI Performance Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Answers AI — Performance Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #1A1A2E;
+  color: #E2E8F0;
+  min-height: 100vh;
+  padding: 24px;
+}
+.container { max-width: 1400px; margin: 0 auto; }
 
- <!-- Dependencies -->
- <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
- <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
- <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
- <script src="https://cdn.tailwindcss.com"></script>
- <script src="https://unpkg.com/recharts/umd/Recharts.min.js" crossorigin></script>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #E94560, #60A5FA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header p { color: #94A3B8; font-size: 14px; margin-top: 4px; }
+.header-controls {
+  display: flex;
+  gap: 12px;
+}
+.header-controls select, .header-controls button {
+  background: #16213E;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #E2E8F0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.header-controls button:hover { background: #1E2A4A; }
 
- <script>
- tailwind.config = {
- theme: {
- extend: {
- colors: {
- primary: '#E94560',
- secondary: '#0F3460',
- background: '#1A1A2E',
- surface: '#16213E',
- 'surface-hover': '#1E2A4A',
- success: '#00D9A5',
- warning: '#FFC107',
- danger: '#FF4757',
- },
- fontFamily: {
- sans: ['Inter', 'sans-serif'],
- }
- }
- }
- }
- </script>
- <style>
- body {
- background-color: #1A1A2E;
- color: #FFFFFF;
- margin: 0;
- overflow-x: hidden;
- }
- .card {
- background-color: #16213E;
- border-radius: 12px;
- padding: 24px;
- border: 1px solid rgba(255,255,255,0.05);
- transition: all 0.2s ease;
- }
- .card:hover {
- transform: scale(1.02);
- background-color: #1E2A4A;
- box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
- }
- .fade-in {
- animation: fadeIn 0.5s ease-out forwards;
- opacity: 0;
- }
- @keyframes fadeIn {
- from { opacity: 0; transform: translateY(10px); }
- to { opacity: 1; transform: translateY(0); }
- }
- .slide-down {
- animation: slideDown 0.3s ease-out forwards;
- }
- @keyframes slideDown {
- from { opacity: 0; transform: translateY(-10px); }
- to { opacity: 1; transform: translateY(0); }
- }
- /* Custom Scrollbar */
- ::-webkit-scrollbar { width: 8px; }
- ::-webkit-scrollbar-track { background: #1A1A2E; }
- ::-webkit-scrollbar-thumb { background: #0F3460; border-radius: 4px; }
- ::-webkit-scrollbar-thumb:hover { background: #E94560; }
- </style>
+/* Cards */
+.grid { display: grid; gap: 24px; margin-bottom: 24px; }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid-3 { grid-template-columns: 2fr 1fr; }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+
+@media (max-width: 1024px) {
+  .grid-3 { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: #16213E;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+/* KPI Cards */
+.kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.kpi-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.kpi-icon.red { background: rgba(233,69,96,0.15); }
+.kpi-icon.blue { background: rgba(96,165,250,0.15); }
+.kpi-icon.green { background: rgba(0,217,165,0.15); }
+.kpi-icon.yellow { background: rgba(255,193,7,0.15); }
+
+.kpi-label { color: #94A3B8; font-size: 13px; margin-bottom: 8px; }
+.kpi-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1;
+}
+.kpi-change {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.kpi-change.up { background: rgba(0,217,165,0.15); color: #00D9A5; }
+
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: #60A5FA;
+  transition: width 1s ease;
+}
+.progress-label {
+  font-size: 11px;
+  color: #94A3B8;
+  margin-top: 6px;
+  text-align: right;
+}
+
+/* Chart containers */
+.chart-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.chart-container {
+  position: relative;
+  height: 260px;
+}
+.chart-container.pie { height: 220px; }
+.chart-container.radar { height: 280px; }
+
+/* Stats row under chart */
+.chart-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.chart-stats .stat-label { font-size: 12px; color: #94A3B8; }
+.chart-stats .stat-value { font-size: 18px; font-weight: 700; margin-top: 4px; }
+.chart-stats .stat-value.green { color: #00D9A5; }
+.chart-stats .stat-value.red { color: #FF4757; }
+
+/* Legend for pie */
+.pie-legend {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.legend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table th {
+  text-align: left;
+  padding: 12px 16px;
+  color: #94A3B8;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.03);
+}
+.data-table th:first-child { border-radius: 8px 0 0 8px; }
+.data-table th:last-child { border-radius: 0 8px 8px 0; }
+.data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge.green { background: rgba(0,217,165,0.15); color: #00D9A5; }
+.badge.gray { background: rgba(255,255,255,0.08); color: #94A3B8; }
+
+/* Radar toggle */
+.radar-toggle {
+  background: #E94560;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.radar-toggle:hover { background: #d63d56; }
+.radar-score {
+  font-size: 14px;
+  color: #94A3B8;
+  margin: 8px 0 16px;
+}
+.radar-score span { color: white; font-weight: 700; }
+.radar-score .boost { color: #00D9A5; margin-left: 8px; }
+
+/* Funnel */
+.funnel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 0;
+}
+.funnel-step {
+  position: relative;
+  text-align: center;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s;
+  cursor: default;
+}
+.funnel-step:hover { transform: scale(1.03); }
+.funnel-step .num {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: monospace;
+  font-weight: 700;
+}
+.funnel-arrow {
+  color: #94A3B8;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Activity feed */
+.activity-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #00D9A5;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.activity-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.activity-dot.green { background: #00D9A5; }
+.activity-dot.yellow { background: #FFC107; }
+.activity-dot.red { background: #FF4757; }
+.activity-text { font-size: 13px; line-height: 1.4; }
+.activity-time { font-size: 11px; color: #94A3B8; margin-top: 4px; }
+
+/* Geo tags */
+.geo-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.geo-tag {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.geo-tag:hover { border-color: #E94560; }
+
+/* Fade in animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+.d1 { animation-delay: 0.05s; }
+.d2 { animation-delay: 0.1s; }
+.d3 { animation-delay: 0.15s; }
+.d4 { animation-delay: 0.2s; }
+</style>
 </head>
 <body>
- <div id="root"></div>
+<div class="container">
 
- <script type="text/babel">
- const { useState, useEffect } = React;
- const {
- AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
- PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar
- } = window.Recharts;
+<!-- Header -->
+<div class="header">
+  <div>
+    <h1>Answers AI</h1>
+    <p>Performance Dashboard</p>
+  </div>
+  <div class="header-controls">
+    <select>
+      <option>Last 30 Days</option>
+      <option>This Quarter</option>
+      <option>Year to Date</option>
+    </select>
+    <button onclick="location.reload()">&#x21bb; Refresh</button>
+  </div>
+</div>
 
- // Custom Hook for Count Up Animation
- const useCountUp = (end, duration = 1500, prefix = "", suffix = "") => {
- const [count, setCount] = useState(0);
+<!-- KPI Row -->
+<div class="grid grid-4">
+  <div class="card fade-in d1">
+    <div class="kpi-header">
+      <div class="kpi-icon red">&#x1F4DE;</div>
+      <span class="kpi-change up">+23%</span>
+    </div>
+    <div class="kpi-label">Inbound Calls</div>
+    <div class="kpi-value" data-count="247">0</div>
+  </div>
 
- useEffect(() => {
- let start = 0;
- const increment = end / (duration / 16);
- const timer = setInterval(() => {
- start += increment;
- if (start >= end) {
- setCount(end);
- clearInterval(timer);
- } else {
- setCount(Math.floor(start));
- }
- }, 16);
- return () => clearInterval(timer);
- }, [end, duration]);
+  <div class="card fade-in d2">
+    <div class="kpi-header">
+      <div class="kpi-icon blue">&#x1F465;</div>
+      <span class="kpi-change up">+18%</span>
+    </div>
+    <div class="kpi-label">Total Leads Generated</div>
+    <div class="kpi-value" data-count="1893">0</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:0%" data-width="75.7%"></div></div>
+    <div class="progress-label">Goal: 2,500 (75.7%)</div>
+  </div>
 
- return `${prefix}${count.toLocaleString()}${suffix}`;
- };
+  <div class="card fade-in d3">
+    <div class="kpi-header">
+      <div class="kpi-icon green">&#x1F4B0;</div>
+      <span style="color:#94A3B8;font-size:12px;">Qualified</span>
+    </div>
+    <div class="kpi-label">Revenue Pipeline</div>
+    <div class="kpi-value" data-count="47200" data-prefix="$">$0</div>
+  </div>
 
- // Icons (Inline SVG for CDN reliability)
- const Icons = {
- Phone: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>,
- Users: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
- Dollar: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>,
- Calculator: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><line x1="8" y1="10" x2="8" y2="10.01"></line><line x1="12" y1="10" x2="12" y2="10.01"></line><line x1="16" y1="10" x2="16" y2="10.01"></line><line x1="8" y1="14" x2="8" y2="14.01"></line><line x1="12" y1="14" x2="12" y2="14.01"></line><line x1="8" y1="18" x2="8" y2="18.01"></line><line x1="12" y1="18" x2="12" y2="18.01"></line></svg>,
- Refresh: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
- };
+  <div class="card fade-in d4">
+    <div class="kpi-header">
+      <div class="kpi-icon yellow">&#x1F9EE;</div>
+      <span class="kpi-change up">18.2% cvr</span>
+    </div>
+    <div class="kpi-label">Calculator Completions</div>
+    <div class="kpi-value" data-count="342">0</div>
+  </div>
+</div>
 
- // --- Data Definitions ---
- const callData = [
- { hour: '12am', mon: 0, tue: 0, wed: 0, avg: 0 }, { hour: '4am', mon: 0, tue: 1, wed: 0, avg: 0.5 },
- { hour: '8am', mon: 12, tue: 14, wed: 13, avg: 13 }, { hour: '12pm', mon: 15, tue: 16, wed: 17, avg: 16 },
- { hour: '4pm', mon: 7, tue: 8, wed: 7, avg: 7.3 }, { hour: '8pm', mon: 5, tue: 6, wed: 6, avg: 5.6 }
- ];
+<!-- Charts Row -->
+<div class="grid grid-3">
+  <div class="card fade-in">
+    <div class="chart-title">Inbound Call Volume by Hour</div>
+    <div class="chart-container">
+      <canvas id="callChart"></canvas>
+    </div>
+    <div class="chart-stats">
+      <div>
+        <div class="stat-label">Peak Hour</div>
+        <div class="stat-value">12:00 PM</div>
+      </div>
+      <div>
+        <div class="stat-label">Answer Rate</div>
+        <div class="stat-value green">78%</div>
+      </div>
+      <div>
+        <div class="stat-label">Missed Today</div>
+        <div class="stat-value red">54</div>
+      </div>
+    </div>
+  </div>
 
- const sourceData = [
- { name: 'RVM', value: 35, color: '#E94560' }, { name: 'Google LSA', value: 25, color: '#0F3460' },
- { name: 'Organic / AI', value: 20, color: '#00D9A5' }, { name: 'Referrals', value: 12, color: '#FFC107' },
- { name: 'Direct', value: 8, color: '#A0A0A0' }
- ];
+  <div class="card fade-in">
+    <div class="chart-title">Where Leads Come From</div>
+    <div class="chart-container pie">
+      <canvas id="sourceChart"></canvas>
+    </div>
+    <div class="pie-legend">
+      <div class="legend-item"><span><span class="legend-dot" style="background:#E94560"></span>RVM</span><strong>35%</strong></div>
+      <div class="legend-item"><span><span class="legend-dot" style="background:#0F3460"></span>Google LSA</span><strong>25%</strong></div>
+      <div class="legend-item"><span><span class="legend-dot" style="background:#00D9A5"></span>Organic / AI</span><strong>20%</strong></div>
+      <div class="legend-item"><span><span class="legend-dot" style="background:#FFC107"></span>Referrals</span><strong>12%</strong></div>
+      <div class="legend-item"><span><span class="legend-dot" style="background:#94A3B8"></span>Direct</span><strong>8%</strong></div>
+    </div>
+  </div>
+</div>
 
- const radarDataBefore = [
- { subject: 'AI Crawler', A: 30 }, { subject: 'Google Profile', A: 45 },
- { subject: 'Schema', A: 20 }, { subject: 'Reviews', A: 35 },
- { subject: 'Content', A: 25 }, { subject: 'NAP', A: 60 },
- { subject: 'Emergency', A: 15 }, { subject: 'AI Search', A: 10 }
- ];
+<!-- Table + Radar Row -->
+<div class="grid grid-2">
+  <div class="card fade-in">
+    <div class="chart-title">SMS Campaign Metrics</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Campaign</th><th>Sent</th><th>Reply Rate</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Free Calculator</strong></td>
+          <td>5,240</td>
+          <td style="color:#00D9A5;font-weight:600;">14.3%</td>
+          <td><span class="badge green">Active</span></td>
+        </tr>
+        <tr>
+          <td><strong>Demo Follow-up</strong></td>
+          <td>1,890</td>
+          <td style="color:#FFC107;font-weight:600;">8.7%</td>
+          <td><span class="badge green">Active</span></td>
+        </tr>
+        <tr>
+          <td><strong>Re-engagement</strong></td>
+          <td>890</td>
+          <td style="color:#FF4757;font-weight:600;">5.2%</td>
+          <td><span class="badge gray">Paused</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
- const radarDataAfter = [
- { subject: 'AI Crawler', A: 95 }, { subject: 'Google Profile', A: 92 },
- { subject: 'Schema', A: 88 }, { subject: 'Reviews', A: 85 },
- { subject: 'Content', A: 90 }, { subject: 'NAP', A: 95 },
- { subject: 'Emergency', A: 80 }, { subject: 'AI Search', A: 75 }
- ];
+  <div class="card fade-in">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <div class="chart-title" style="margin:0;">AI Search Visibility</div>
+      <button class="radar-toggle" onclick="toggleRadar()">Toggle Before/After</button>
+    </div>
+    <div class="radar-score">Score: <span id="radarScore">87.5</span>/100 <span class="boost" id="radarBoost">(+217%)</span></div>
+    <div class="chart-container radar">
+      <canvas id="radarChart"></canvas>
+    </div>
+  </div>
+</div>
 
- const initialActivity = [
- { id: 1, type: 'success', text: 'New inbound call from Austin, TX', time: '2 min ago' },
- { id: 2, type: 'success', text: 'Calculator completed by Mike\'s Plumbing', time: '5 min ago' },
- { id: 3, type: 'warning', text: 'SMS reply: "Tell me more" from Joe\'s Drains', time: '8 min ago' },
- ];
+<!-- Funnel + Activity Row -->
+<div class="grid grid-3">
+  <div class="card fade-in">
+    <div class="chart-title">Lead to Customer Funnel</div>
+    <div class="funnel">
+      <div class="funnel-step" style="width:100%;background:rgba(233,69,96,0.2);border:1px solid #E94560;">
+        &#x1F4DE; RVM Sent<span class="num">5,000</span>
+      </div>
+      <div class="funnel-arrow">&#x2193; 12.5% conversion</div>
+      <div class="funnel-step" style="width:85%;background:rgba(233,69,96,0.35);border:1px solid #E94560;">
+        &#x1F4AC; Text Back<span class="num">625</span>
+      </div>
+      <div class="funnel-arrow">&#x2193; 54.7% conversion</div>
+      <div class="funnel-step" style="width:65%;background:rgba(96,165,250,0.3);border:1px solid #60A5FA;">
+        &#x1F9EE; Calc Done<span class="num">342</span>
+      </div>
+      <div class="funnel-arrow">&#x2193; 19.9% conversion</div>
+      <div class="funnel-step" style="width:45%;background:rgba(0,217,165,0.4);border:1px solid #00D9A5;">
+        &#x1F4C5; Demo Booked<span class="num">68</span>
+      </div>
+      <div class="funnel-arrow">&#x2193; 20.6% conversion</div>
+      <div class="funnel-step" style="width:30%;background:#00D9A5;color:#1A1A2E;box-shadow:0 0 20px rgba(0,217,165,0.3);">
+        &#x1F4B0; Sale Closed<span class="num">14</span>
+      </div>
+    </div>
+  </div>
 
- // --- Components ---
+  <div class="card fade-in">
+    <div class="activity-header">
+      <div class="pulse-dot"></div>
+      <div class="chart-title" style="margin:0;">Live Activity</div>
+    </div>
+    <div id="activityFeed">
+      <div class="activity-item">
+        <div class="activity-dot green"></div>
+        <div>
+          <div class="activity-text">New inbound call from Austin, TX</div>
+          <div class="activity-time">2 min ago</div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-dot green"></div>
+        <div>
+          <div class="activity-text">Calculator completed by Mike's Plumbing</div>
+          <div class="activity-time">5 min ago</div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-dot yellow"></div>
+        <div>
+          <div class="activity-text">SMS reply: "Tell me more" from Joe's Drains</div>
+          <div class="activity-time">8 min ago</div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-dot red"></div>
+        <div>
+          <div class="activity-text">Missed call from Seattle &#x2014; after hours</div>
+          <div class="activity-time">12 min ago</div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-dot green"></div>
+        <div>
+          <div class="activity-text">Demo booked by Rapid Rooter, Denver</div>
+          <div class="activity-time">15 min ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
- const Dashboard = () => {
- const [optimized, setOptimized] = useState(true);
- const [feed, setFeed] = useState(initialActivity);
+<!-- Geo -->
+<div class="card fade-in" style="margin-top:24px;">
+  <div class="chart-title">Lead Geography (Top Markets)</div>
+  <div class="geo-tags">
+    <div class="geo-tag">&#x1F4CD; Houston, TX (342)</div>
+    <div class="geo-tag">&#x1F4CD; Dallas, TX (298)</div>
+    <div class="geo-tag">&#x1F4CD; Austin, TX (210)</div>
+    <div class="geo-tag">&#x1F4CD; Phoenix, AZ (185)</div>
+    <div class="geo-tag">&#x1F4CD; Miami, FL (156)</div>
+    <div class="geo-tag">&#x1F4CD; Denver, CO (134)</div>
+    <div class="geo-tag">&#x1F4CD; Atlanta, GA (128)</div>
+  </div>
+</div>
 
- // Simulate live feed
- useEffect(() => {
- const interval = setInterval(() => {
- const newEvents = [
- { type: 'success', text: 'Demo booked by Rapid Rooter, Denver', time: 'Just now' },
- { type: 'danger', text: 'Missed call from Seattle — after hours', time: 'Just now' },
- { type: 'warning', text: 'Follow-up due: ABC Plumbing', time: 'Just now' }
- ];
- const randomEvent = { ...newEvents[Math.floor(Math.random() * newEvents.length)], id: Date.now() };
- setFeed(prev => [randomEvent, ...prev].slice(0, 8));
- }, 10000);
- return () => clearInterval(interval);
- }, []);
+</div>
 
- return (
- <div className="min-h-screen p-4 md:p-8">
- {/* Header */}
- <header className="flex flex-col md:flex-row justify-between items-center mb-8">
- <div>
- <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400">
- Answers AI
- </h1>
- <p className="text-text-secondary text-sm">Performance Dashboard</p>
- </div>
- <div className="flex gap-4 mt-4 md:mt-0">
- <select className="bg-surface border border-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-primary">
- <option>Last 30 Days</option>
- <option>This Quarter</option>
- <option>Year to Date</option>
- </select>
- <button className="bg-surface hover:bg-surface-hover p-2 rounded-lg border border-gray-700 transition-colors">
- <Icons.Refresh />
- </button>
- </div>
- </header>
+<script>
+// ---- Count-up animation ----
+document.querySelectorAll('.kpi-value[data-count]').forEach(el => {
+  const target = +el.dataset.count;
+  const prefix = el.dataset.prefix || '';
+  const duration = 1500;
+  const start = performance.now();
 
- {/* Section 1: KPI Cards */}
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <div className="card fade-in" style={{animationDelay: '0.1s'}}>
- <div className="flex justify-between items-start mb-4">
- <div className="p-3 bg-primary/20 rounded-lg text-primary"><Icons.Phone /></div>
- <span className="text-success text-sm font-semibold">+23% vs last mo</span>
- </div>
- <h3 className="text-text-secondary text-sm mb-1">Inbound Calls</h3>
- <div className="text-4xl font-extrabold">{useCountUp(247)}</div>
- </div>
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(eased * target);
+    el.textContent = prefix + current.toLocaleString();
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+});
 
- <div className="card fade-in" style={{animationDelay: '0.2s'}}>
- <div className="flex justify-between items-start mb-4">
- <div className="p-3 bg-blue-500/20 rounded-lg text-blue-400"><Icons.Users /></div>
- <span className="text-success text-sm font-semibold">+18% vs last mo</span>
- </div>
- <h3 className="text-text-secondary text-sm mb-1">Total Leads Generated</h3>
- <div className="text-4xl font-extrabold mb-3">{useCountUp(1893)}</div>
- <div className="w-full bg-gray-700 rounded-full h-1.5">
- <div className="bg-blue-400 h-1.5 rounded-full" style={{width: '75.7%'}}></div>
- </div>
- <p className="text-xs text-gray-400 mt-2 text-right">Goal: 2,500 (75.7%)</p>
- </div>
+// ---- Progress bar animation ----
+setTimeout(() => {
+  document.querySelectorAll('.progress-fill[data-width]').forEach(el => {
+    el.style.width = el.dataset.width;
+  });
+}, 300);
 
- <div className="card fade-in" style={{animationDelay: '0.3s'}}>
- <div className="flex justify-between items-start mb-4">
- <div className="p-3 bg-success/20 rounded-lg text-success"><Icons.Dollar /></div>
- <span className="text-gray-400 text-sm">Qualified leads</span>
- </div>
- <h3 className="text-text-secondary text-sm mb-1">Revenue Pipeline</h3>
- <div className="text-4xl font-extrabold">{useCountUp(47200, 1500, "$")}</div>
- </div>
+// ---- Chart.js defaults ----
+Chart.defaults.color = '#94A3B8';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+Chart.defaults.font.family = 'Inter';
 
- <div className="card fade-in" style={{animationDelay: '0.4s'}}>
- <div className="flex justify-between items-start mb-4">
- <div className="p-3 bg-warning/20 rounded-lg text-warning"><Icons.Calculator /></div>
- <span className="text-success text-sm font-semibold">18.2% cvr</span>
- </div>
- <h3 className="text-text-secondary text-sm mb-1">Calculator Completions</h3>
- <div className="text-4xl font-extrabold">{useCountUp(342)}</div>
- </div>
- </div>
+// ---- Call Volume Chart ----
+new Chart(document.getElementById('callChart'), {
+  type: 'line',
+  data: {
+    labels: ['12am','4am','8am','12pm','4pm','8pm'],
+    datasets: [
+      { label: 'Mon', data: [0,0,12,15,7,5], borderColor: '#E94560', backgroundColor: 'rgba(233,69,96,0.1)', fill: true, tension: 0.4, pointRadius: 4 },
+      { label: 'Tue', data: [0,1,14,16,8,6], borderColor: '#0F3460', backgroundColor: 'rgba(15,52,96,0.1)', fill: true, tension: 0.4, pointRadius: 4 },
+      { label: 'Wed', data: [0,0,13,17,7,6], borderColor: '#00D9A5', backgroundColor: 'rgba(0,217,165,0.1)', fill: true, tension: 0.4, pointRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top', align: 'end', labels: { usePointStyle: true, boxWidth: 8 } } },
+    scales: {
+      y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { font: { size: 11 } } },
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+    },
+    interaction: { intersect: false, mode: 'index' }
+  }
+});
 
- {/* Middle Row: Analytics & Sources */}
- <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
- {/* Section 2: Call Analytics (Left 2/3) */}
- <div className="card lg:col-span-2">
- <h2 className="text-lg font-bold mb-6">Inbound Call Volume by Hour</h2>
- <div className="h-72 w-full">
- <ResponsiveContainer width="100%" height="100%">
- <AreaChart data={callData}>
- <defs>
- <linearGradient id="colorMon" x1="0" y1="0" x2="0" y2="1">
- <stop offset="5%" stopColor="#E94560" stopOpacity={0.3}/>
- <stop offset="95%" stopColor="#E94560" stopOpacity={0}/>
- </linearGradient>
- </defs>
- <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
- <XAxis dataKey="hour" stroke="#A0A0A0" fontSize={12} tickLine={false} />
- <YAxis stroke="#A0A0A0" fontSize={12} tickLine={false} axisLine={false} />
- <Tooltip contentStyle={{backgroundColor: '#16213E', borderColor: '#333'}} />
- <Legend />
- <Area type="monotone" dataKey="mon" name="Monday" stroke="#E94560" fillOpacity={1} fill="url(#colorMon)" />
- <Area type="monotone" dataKey="tue" name="Tuesday" stroke="#0F3460" fillOpacity={0.1} />
- <Area type="monotone" dataKey="wed" name="Wednesday" stroke="#00D9A5" fillOpacity={0.1} />
- </AreaChart>
- </ResponsiveContainer>
- </div>
- <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-700">
- <div>
- <p className="text-sm text-gray-400">Peak Hour</p>
- <p className="text-xl font-bold">12:00 PM</p>
- </div>
- <div>
- <p className="text-sm text-gray-400">Avg Answer Rate</p>
- <p className="text-xl font-bold text-success">78%</p>
- </div>
- <div>
- <p className="text-sm text-gray-400">Missed Today</p>
- <p className="text-xl font-bold text-danger">54 <span className="text-xs">+3</span></p>
- </div>
- </div>
- </div>
+// ---- Source Pie Chart ----
+new Chart(document.getElementById('sourceChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['RVM','Google LSA','Organic/AI','Referrals','Direct'],
+    datasets: [{
+      data: [35,25,20,12,8],
+      backgroundColor: ['#E94560','#0F3460','#00D9A5','#FFC107','#94A3B8'],
+      borderWidth: 0,
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '65%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#16213E',
+        titleColor: '#fff',
+        bodyColor: '#94A3B8',
+        borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1,
+        callbacks: {
+          label: (ctx) => ' ' + ctx.label + ': ' + ctx.parsed + '%'
+        }
+      }
+    }
+  }
+});
 
- {/* Section 3: Lead Sources (Right 1/3) */}
- <div className="card">
- <h2 className="text-lg font-bold mb-6">Where Leads Come From</h2>
- <div className="h-64 w-full relative">
- <ResponsiveContainer width="100%" height="100%">
- <PieChart>
- <Pie data={sourceData} innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
- {sourceData.map((entry, index) => (
- <Cell key={`cell-${index}`} fill={entry.color} />
- ))}
- </Pie>
- <Tooltip contentStyle={{backgroundColor: '#16213E', borderColor: '#333'}} />
- </PieChart>
- </ResponsiveContainer>
- <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
- <div className="text-center">
- <p className="text-2xl font-bold">1,893</p>
- <p className="text-xs text-gray-400">Total</p>
- </div>
- </div>
- </div>
- <div className="mt-4 space-y-3">
- {sourceData.map(source => (
- <div key={source.name} className="flex justify-between items-center text-sm">
- <div className="flex items-center gap-2">
- <div className="w-3 h-3 rounded-full" style={{backgroundColor: source.color}}></div>
- <span>{source.name}</span>
- </div>
- <span className="font-semibold">{source.value}%</span>
- </div>
- ))}
- </div>
- </div>
- </div>
+// ---- Radar Chart (Before/After) ----
+let radarOptimized = true;
+const radarCtx = document.getElementById('radarChart');
+const radarDataBefore = [30,45,20,35,25,60,15,10];
+const radarDataAfter = [95,92,88,85,90,95,80,75];
+const radarLabels = ['AI Crawler','Google Profile','Schema','Reviews','Content','NAP','Emergency','AI Search'];
 
- {/* Section 4 & 5: Tables and Radar */}
- <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
- {/* SMS Campaigns */}
- <div className="card overflow-x-auto">
- <h2 className="text-lg font-bold mb-6">SMS Campaign Metrics</h2>
- <table className="w-full text-sm text-left">
- <thead className="text-xs text-gray-400 uppercase bg-surface-hover">
- <tr>
- <th className="px-4 py-3 rounded-l-lg">Campaign</th>
- <th className="px-4 py-3">Sent</th>
- <th className="px-4 py-3">Reply Rate</th>
- <th className="px-4 py-3 rounded-r-lg">Status</th>
- </tr>
- </thead>
- <tbody>
- <tr className="border-b border-gray-700">
- <td className="px-4 py-4 font-medium">Free Calculator</td>
- <td className="px-4 py-4">5,240</td>
- <td className="px-4 py-4 text-success">14.3%</td>
- <td className="px-4 py-4"><span className="bg-success/20 text-success px-2 py-1 rounded text-xs">Active</span></td>
- </tr>
- <tr className="border-b border-gray-700">
- <td className="px-4 py-4 font-medium">Demo Follow-up</td>
- <td className="px-4 py-4">1,890</td>
- <td className="px-4 py-4 text-warning">8.7%</td>
- <td className="px-4 py-4"><span className="bg-success/20 text-success px-2 py-1 rounded text-xs">Active</span></td>
- </tr>
- <tr>
- <td className="px-4 py-4 font-medium">Re-engagement</td>
- <td className="px-4 py-4">890</td>
- <td className="px-4 py-4 text-danger">5.2%</td>
- <td className="px-4 py-4"><span className="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Paused</span></td>
- </tr>
- </tbody>
- </table>
- </div>
+let radarChart = new Chart(radarCtx, {
+  type: 'radar',
+  data: {
+    labels: radarLabels,
+    datasets: [{
+      label: 'Score',
+      data: radarDataAfter,
+      borderColor: '#E94560',
+      backgroundColor: 'rgba(233,69,96,0.3)',
+      pointBackgroundColor: '#E94560',
+      pointBorderColor: '#fff',
+      pointRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 100,
+        ticks: { display: false, backdropColor: 'transparent' },
+        grid: { color: 'rgba(255,255,255,0.08)' },
+        pointLabels: { color: '#94A3B8', font: { size: 10 } }
+      }
+    },
+    plugins: { legend: { display: false } }
+  }
+});
 
- {/* AI Visibility */}
- <div className="card">
- <div className="flex justify-between items-center mb-2">
- <h2 className="text-lg font-bold">AI Search Visibility Score</h2>
- <button
- onClick={() => setOptimized(!optimized)}
- className="text-xs bg-primary hover:bg-primary/80 px-3 py-1 rounded transition-colors"
- >
- Toggle {optimized ? 'Before' : 'After'}
- </button>
- </div>
- <p className="text-sm text-gray-400 mb-4">
- Score: <span className="font-bold text-white">{optimized ? '87.5' : '27.5'}</span>/100
- {optimized && <span className="text-success ml-2">(+217%)</span>}
- </p>
- <div className="h-64 w-full">
- <ResponsiveContainer width="100%" height="100%">
- <RadarChart cx="50%" cy="50%" outerRadius="80%" data={optimized ? radarDataAfter : radarDataBefore}>
- <PolarGrid stroke="rgba(255,255,255,0.1)" />
- <PolarAngleAxis dataKey="subject" tick={{fill: '#A0A0A0', fontSize: 10}} />
- <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
- <Radar name="Score" dataKey="A" stroke="#E94560" fill="#E94560" fillOpacity={0.5} />
- </RadarChart>
- </ResponsiveContainer>
- </div>
- </div>
- </div>
+function toggleRadar() {
+  radarOptimized = !radarOptimized;
+  radarChart.data.datasets[0].data = radarOptimized ? radarDataAfter : radarDataBefore;
+  radarChart.update();
+  document.getElementById('radarScore').textContent = radarOptimized ? '87.5' : '27.5';
+  document.getElementById('radarBoost').style.display = radarOptimized ? 'inline' : 'none';
+}
 
- {/* Bottom Row: Funnel & Activity */}
- <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
- {/* Section 6: Funnel */}
- <div className="card lg:col-span-2">
- <h2 className="text-lg font-bold mb-6">Lead to Customer Funnel</h2>
- <div className="flex flex-col items-center w-full max-w-md mx-auto space-y-2 py-4">
- <div className="w-full bg-primary/20 border border-primary text-center py-3 rounded-t-xl transition-all duration-500 hover:scale-105 relative">
- <span className="font-bold">📞 RVM Sent</span>
- <span className="absolute right-4 font-mono">5,000</span>
- </div>
- <div className="text-xs text-gray-400">↓ 12.5% Conversion</div>
+// ---- Live Activity Simulation ----
+const events = [
+  { text: 'Demo booked by Rapid Rooter, Denver', type: 'green' },
+  { text: 'Missed call from Seattle &#x2014; after hours', type: 'red' },
+  { text: 'Follow-up due: ABC Plumbing', type: 'yellow' },
+  { text: 'Calculator shared by Mike\'s Plumbing', type: 'green' },
+  { text: 'SMS reply: "Pricing?" from Joe\'s Drains', type: 'yellow' },
+  { text: 'New lead from Google LSA &#x2014; Houston', type: 'green' }
+];
 
- <div className="w-[85%] bg-primary/40 border border-primary text-center py-3 rounded transition-all duration-500 hover:scale-105 relative">
- <span className="font-bold">💬 Text Back</span>
- <span className="absolute right-4 font-mono">625</span>
- </div>
- <div className="text-xs text-gray-400">↓ 54.7% Conversion</div>
-
- <div className="w-[65%] bg-blue-500/40 border border-blue-500 text-center py-3 rounded transition-all duration-500 hover:scale-105 relative">
- <span className="font-bold">🧮 Calc Done</span>
- <span className="absolute right-4 font-mono">342</span>
- </div>
- <div className="text-xs text-gray-400">↓ 19.9% Conversion</div>
-
- <div className="w-[45%] bg-success/60 border border-success text-center py-3 rounded transition-all duration-500 hover:scale-105 relative">
- <span className="font-bold">📅 Demo Booked</span>
- <span className="absolute right-4 font-mono">68</span>
- </div>
- <div className="text-xs text-gray-400">↓ 20.6% Conversion</div>
-
- <div className="w-[30%] bg-success border border-success text-center py-3 rounded-b-xl shadow-[0_0_15px_rgba(0,217,165,0.5)] transition-all duration-500 hover:scale-105 relative text-gray-900">
- <span className="font-bold">💰 Sale Closed</span>
- <span className="absolute right-4 font-mono font-bold">14</span>
- </div>
- </div>
- </div>
-
- {/* Section 7: Live Activity Feed */}
- <div className="card flex flex-col">
- <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
- <span className="w-2 h-2 rounded-full bg-success animate-pulse"></span>
- Live Activity
- </h2>
- <div className="flex-1 overflow-y-auto space-y-4 pr-2">
- {feed.map(item => (
- <div key={item.id} className="slide-down flex items-start gap-3 p-3 bg-surface-hover rounded-lg border border-gray-700/50">
- <div className={`mt-1 w-2 h-2 rounded-full shrink-0 ${
- item.type === 'success' ? 'bg-success' :
- item.type === 'warning' ? 'bg-warning' : 'bg-danger'
- }`}></div>
- <div>
- <p className="text-sm font-medium leading-snug">{item.text}</p>
- <p className="text-xs text-gray-400 mt-1">{item.time}</p>
- </div>
- </div>
- ))}
- </div>
- </div>
- </div>
-
- {/* Section 8: Geo Map (Simplified text layout to keep single-file light) */}
- <div className="card mt-6">
- <h2 className="text-lg font-bold mb-4">Lead Geography (Top Markets)</h2>
- <div className="flex flex-wrap gap-3">
- {['Houston, TX (342)', 'Dallas, TX (298)', 'Austin, TX (210)', 'Phoenix, AZ (185)', 'Miami, FL (156)'].map((city, i) => (
- <div key={i} className="px-4 py-2 bg-surface-hover border border-gray-700 rounded-full text-sm hover:border-primary transition-colors cursor-default">
- 📍 {city}
- </div>
- ))}
- </div>
- </div>
-
- </div>
- );
- };
-
- const root = ReactDOM.createRoot(document.getElementById('root'));
- root.render(<Dashboard />);
- </script>
+setInterval(() => {
+  const feed = document.getElementById('activityFeed');
+  const ev = events[Math.floor(Math.random() * events.length)];
+  const item = document.createElement('div');
+  item.className = 'activity-item';
+  item.style.animation = 'fadeInUp 0.3s ease';
+  item.innerHTML = '<div class="activity-dot ' + ev.type + '"></div><div><div class="activity-text">' + ev.text + '</div><div class="activity-time">Just now</div></div>';
+  feed.insertBefore(item, feed.firstChild);
+  if (feed.children.length > 6) feed.lastChild.remove();
+}, 8000);
+</script>
 </body>
 </html>
