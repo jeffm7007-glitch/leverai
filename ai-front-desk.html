@@ -282,13 +282,25 @@
 
     <!-- FOOTER CTA -->
     <div class="footer-cta" id="start">
-      <h2>Stop Losing Jobs to Voicemail</h2>
-      <p style="color: #b0b0c0; margin-bottom: 30px;">Every day you wait is another $2,500 job your competitor books.</p>
-      <div class="price-tag">$799<span>/month</span></div>
-      <br>
-      <a href="sms:+18777750851?body=FREE%20CAL" class="cta-btn">Text FREE CAL to 877-775-0851 →</a>
-      <p style="margin-top: 16px; color: #888; font-size: 0.9em;">Or call 813-491-3590 and ask for Jeff</p>
+      <h2>🚀 Start Free — Get Your Calculator</h2>
+      <p style="color: #b0b0c0; margin-bottom: 20px;">Enter your mobile number. We'll text you a custom plumbing job pricing calculator instantly — no credit card, no sales call.</p>
+      <form onsubmit="handleFreeStart(event)" style="max-width: 400px; margin: 0 auto;">
+        <input type="tel" placeholder="(555) 123-4567" required pattern="[0-9\(\)\-\s]{10,}" style="width: 100%; padding: 14px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 1rem; margin-bottom: 12px; outline: none;">
+        <button type="submit" class="cta-btn" style="width: 100%; border: none; cursor: pointer;">Send My Free Calculator →</button>
+      </form>
+      <p style="margin-top: 20px; color: #888; font-size: 0.85em;">Or text <strong>FREE CAL</strong> to <a href="sms:+18777750851?body=FREE%20CAL" style="color: #e94560;">877-775-0851</a> · Call <a href="tel:813-491-3590" style="color: #e94560;">813-491-3590</a></p>
+      <p style="margin-top: 8px; color: #555; font-size: 0.75em;">By submitting, you agree to receive SMS. Reply STOP anytime.</p>
     </div>
+
+    <script>
+    function handleFreeStart(e) {
+      e.preventDefault();
+      const phone = e.target.querySelector('input[type=tel]').value;
+      localStorage.setItem('proplum_lead_phone', phone);
+      localStorage.setItem('proplum_lead_source', 'ai-front-desk');
+      window.location.href = 'https://plumbing-calculator-proplum.netlify.app?ref=ai-front-desk&phone=' + encodeURIComponent(phone);
+    }
+    </script>
 
     <p style="text-align: center; color: #555; margin-top: 40px; font-size: 0.85em;">
       © 2026 ProPlum Network. 1 plumber per market. No shared leads. No spam.
