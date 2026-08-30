@@ -219,7 +219,88 @@
         .cta-section h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; margin-bottom: 1rem; }
         .cta-section p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin: 0 auto 2rem; }
 
-        footer { padding: 60px 1.5rem 30px; border-top: 1px solid var(--border); }
+        .footer-cta {
+            background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(99,102,241,0.1));
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem auto 3rem;
+            max-width: 600px;
+        }
+        .footer-cta h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .footer-cta p { color: var(--text-dim); margin-bottom: 1.5rem; }
+        .phone-input-group {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .phone-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+        .phone-input::placeholder { color: var(--text-muted); }
+        .phone-input:focus { border-color: var(--cyan); }
+        .btn-submit {
+            background: linear-gradient(135deg, var(--emerald), var(--cyan));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+            white-space: nowrap;
+        }
+        .btn-submit:hover { transform: scale(1.05); }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--navy-light);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .modal p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-close:hover { color: white; }
+        .modal-inner { position: relative; }
         .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
         .footer-brand p { color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; }
         .footer-col h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 1rem; }
@@ -261,7 +342,7 @@
                 <a href="/monitoring/">Pricing</a>
                 <a href="https://proplum-franchise-case-study.netlify.app">Case Study</a>
                 <a href="https://proplum-ai-audit.netlify.app">Free Audit</a>
-                <a href="https://calendly.com/jeff-proplum" class="nav-cta-link">Book a Call</a>
+                <a href="#" class="nav-cta-link" onclick="openFreeModal(); return false;" style="background: linear-gradient(135deg, var(--emerald), #059669);">Start Free →</a>
             </nav>
             <a href="sms:813-491-3590" class="btn-call">Contact</a>
         </div>
@@ -555,6 +636,15 @@
     </section>
 
     <footer>
+            <div class="footer-cta">
+                <h3>🚀 Start Your Free Calculator</h3>
+                <p>Enter your mobile number. We'll text you your custom plumbing job pricing calculator instantly.</p>
+                <form class="phone-input-group" onsubmit="handleFreeStart(event)">
+                    <input type="tel" class="phone-input" placeholder="(555) 123-4567" required pattern="[0-9\(\)\-\s]{10,}">
+                    <button type="submit" class="btn-submit">Send Calculator</button>
+                </form>
+            </div>
+        </div>
         <div class="footer-inner">
             <div class="footer-brand">
                 <a href="#" class="logo">
@@ -595,5 +685,35 @@
             <p>Built for the AI search era.</p>
         </div>
     </footer>
+
+    <!-- Free Start Modal -->
+    <div class="modal-overlay" id="freeModal" onclick="if(event.target===this)closeFreeModal()">
+        <div class="modal">
+            <div class="modal-inner">
+                <button class="modal-close" onclick="closeFreeModal()">&times;</button>
+                <h3>🚀 Start Your Free Calculator</h3>
+                <p>Enter your mobile number. We'll text you your custom plumbing job pricing calculator instantly — no credit card, no sales call.</p>
+                <form onsubmit="handleFreeStart(event)">
+                    <input type="tel" class="phone-input" style="width:100%; margin-bottom:1rem;" placeholder="(555) 123-4567" required pattern="[0-9\(\)\-\s]{10,}">
+                    <button type="submit" class="btn-submit" style="width:100%;">Send My Free Calculator</button>
+                </form>
+                <p style="margin-top:1rem; font-size:0.75rem; color:var(--text-muted);">By submitting, you agree to receive SMS. Reply STOP anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function openFreeModal() { document.getElementById('freeModal').classList.add('active'); }
+    function closeFreeModal() { document.getElementById('freeModal').classList.remove('active'); }
+    function handleFreeStart(e) {
+        e.preventDefault();
+        const phone = e.target.querySelector('input[type=tel]').value;
+        // Store lead info (could be sent to backend)
+        localStorage.setItem('proplum_lead_phone', phone);
+        localStorage.setItem('proplum_lead_source', 'website_footer');
+        // Redirect to calculator
+        window.location.href = 'https://plumbing-calculator-proplum.netlify.app?ref=answers-ai&phone=' + encodeURIComponent(phone);
+    }
+    </script>
 </body>
 </html>
