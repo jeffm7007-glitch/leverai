@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lever AI — AI Search Visibility for Local Plumbers</title>
-    <meta name="description" content="AI search visibility for local plumbers. We audit billion-dollar franchises. We fix your Google Business Profile, schema, and llms.txt so AI search recommends YOU.">
+    <title>Answers AI — AI Search Visibility for Local Plumbers</title>
+    <meta name="description" content="AI search visibility for local plumbers. We audit billion-dollar franchises. We fix your Google Business Profile, schema, and LLM crawler feeds so AI search recommends YOU.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -99,6 +99,55 @@
             text-decoration: none; font-size: 1rem; transition: transform 0.2s; border: none; cursor: pointer;
         }
         .btn-primary:hover { transform: translateY(-2px); }
+        .btn-round {
+            display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 180px; height: 180px; border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #ef4444, #7c3aed);
+            color: white; font-weight: 800; text-decoration: none; font-size: 0.95rem;
+            border: 4px solid rgba(255,255,255,0.15); cursor: pointer;
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.4), 0 0 80px rgba(245, 158, 11, 0.2), inset 0 0 20px rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
+            letter-spacing: 0.05em; text-align: center; line-height: 1.2;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        .btn-round::before {
+            content: ''; position: absolute; inset: 0; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 60%);
+            pointer-events: none;
+        }
+        .btn-round:hover {
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 0 60px rgba(245, 158, 11, 0.6), 0 0 120px rgba(245, 158, 11, 0.3), inset 0 0 30px rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .btn-round:active { transform: scale(0.95); }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.4), 0 0 80px rgba(245, 158, 11, 0.2), inset 0 0 20px rgba(255,255,255,0.1); }
+            50% { box-shadow: 0 0 60px rgba(245, 158, 11, 0.6), 0 0 100px rgba(245, 158, 11, 0.3), inset 0 0 25px rgba(255,255,255,0.15); }
+        }
+
+        .voice-wave {
+            display: flex; align-items: center; justify-content: center; gap: 4px; height: 32px; margin-bottom: 8px;
+        }
+        .voice-wave span {
+            display: inline-block; width: 4px; background: linear-gradient(to top, rgba(255,255,255,0.9), rgba(255,255,255,0.4)); border-radius: 2px;
+            animation: wave 1.2s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(255,255,255,0.3);
+        }
+        .voice-wave span:nth-child(1) { height: 10px; animation-delay: 0s; }
+        .voice-wave span:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+        .voice-wave span:nth-child(3) { height: 28px; animation-delay: 0.2s; }
+        .voice-wave span:nth-child(4) { height: 18px; animation-delay: 0.3s; }
+        .voice-wave span:nth-child(5) { height: 26px; animation-delay: 0.15s; }
+        .voice-wave span:nth-child(6) { height: 14px; animation-delay: 0.25s; }
+        .voice-wave span:nth-child(7) { height: 22px; animation-delay: 0.05s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.35); opacity: 0.5; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+
         .btn-demo {
             display: inline-flex; align-items: center; gap: 0.5rem;
             background: linear-gradient(135deg, var(--orange), var(--red), var(--purple));
@@ -186,6 +235,7 @@
             .nav { display: none; }
             .hero { padding: 120px 1rem 60px; }
             .hero-cta-group { flex-direction: column; }
+            .btn-round { width: 150px; height: 150px; font-size: 0.85rem; }
             .btn-primary, .btn-secondary, .btn-demo { width: 100%; justify-content: center; }
             .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
             .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
@@ -201,7 +251,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" color="white"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
                 </div>
                 <div class="logo-text">
-                    <span>Lever AI</span>
+                    <span>Answers AI</span>
                     <span>AI Search for Local Plumbers</span>
                 </div>
             </a>
@@ -213,7 +263,7 @@
                 <a href="https://proplum-ai-audit.netlify.app">Free Audit</a>
                 <a href="https://calendly.com/jeff-proplum" class="nav-cta-link">Book a Call</a>
             </nav>
-            <a href="tel:727-382-8869" class="btn-call">📞 Call Now</a>
+            <a href="sms:813-491-3590" class="btn-call">Contact</a>
         </div>
     </header>
 
@@ -223,15 +273,20 @@
             <h1>When Homeowners Ask AI for a Plumber, <span>Be the Name It Speaks Aloud</span></h1>
             <p>92% of businesses are invisible to ChatGPT, Claude, and Copilot — even when they rank #1. We build the infrastructure AI search flows through so YOUR name gets spoken.</p>
 
-            <div class="hero-cta-group">
-                <a href="tel:727-382-8869" class="btn-demo">📞 Call (727) 382-8869 — Hear the AI</a>
+            <div class="hero-cta-group" style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                <a href="tel:727-382-8869" class="btn-round" title="Call our AI demo">
+                    <div class="voice-wave">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div>Listen to<br><strong>The Best<br>AI Voice</strong></div>
+                </a>
                 <a href="https://proplum-ai-audit.netlify.app" class="btn-primary">🔍 Run Free AI Visibility Audit</a>
             </div>
 
             <div class="click-to-call-bar">
-                <p>☎️ Want to hear how your AI receptionist sounds?</p>
-                <a href="tel:727-382-8869" class="phone-number">(727) 382-8869</a>
-                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Live 24/7. Real number. Real AI.</p>
+                <p>📩 Text <strong>"Fix My Leak"</strong> for instant attention</p>
+                <a href="sms:813-491-3590" class="phone-number">(813) 491-3590</a>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Or tap the voice wave above to hear our AI</p>
             </div>
 
             <div style="max-width: 720px; margin: 3rem auto 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
@@ -259,11 +314,11 @@
                     <div class="stat-label">Of businesses invisible to AI search</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">2.4x</div>
+                    <div class="stat-number">4.4x</div>
                     <div class="stat-label">Higher conversion for AI-discovered brands</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">41%</div>
+                    <div class="stat-number">77%</div>
                     <div class="stat-label">Of mobile searches are zero-click</div>
                 </div>
                 <div class="stat-card">
@@ -287,10 +342,10 @@
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">⚡</div>
                     <h3>Infrastructure Deployment</h3>
-                    <p>Deploy LocalBusiness schema, llms.txt, and structured data across your entire network — not just the homepage.</p>
+                    <p>Deploy LocalBusiness schema, LLM crawler feeds, and structured data across your entire network — not just the homepage.</p>
                     <ul>
                         <li>Network-wide schema deployment</li>
-                        <li>llms.txt optimization</li>
+                        <li>LLM crawler optimization</li>
                         <li>Technical debt remediation</li>
                         <li>Franchisee compliance dashboard</li>
                     </ul>
@@ -330,7 +385,7 @@
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(16,185,129,0.1); color: var(--emerald);">3</div>
                     <h3>Fix It Fast</h3>
-                    <p>Schema markup, llms.txt, GBP optimization — most fixes deploy in 48 hours. No downtime. No learning curve.</p>
+                    <p>Schema markup, LLM crawler feeds, GBP optimization — most fixes deploy in 48 hours. No downtime. No learning curve.</p>
                 </div>
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">4</div>
@@ -361,7 +416,7 @@
                         <li>GBP Alignment — NAP consistency baseline</li>
                         <li>Monthly Indexing & Health Snapshot</li>
                     </ul>
-                    <a href="tel:727-382-8869" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">📞 Call to Start</a>
+                    <a href="sms:813-491-3590" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">Contact</a>
                 </div>
 
                 <div class="cap-card" style="position: relative; overflow: hidden;">
@@ -375,10 +430,10 @@
                         <li>Answer Engine Optimization (AEO)</li>
                         <li>Answer-First Architecture & FAQPage Schema</li>
                         <li>LocalBusiness Schema per service area</li>
-                        <li>llms.txt Guide Implementation</li>
+                        <li>LLM Crawler Feed Implementation</li>
                         <li>Bi-Weekly Call Performance Logs</li>
                     </ul>
-                    <a href="tel:727-382-8869" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">📞 Call to Upgrade</a>
+                    <a href="sms:813-491-3590" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">Contact</a>
                 </div>
 
                 <div class="cap-card" style="position: relative; overflow: hidden;">
@@ -396,7 +451,7 @@
                         <li>Full MAVA-8 Diagnostic</li>
                         <li>Direct 1-on-1 strategy & competitor radar</li>
                     </ul>
-                    <a href="tel:727-382-8869" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">📞 Call for GEO</a>
+                    <a href="sms:813-491-3590" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">Contact</a>
                 </div>
 
                 <div class="cap-card" style="position: relative; overflow: hidden;">
@@ -413,14 +468,19 @@
                         <li>Dedicated success manager</li>
                         <li>API access + custom integrations</li>
                     </ul>
-                    <a href="tel:727-382-8869" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">📞 Call for Enterprise</a>
+                    <a href="sms:813-491-3590" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">Contact</a>
                 </div>
             </div>
 
-            <div class="click-to-call-bar" style="margin-top: 3rem;">
-                <p>📞 Rather talk to the AI directly?</p>
-                <a href="tel:727-382-8869" class="phone-number">(727) 382-8869</a>
-                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Call 24/7. Hear the Virtual Receptionist in action.</p>
+            <div class="click-to-call-bar" style="margin-top: 3rem; max-width: 700px; text-align: center; padding: 2rem;">
+                <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">💳 <strong>Prefer Direct Payment?</strong></p>
+                <p style="color: var(--text-dim); margin-bottom: 1rem; font-size: 0.9rem;">Limited clients. Personal service. No automated checkout — just direct Zelle to get started today.</p>
+                <div style="background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 1.5rem; margin: 1rem 0;">
+                    <p style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Zelle Email</p>
+                    <p style="font-size: 1.3rem; font-weight: 800; color: var(--cyan); font-family: 'JetBrains Mono', monospace;">jeffm6509@gmail.com</p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Send payment → Text "Fix My Leak" to 813-491-3590 → You'''re live in 48 hours</p>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Questions? Text me. I personally handle every client.</p>
             </div>
 
             <p style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-size: 0.9rem;">Monitor subscribers get 20% off their first upgrade. Every plan includes a free AI visibility audit to start.</p>
@@ -461,7 +521,7 @@
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">📊</div>
                     <h3>Franchise-Level Intelligence</h3>
-                    <p>We study what the big guys do wrong — ghost pages, missing schema, broken llms.txt — so you don't make the same $500K mistakes.</p>
+                    <p>We study what the big guys do wrong — ghost pages, missing schema, weak LLM crawler signals — so you don't make the same $500K mistakes.</p>
                     <ul>
                         <li>Case study: 1-Tom-Plumber audit</li>
                         <li>ARS/Rescue Rooter analysis</li>
@@ -475,7 +535,7 @@
                     <p>We deploy the same AI visibility infrastructure that franchise networks pay consultants $10K+/mo to build.</p>
                     <ul>
                         <li>LocalBusiness schema deployment</li>
-                        <li>llms.txt optimization</li>
+                        <li>LLM crawler optimization</li>
                         <li>GBP optimization</li>
                         <li>Monthly visibility reports</li>
                     </ul>
@@ -488,10 +548,10 @@
         <h2>AI Search Is Winner-Take-Most</h2>
         <p>The cost of catching up exceeds the cost of leading. One call to our AI receptionist and you'll know exactly what you're missing.</p>
         <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:2rem;">
-            <a href="tel:727-382-8869" class="btn-demo" style="font-size: 1.3rem; padding: 1.3rem 3.5rem;">📞 Call (727) 382-8869</a>
+            <a href="sms:813-491-3590" class="btn-demo" style="font-size: 1.3rem; padding: 1.3rem 3.5rem;">📩 Text "Fix My Leak" to 813-491-3590</a>
             <a href="https://proplum-ai-audit.netlify.app" class="btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">🔍 Run Free AI Audit</a>
         </div>
-        <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.9rem;">Real number. Real AI. 24/7. Call and hear for yourself.</p>
+        <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.9rem;">Real number. Real AI. Text and get an instant response.</p>
     </section>
 
     <footer>
@@ -502,11 +562,11 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" color="white"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
                     </div>
                     <div class="logo-text">
-                        <span>Lever AI</span>
+                        <span>Answers AI</span>
                         <span>AI Search for Local Plumbers</span>
                     </div>
                 </a>
-                <p>AI search visibility for local plumbers. We audit billion-dollar franchises. We fix your Google Business Profile, schema, and llms.txt so AI search recommends YOU.</p>
+                <p>AI search visibility for local plumbers. We audit billion-dollar franchises. We fix your Google Business Profile, schema, and LLM crawler feeds so AI search recommends YOU.</p>
             </div>
             <div class="footer-col">
                 <h4>Product</h4>
@@ -524,14 +584,14 @@
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
-                <a href="tel:727-382-8869">📞 (727) 382-8869</a>
+                <a href="sms:813-491-3590">📩 (813) 491-3590</a>
                 <a href="https://calendly.com/jeff-proplum">Book a Call</a>
                 <a href="#">Privacy</a>
                 <a href="#">Terms</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 Lever AI Inc. All rights reserved.</p>
+            <p>© 2026 Answers AI Inc. All rights reserved.</p>
             <p>Built for the AI search era.</p>
         </div>
     </footer>

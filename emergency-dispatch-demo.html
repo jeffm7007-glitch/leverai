@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lever AI — Emergency Dispatch Demo</title>
+  <title>Answers AI — Emergency Dispatch Demo</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -279,7 +279,7 @@
     <div class="logo">
       <div class="logo-icon">L</div>
       <div class="logo-text">
-        <h1>Lever AI</h1>
+        <h1>Answers AI</h1>
         <p>Emergency Dispatch Engine — Demo Mode</p>
       </div>
     </div>
@@ -289,7 +289,7 @@
   <div class="container">
     <div class="hero">
       <h2>"The call comes at 2 AM. The system already caught it."</h2>
-      <p>Type any emergency message below and watch Lever AI classify, triage, and respond in under 5 seconds.</p>
+      <p>Type any emergency message below and watch Answers AI classify, triage, and respond in under 5 seconds.</p>
     </div>
 
     <div class="grid grid-2">
@@ -404,7 +404,7 @@
   </div>
 
   <footer>
-    <strong>Lever AI</strong> — AI Emergency Dispatch for Home Service Trades<br>
+    <strong>Answers AI</strong> — AI Emergency Dispatch for Home Service Trades<br>
     <a href="https://proplumnet.com">proplumnet.com</a> · 📞 <a href="tel:8134913950">813.491.3950</a><br>
     <span style="color: #444;">Built by Jenni for Jeff ❤️‍🔥</span>
   </footer>
@@ -507,7 +507,7 @@
       addTerminalLine(getTime(), "PARSE", `Message body: "${message.slice(0, 60)}${message.length > 60 ? '...' : ''}"`, "tag-webhook");
       await delay(300);
 
-      addTerminalLine(getTime(), "AI", "Sending to Lever AI Triage Engine...", "tag-ai");
+      addTerminalLine(getTime(), "AI", "Sending to Answers AI Triage Engine...", "tag-ai");
       await delay(600);
 
       // Determine response type

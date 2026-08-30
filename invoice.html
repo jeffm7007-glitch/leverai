@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lever AI Invoice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B0F19;
+            --navy-light: #111827;
+            --cyan: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+            --text-muted: #64748b;
+            --border: rgba(255,255,255,0.1);
+            --green: #10b981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem 1rem;
+        }
+        .invoice {
+            max-width: 700px;
+            width: 100%;
+            background: var(--navy-light);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .invoice-header {
+            background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(99,102,241,0.1));
+            padding: 2.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .invoice-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .brand-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--cyan), var(--cyan-glow));
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+        .brand-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+        .invoice-meta {
+            text-align: right;
+        }
+        .invoice-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--cyan-glow);
+            font-weight: 500;
+        }
+        .invoice-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        .invoice-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.75rem;
+        }
+        .status-due {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .status-paid {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .invoice-body {
+            padding: 2rem;
+        }
+        .client-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 600px) {
+            .client-section { grid-template-columns: 1fr; }
+            .invoice-header-top { flex-direction: column; gap: 1rem; }
+            .invoice-meta { text-align: left; }
+        }
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .client-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+        }
+        .client-detail {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 0.25rem;
+        }
+
+        .line-items {
+            border-top: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        .line-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .line-item-desc {
+            flex: 1;
+        }
+        .line-item-name {
+            font-weight: 600;
+            color: white;
+            font-size: 0.95rem;
+        }
+        .line-item-detail {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        .line-item-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .totals {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+        .total-row.final {
+            border-top: 2px solid var(--cyan);
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+        }
+        .total-row.final .amount {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cyan-glow);
+        }
+
+        .payment-section {
+            background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(99,102,241,0.05));
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .payment-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .zelle-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .zelle-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .zelle-email {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--cyan-glow);
+        }
+        .zelle-instruction {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 0.5rem;
+        }
+        .payment-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .terms {
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .terms strong {
+            color: var(--text-dim);
+        }
+
+        .due-date {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .due-date-label {
+            font-size: 0.75rem;
+            color: #f59e0b;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+        }
+        .due-date-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: white;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice">
+        <div class="invoice-header">
+            <div class="invoice-header-top">
+                <div class="brand">
+                    <div class="brand-icon">⚡</div>
+                    <div class="brand-text">Lever AI</div>
+                </div>
+                <div class="invoice-meta">
+                    <div class="invoice-number">INV-2026-001</div>
+                    <div class="invoice-date">August 2026</div>
+                    <div class="invoice-status status-due">● Payment Due</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-body">
+            <div class="client-section">
+                <div>
+                    <div class="section-label">Billed To</div>
+                    <div class="client-name" id="clientName">[Client Business Name]</div>
+                    <div class="client-detail" id="clientContact">[Contact Name]</div>
+                    <div class="client-detail" id="clientPhone">[Phone Number]</div>
+                    <div class="client-detail" id="clientEmail">[Email]</div>
+                </div>
+                <div>
+                    <div class="section-label">Service Period</div>
+                    <div class="client-name">August 1 – August 31, 2026</div>
+                    <div class="client-detail">Monthly AI Visibility Service</div>
+                </div>
+            </div>
+
+            <div class="due-date">
+                <div class="due-date-label">Payment Due By</div>
+                <div class="due-date-value">September 5, 2026</div>
+            </div>
+
+            <div class="line-items">
+                <div class="line-item">
+                    <div class="line-item-desc">
+                        <div class="line-item-name">AI Search Visibility — Essentials Tier</div>
+                        <div class="line-item-detail">24/7 Virtual Receptionist, Schema markup, GBP optimization, LLM crawler feeds</div>
+                    </div>
+                    <div class="line-item-price">$99.00</div>
+                </div>
+                <div class="line-item">
+                    <div class="line-item-desc">
+                        <div class="line-item-name">Setup Fee (One-Time)</div>
+                        <div class="line-item-detail">Initial AI profile configuration, schema deployment, voice agent training</div>
+                    </div>
+                    <div class="line-item-price">$199.00</div>
+                </div>
+            </div>
+
+            <div class="totals">
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span>$298.00</span>
+                </div>
+                <div class="total-row">
+                    <span>Tax</span>
+                    <span>$0.00</span>
+                </div>
+                <div class="total-row final">
+                    <span>Total Due</span>
+                    <span class="amount">$298.00</span>
+                </div>
+            </div>
+
+            <div class="payment-section">
+                <div class="payment-title">💳 Payment Instructions</div>
+                <div class="zelle-box">
+                    <div class="zelle-label">Send Zelle Payment To</div>
+                    <div class="zelle-email">jeffm6509@gmail.com</div>
+                    <div class="zelle-instruction">Open your bank app → Zelle → Send → Enter email above → Amount: $298.00</div>
+                </div>
+                <div class="payment-note">
+                    <strong>After payment:</strong> Text "PAID" to 813-491-3590 and we'll confirm your service is active within 1 hour.
+                </div>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">Prefer ACH bank transfer? Text "ACH" to 813-491-3590 and we'll send you routing details.</p>
+                </div>
+            </div>
+
+            <div class="terms">
+                <strong>Terms:</strong> Payment due within 5 business days of invoice date. Late payments subject to service suspension. No refunds for services rendered. Questions? Text 813-491-3590 — I personally handle every account.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-populate from URL parameters
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('name')) document.getElementById('clientName').textContent = params.get('name');
+        if (params.get('contact')) document.getElementById('clientContact').textContent = params.get('contact');
+        if (params.get('phone')) document.getElementById('clientPhone').textContent = params.get('phone');
+        if (params.get('email')) document.getElementById('clientEmail').textContent = params.get('email');
+        if (params.get('inv')) document.querySelector('.invoice-number').textContent = params.get('inv');
+        if (params.get('amount')) {
+            document.querySelector('.total-row.final .amount').textContent = '$' + params.get('amount');
+            document.querySelector('.zelle-instruction').textContent = 
+                'Open your bank app → Zelle → Send → Enter email above → Amount: $' + params.get('amount');
+        }
+    </script>
+</body>
+</html>
