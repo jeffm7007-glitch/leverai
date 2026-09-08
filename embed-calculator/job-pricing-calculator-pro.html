@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProPlum — Job Pricing Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0f172a;
+    min-height: 100vh;
+    padding: 20px;
+    color: #e2e8f0;
+  }
+  
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-top: 8px;
+  }
+  .header .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  .header .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .header p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+  
+  /* Card */
+  .card {
+    background: #1e293b;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .card-header {
+    padding: 20px 20px 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .card-body {
+    padding: 16px 20px 20px;
+  }
+  
+  /* Job Grid */
+  .job-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .job-card {
+    background: #0f172a;
+    border: 1.5px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 16px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .job-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .job-card:hover {
+    border-color: rgba(59,130,246,0.3);
+    transform: translateY(-2px);
+  }
+  .job-card:hover::before {
+    opacity: 1;
+  }
+  .job-card.selected {
+    border-color: #3b82f6;
+    background: rgba(59,130,246,0.08);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15), 0 4px 20px rgba(59,130,246,0.1);
+  }
+  .job-card.selected::before {
+    opacity: 1;
+  }
+  .job-icon {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .job-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    line-height: 1.25;
+    position: relative;
+    z-index: 1;
+  }
+  .job-rate {
+    font-size: 0.65rem;
+    color: #64748b;
+    margin-top: 4px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Emergency Toggle */
+  .emergency-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.03));
+    border: 1.5px solid rgba(239,68,68,0.15);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .emergency-toggle:hover {
+    border-color: rgba(239,68,68,0.3);
+  }
+  .emergency-toggle.active {
+    background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05));
+    border-color: rgba(239,68,68,0.4);
+    box-shadow: 0 0 30px rgba(239,68,68,0.08);
+  }
+  .emergency-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .emergency-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(239,68,68,0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+  .emergency-text {
+    font-weight: 700;
+    color: #f87171;
+    font-size: 0.95rem;
+  }
+  .emergency-sub {
+    font-size: 0.78rem;
+    color: #94a3b8;
+  }
+  .toggle-switch {
+    width: 52px;
+    height: 30px;
+    background: #334155;
+    border-radius: 15px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .emergency-toggle.active .toggle-switch {
+    background: #ef4444;
+  }
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .emergency-toggle.active .toggle-switch::after {
+    transform: translateX(22px);
+  }
+  
+  /* Multiplier */
+  .multiplier-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .multiplier-row.show {
+    display: flex;
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .mult-btn {
+    flex: 1;
+    padding: 12px 4px;
+    background: #0f172a;
+    border: 1.5px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    transition: all 0.2s;
+    line-height: 1.3;
+  }
+  .mult-btn:hover {
+    border-color: rgba(239,68,68,0.3);
+    color: #f87171;
+  }
+  .mult-btn.selected {
+    border-color: #ef4444;
+    background: rgba(239,68,68,0.1);
+    color: #f87171;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+  }
+  
+  /* Input Fields */
+  .field {
+    margin-bottom: 16px;
+  }
+  .field-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .input-row input[type="number"] {
+    width: 90px;
+    padding: 12px;
+    background: #0f172a;
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .input-row input[type="number"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+  }
+  .input-row input[type="range"] {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    background: #334155;
+    border-radius: 3px;
+    outline: none;
+  }
+  .input-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 3px solid #1e293b;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+    transition: transform 0.2s;
+  }
+  .input-row input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Calculate Button */
+  .calc-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(59,130,246,0.25);
+    letter-spacing: 0.01em;
+  }
+  .calc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(59,130,246,0.35);
+  }
+  .calc-btn:active {
+    transform: translateY(0);
+  }
+  .calc-btn.emergency {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    box-shadow: 0 4px 20px rgba(239,68,68,0.25);
+  }
+  .calc-btn.emergency:hover {
+    box-shadow: 0 8px 30px rgba(239,68,68,0.35);
+  }
+  
+  /* Results */
+  .results {
+    background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    display: none;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .results::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+  }
+  .results.show {
+    display: block;
+    animation: fadeUp 0.5s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .results.emergency {
+    background: linear-gradient(135deg, #7f1d1d 0%, #dc2626 100%);
+  }
+  .big-number {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #fff;
+    margin: 8px 0;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+  }
+  .result-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+  }
+  .result-detail {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .breakdown {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+    position: relative;
+    z-index: 1;
+  }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+  }
+  .breakdown-row.total {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: 8px;
+    padding-top: 12px;
+  }
+  
+  /* CTA Buttons */
+  .cta-section {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .cta-section.show {
+    display: flex;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+  .cta-btn {
+    width: 100%;
+    padding: 18px 24px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 0.01em;
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+  }
+  .cta-btn-book {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+  .cta-btn-book:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .cta-btn-emergency {
+    background: #dc2626;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(220,38,38,0.3);
+  }
+  .cta-btn-emergency:hover {
+    background: #b91c1c;
+    box-shadow: 0 8px 30px rgba(220,38,38,0.4);
+  }
+  
+  /* AfterHours Box */
+  .afterhours-box {
+    background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(34,197,94,0.02));
+    border: 1.5px solid rgba(34,197,94,0.15);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 16px;
+    display: none;
+  }
+  .afterhours-box.show {
+    display: block;
+    animation: fadeUp 0.5s ease 0.3s both;
+  }
+  .afterhours-box h4 {
+    color: #4ade80;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    text-align: center;
+    font-weight: 700;
+  }
+  .earnings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .earning-card {
+    background: #0f172a;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .earning-card .label {
+    font-size: 0.65rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .earning-card .value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #4ade80;
+    margin-top: 4px;
+  }
+  .earning-card .value.red {
+    color: #f87171;
+  }
+  
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: #475569;
+    font-size: 0.75rem;
+  }
+  .footer a {
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  /* Responsive */
+  @media (max-width: 480px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 1.4rem; }
+    .big-number { font-size: 2.6rem; }
+    .job-grid { gap: 8px; }
+    .job-card { padding: 12px 4px; }
+    .job-icon { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="badge">Live Pricing Engine</div>
+    <h1>Job Pricing Calculator</h1>
+    <p>Estimate any plumbing job in seconds</p>
+  </div>
+  
+  <!-- Job Types -->
+  <div class="card">
+    <div class="card-header">Select Job Type</div>
+    <div class="card-body">
+      <div class="job-grid" id="jobGrid">
+        <div class="job-card selected" data-job="emergency" data-base="350" data-hours="2">
+          <div class="job-icon">🚨</div>
+          <div class="job-name">Emergency<br>Repair</div>
+          <div class="job-rate">$350+</div>
+        </div>
+        <div class="job-card" data-job="drain" data-base="150" data-hours="1.5">
+          <div class="job-icon">🚿</div>
+          <div class="job-name">Drain<br>Cleaning</div>
+          <div class="job-rate">$150+</div>
+        </div>
+        <div class="job-card" data-job="waterheater" data-base="500" data-hours="3">
+          <div class="job-icon">🌡️</div>
+          <div class="job-name">Water Heater<br>Repair</div>
+          <div class="job-rate">$500+</div>
+        </div>
+        <div class="job-card" data-job="pipe" data-base="400" data-hours="2.5">
+          <div class="job-icon">🔩</div>
+          <div class="job-name">Pipe<br>Repair</div>
+          <div class="job-rate">$400+</div>
+        </div>
+        <div class="job-card" data-job="toilet" data-base="200" data-hours="1.5">
+          <div class="job-icon">🚽</div>
+          <div class="job-name">Toilet<br>Install</div>
+          <div class="job-rate">$200+</div>
+        </div>
+        <div class="job-card" data-job="faucet" data-base="120" data-hours="1">
+          <div class="job-icon">🚰</div>
+          <div class="job-name">Faucet<br>Install</div>
+          <div class="job-rate">$120+</div>
+        </div>
+        <div class="job-card" data-job="sewer" data-base="2500" data-hours="6">
+          <div class="job-icon">🕳️</div>
+          <div class="job-name">Sewer Line<br>Repair</div>
+          <div class="job-rate">$2,500+</div>
+        </div>
+        <div class="job-card" data-job="repipe" data-base="4500" data-hours="16">
+          <div class="job-icon">🏠</div>
+          <div class="job-name">Whole House<br>Repipe</div>
+          <div class="job-rate">$4,500+</div>
+        </div>
+        <div class="job-card" data-job="inspection" data-base="175" data-hours="1">
+          <div class="job-icon">🔍</div>
+          <div class="job-name">Camera<br>Inspection</div>
+          <div class="job-rate">$175+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Emergency Toggle -->
+  <div class="emergency-toggle" id="emergencyToggle">
+    <div class="emergency-label">
+      <div class="emergency-icon">🚨</div>
+      <div>
+        <div class="emergency-text">AfterHours Emergency Mode</div>
+        <div class="emergency-sub">2 AM · Weekend · Holiday rates</div>
+      </div>
+    </div>
+    <div class="toggle-switch"></div>
+  </div>
+  
+  <!-- Multiplier -->
+  <div class="multiplier-row" id="multiplierRow">
+    <button class="mult-btn" data-mult="1.5">1.5×<br><small>Evening</small></button>
+    <button class="mult-btn selected" data-mult="2">2.0×<br><small>After Hours</small></button>
+    <button class="mult-btn" data-mult="2.5">2.5×<br><small>Weekend</small></button>
+    <button class="mult-btn" data-mult="3">3.0×<br><small>Holiday</small></button>
+  </div>
+  
+  <!-- Input Fields -->
+  <div class="card">
+    <div class="card-body">
+      <div class="field">
+        <label class="field-label">Hourly Rate</label>
+        <div class="input-row">
+          <input type="number" id="rateInput" value="125" min="1" step="5">
+          <input type="range" id="rateSlider" min="75" max="250" value="125" step="5">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="field-label">Estimated Hours</label>
+        <div class="input-row">
+          <input type="number" id="hoursInput" value="2" min="0.5" step="0.5">
+          <input type="range" id="hoursSlider" min="0.5" max="24" value="2" step="0.5">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="field-label">Materials Cost</label>
+        <div class="input-row">
+          <input type="number" id="matInput" value="50" min="0" step="25">
+          <input type="range" id="matSlider" min="0" max="1000" value="50" step="25">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="field-label">Trip / Service Fee</label>
+        <div class="input-row">
+          <input type="number" id="tripInput" value="75" min="0" step="25">
+          <input type="range" id="tripSlider" min="0" max="200" value="75" step="25">
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="field-label">Tax Rate</label>
+        <div class="input-row">
+          <input type="number" id="taxInput" value="7" min="0" max="20" step="0.5">
+          <input type="range" id="taxSlider" min="0" max="20" value="7" step="0.5">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Calculate -->
+  <button class="calc-btn" id="calcBtn">Calculate Estimate</button>
+  
+  <!-- Results -->
+  <div class="results" id="results">
+    <div class="result-label">Estimated Total</div>
+    <div class="big-number" id="totalPrice">$0</div>
+    <div class="result-detail" id="jobTypeLabel">Emergency Repair</div>
+    <div class="result-detail" id="emergencyLabel" style="display: none; font-weight: 700; color: #fca5a5;"></div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span>Labor</span><span id="laborCost">$0</span></div>
+      <div class="breakdown-row"><span>Materials</span><span id="matCost">$0</span></div>
+      <div class="breakdown-row"><span>Trip/Service Fee</span><span id="tripCost">$0</span></div>
+      <div class="breakdown-row"><span>Subtotal</span><span id="subtotalCost">$0</span></div>
+      <div class="breakdown-row"><span>Tax</span><span id="taxCost">$0</span></div>
+      <div class="breakdown-row" id="multRow" style="display: none; color: #fca5a5; font-weight: 700;"><span>Emergency Multiplier</span><span id="multValue">—</span></div>
+    </div>
+  </div>
+  
+  <!-- CTA Buttons -->
+  <div class="cta-section" id="ctaSection">
+    <a href="https://lever-ai.app/book?utm_source=calc" class="cta-btn cta-btn-book" target="_blank" rel="noopener">
+      📅 Book Estimate
+    </a>
+    <a href="tel:8134913590" class="cta-btn cta-btn-emergency">
+      🚨 Emergency Plumber Now
+    </a>
+  </div>
+  
+  <!-- AfterHours -->
+  <div class="afterhours-box" id="afterhoursBox">
+    <h4>💰 Forward This Emergency — Get Paid</h4>
+    <div class="earnings-grid">
+      <div class="earning-card">
+        <div class="label">You Keep</div>
+        <div class="value" id="referrerEarn">$0</div>
+      </div>
+      <div class="earning-card">
+        <div class="label">AfterHours Plumber</div>
+        <div class="value red" id="plumberEarn">$0</div>
+      </div>
+      <div class="earning-card">
+        <div class="label">Network Fee</div>
+        <div class="value" id="networkEarn">$0</div>
+      </div>
+      <div class="earning-card">
+        <div class="label">Your Sleep</div>
+        <div class="value" style="color: #4ade80; font-size: 1.1rem;">😴 Priceless</div>
+      </div>
+    </div>
+    <a href="https://lever-ai.app/afterhours?utm_source=calc" style="display: block; width: 100%; padding: 14px; background: #16a34a; color: #fff; font-weight: 700; text-align: center; border-radius: 12px; text-decoration: none; transition: all 0.2s;" target="_blank" rel="noopener">
+      🚀 Join AfterHours Network — Free
+    </a>
+  </div>
+  
+  <div class="footer">
+    Powered by <a href="https://lever-ai.app" target="_blank" rel="noopener">Lever AI</a> — AI Receptionist for Plumbing & HVAC
+  </div>
+</div>
+
+<script>
+(function() {
+  const jobCards = document.querySelectorAll('.job-card');
+  const emergencyToggle = document.getElementById('emergencyToggle');
+  const multiplierRow = document.getElementById('multiplierRow');
+  const multBtns = document.querySelectorAll('.mult-btn');
+  
+  const rateInput = document.getElementById('rateInput');
+  const rateSlider = document.getElementById('rateSlider');
+  const hoursInput = document.getElementById('hoursInput');
+  const hoursSlider = document.getElementById('hoursSlider');
+  const matInput = document.getElementById('matInput');
+  const matSlider = document.getElementById('matSlider');
+  const tripInput = document.getElementById('tripInput');
+  const tripSlider = document.getElementById('tripSlider');
+  const taxInput = document.getElementById('taxInput');
+  const taxSlider = document.getElementById('taxSlider');
+  
+  const calcBtn = document.getElementById('calcBtn');
+  const results = document.getElementById('results');
+  const ctaSection = document.getElementById('ctaSection');
+  const afterhoursBox = document.getElementById('afterhoursBox');
+  const totalPrice = document.getElementById('totalPrice');
+  const jobTypeLabel = document.getElementById('jobTypeLabel');
+  const emergencyLabel = document.getElementById('emergencyLabel');
+  const laborCost = document.getElementById('laborCost');
+  const matCost = document.getElementById('matCost');
+  const tripCost = document.getElementById('tripCost');
+  const subtotalCost = document.getElementById('subtotalCost');
+  const taxCost = document.getElementById('taxCost');
+  const multRow = document.getElementById('multRow');
+  const multValue = document.getElementById('multValue');
+  
+  const referrerEarn = document.getElementById('referrerEarn');
+  const plumberEarn = document.getElementById('plumberEarn');
+  const networkEarn = document.getElementById('networkEarn');
+  
+  let selectedJob = { name: 'Emergency Repair', base: 350, hours: 2 };
+  let isEmergencyMode = false;
+  let emergencyMult = 2.0;
+  
+  emergencyToggle.addEventListener('click', () => {
+    isEmergencyMode = !isEmergencyMode;
+    emergencyToggle.classList.toggle('active', isEmergencyMode);
+    multiplierRow.classList.toggle('show', isEmergencyMode);
+    calcBtn.classList.toggle('emergency', isEmergencyMode);
+  });
+  
+  multBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      multBtns.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      emergencyMult = parseFloat(btn.dataset.mult);
+    });
+  });
+  
+  jobCards.forEach(card => {
+    card.addEventListener('click', () => {
+      jobCards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedJob = {
+        name: card.querySelector('.job-name').innerHTML.replace(/<br>/g, ' '),
+        base: parseFloat(card.dataset.base),
+        hours: parseFloat(card.dataset.hours)
+      };
+      hoursInput.value = selectedJob.hours;
+      hoursSlider.value = selectedJob.hours;
+    });
+  });
+  
+  function sync(input, slider) {
+    input.addEventListener('input', () => slider.value = input.value);
+    slider.addEventListener('input', () => input.value = slider.value);
+  }
+  sync(rateInput, rateSlider);
+  sync(hoursInput, hoursSlider);
+  sync(matInput, matSlider);
+  sync(tripInput, tripSlider);
+  sync(taxInput, taxSlider);
+  
+  calcBtn.addEventListener('click', () => {
+    const rate = parseFloat(rateInput.value) || 0;
+    const hours = parseFloat(hoursInput.value) || 0;
+    const mats = parseFloat(matInput.value) || 0;
+    const trip = parseFloat(tripInput.value) || 0;
+    const taxRate = parseFloat(taxInput.value) || 0;
+    
+    let labor = rate * hours;
+    let effectiveRate = rate;
+    
+    if (isEmergencyMode) {
+      labor = labor * emergencyMult;
+      effectiveRate = rate * emergencyMult;
+    }
+    
+    const subtotal = labor + mats + trip;
+    const tax = subtotal * (taxRate / 100);
+    const total = subtotal + tax;
+    
+    totalPrice.textContent = '$' + Math.round(total).toLocaleString();
+    jobTypeLabel.textContent = selectedJob.name;
+    
+    if (isEmergencyMode) {
+      results.classList.add('emergency');
+      emergencyLabel.style.display = 'block';
+      const labels = { 1.5: 'Evening Rate (1.5×)', 2: 'AfterHours Rate (2×)', 2.5: 'Weekend Rate (2.5×)', 3: 'Holiday Rate (3×)' };
+      emergencyLabel.textContent = labels[emergencyMult] || 'Emergency Rate';
+      multRow.style.display = 'flex';
+      multValue.textContent = emergencyMult + '×';
+    } else {
+      results.classList.remove('emergency');
+      emergencyLabel.style.display = 'none';
+      multRow.style.display = 'none';
+    }
+    
+    laborCost.textContent = '$' + Math.round(labor).toLocaleString() + ' (' + hours + ' hrs @ $' + Math.round(effectiveRate) + '/hr)';
+    matCost.textContent = '$' + mats;
+    tripCost.textContent = '$' + trip;
+    subtotalCost.textContent = '$' + Math.round(subtotal).toLocaleString();
+    taxCost.textContent = '$' + Math.round(tax) + ' (' + taxRate + '%)';
+    
+    results.classList.add('show');
+    ctaSection.classList.add('show');
+    
+    if (selectedJob.name.toLowerCase().includes('emergency') || isEmergencyMode) {
+      afterhoursBox.classList.add('show');
+      const jobTotal = Math.round(total);
+      referrerEarn.textContent = '$' + Math.round(jobTotal * 0.20).toLocaleString();
+      plumberEarn.textContent = '$' + Math.round(jobTotal * 0.60).toLocaleString();
+      networkEarn.textContent = '$' + Math.round(jobTotal * 0.20).toLocaleString();
+    } else {
+      afterhoursBox.classList.remove('show');
+    }
+    
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+})();
+</script>
+
+</body>
+</html>

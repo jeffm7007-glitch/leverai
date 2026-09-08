@@ -53,6 +53,17 @@
         .logo-text { display: flex; flex-direction: column; }
         .logo-text span:first-child { font-weight: 800; font-size: 1.1rem; color: white; }
         .logo-text span:last-child { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.1em; }
+        .lang-toggle {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            border: none;
+            color: white; padding: 0.5rem 1rem; border-radius: 8px;
+            font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+            font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;
+            box-shadow: 0 2px 8px rgba(6,182,212,0.3);
+        }
+        .lang-toggle:hover { background: linear-gradient(135deg, var(--cyan-glow), var(--indigo)); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(6,182,212,0.4); }
+        .lang-toggle.active { background: linear-gradient(135deg, var(--emerald), var(--cyan)); box-shadow: 0 2px 8px rgba(16,185,129,0.3); }
         .nav { display: flex; gap: 2rem; align-items: center; }
         .nav a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
         .nav a:hover { color: var(--cyan); }
@@ -314,52 +325,121 @@
 
         @media (max-width: 768px) {
             .nav { display: none; }
-            .hero { padding: 120px 1rem 60px; }
+            .header-inner { flex-wrap: wrap; gap: 0.5rem; }
+            .hero { padding: 100px 1rem 40px; }
+            .hero h1 { font-size: 1.7rem; line-height: 1.2; }
+            .hero p { font-size: 0.9rem; }
             .hero-cta-group { flex-direction: column; }
-            .btn-round { width: 150px; height: 150px; font-size: 0.85rem; }
+            .btn-round { width: 120px; height: 120px; font-size: 0.75rem; }
             .btn-primary, .btn-secondary, .btn-demo { width: 100%; justify-content: center; }
+            .capabilities-grid, div[class*="capabilities-grid"] { grid-template-columns: 1fr !important; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.75rem; margin: 1.5rem 0; }
+            .stat-number { font-size: 1.8rem; }
+            .stat-label { font-size: 0.7rem; }
+            .section-title { font-size: 1.5rem; }
+            .section-subtitle { font-size: 0.9rem; margin-bottom: 2rem; }
             .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
             .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
-            .phone-number { font-size: 1.5rem !important; }
+            .phone-number { font-size: 1.3rem !important; }
+            .lang-toggle { padding: 0.4rem 0.7rem; font-size: 0.75rem; }
+            .btn-call { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
+            .logo img { height: 48px !important; }
+            .proplum-tagline { display: none !important; }
+            .cap-card { padding: 1.25rem; }
+            .cap-card h3 { font-size: 1rem; }
+            .cap-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+            .click-to-call-bar { padding: 1.25rem 1rem; }
+            #pricing .cap-card [style*="font-size: 3.5rem"] { font-size: 2.2rem !important; }
+            #pricing .cap-card [style*="font-size: 3rem"] { font-size: 2rem !important; }
         }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.lever-ai.app/#organization",
+          "name": "Lever AI",
+          "url": "https://www.lever-ai.app",
+          "logo": { "@type": "ImageObject", "url": "https://www.lever-ai.app/logo.png" },
+          "sameAs": ["https://proplumnetwork.com"],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-727-382-8869",
+            "contactType": "customer service",
+            "availableLanguage": ["English", "Spanish"],
+            "areaServed": "US"
+          }
+        },
+        {
+          "@type": "LocalBusiness",
+          "@id": "https://www.lever-ai.app/#localbusiness",
+          "name": "Lever AI",
+          "description": "Emergency dispatch AI for plumbing and HVAC contractors. AI voice agents, real-time dispatch, and operations dashboard.",
+          "url": "https://www.lever-ai.app",
+          "telephone": "+1-727-382-8869",
+          "priceRange": "$$",
+          "areaServed": { "@type": "Country", "name": "United States" },
+          "serviceType": ["AI Voice Agent", "Emergency Dispatch", "Plumber Dispatch", "Operations Dashboard"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.lever-ai.app/#website",
+          "url": "https://www.lever-ai.app",
+          "name": "Lever AI — Emergency Dispatch AI",
+          "publisher": { "@id": "https://www.lever-ai.app/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": { "@type": "EntryPoint", "urlTemplate": "https://www.lever-ai.app/?q={search_term_string}" },
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <header class="header">
         <div class="header-inner">
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" color="white"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
-                </div>
-                <div class="logo-text">
-                    <span>Answers AI</span>
-                    <span>AI Search for Local Plumbers</span>
-                </div>
+            <a href="/" class="logo">
+                <img src="logo.png" alt="Answers AI" style="height: 40px; width: auto;">
             </a>
+            <div class="proplum-tagline" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: -0.5rem;">
+                <span style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace;">Powering</span>
+                <a href="https://proplumnetwork.com" target="_blank" style="font-size: 0.7rem; color: var(--cyan); text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap;">Professional Plumbers Network ↗</a>
+            </div>
             <nav class="nav">
-                <a href="/whitepaper.html">Research</a>
-                <a href="/faq.html">FAQ</a>
-                <a href="/monitoring/">Pricing</a>
-                <a href="https://proplum-franchise-case-study.netlify.app">Case Study</a>
-                <a href="https://proplum-ai-audit.netlify.app">Free Audit</a>
-                <a href="#" class="nav-cta-link" onclick="openFreeModal(); return false;" style="background: linear-gradient(135deg, var(--emerald), #059669);">Start Free →</a>
+                <a href="/whitepaper.html" data-i18n="nav-research">Research</a>
+                <a href="/faq.html" data-i18n="nav-faq">FAQ</a>
+                <a href="/monitoring/" data-i18n="nav-pricing">Pricing</a>
+                <a href="https://proplum-franchise-case-study.netlify.app" data-i18n="nav-case">Case Study</a>
+                <a href="https://proplum-ai-audit.netlify.app" data-i18n="nav-free-audit">Free Audit</a>
+                <a href="#" class="nav-cta-link" onclick="openFreeModal(); return false;" style="background: linear-gradient(135deg, var(--emerald), #059669);" data-i18n="nav-start">Start Free →</a>
             </nav>
-            <a href="sms:813-491-3590" class="btn-call">Contact</a>
+            <a href="sms:813-491-3590" class="btn-call" data-i18n="contact-btn">Contact</a>
+            <button class="lang-toggle" id="langToggle" onclick="toggleLang()" title="Switch to Spanish">
+                <span>🌐</span> <span id="langLabel">Español</span>
+            </button>
         </div>
     </header>
 
     <section class="hero">
         <div class="hero-inner">
-            <div class="hero-badge">🔍 AI Search Visibility for Plumbers</div>
-            <h1>When Homeowners Ask AI for a Plumber, <span>Be the Name It Speaks Aloud</span></h1>
-            <p>92% of businesses are invisible to ChatGPT, Claude, and Copilot — even when they rank #1. We build the infrastructure AI search flows through so YOUR name gets spoken.</p>
+            <div class="hero-badge" data-i18n="hero-badge">🚑 24/7 Emergency Dispatch AI</div>
+            <h1 data-i18n="hero-h1">Savvy plumbers are increasing revenue $300K with one simple $99 a month tool 🔥</h1>
+            <p data-i18n="hero-p">Emergency dispatch AI that answers calls, books jobs, and never sleeps. While your competitors miss calls, you capture every emergency.</p>
+
+            <div style="max-width: 720px; margin: 2rem auto; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                <img src="hero-emergency.jpg" alt="Emergency plumbing van responding to calls 24/7" style="width: 100%; height: auto; display: block;">
+            </div>
 
             <div class="hero-cta-group" style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
                 <a href="tel:727-382-8869" class="btn-round" title="Call our AI demo">
                     <div class="voice-wave">
                         <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
                     </div>
-                    <div>Listen to<br><strong>The Best<br>AI Voice</strong></div>
+                    <div data-i18n="hero-cta-call">Call Our<br><strong>AI Agent</strong></div>
                 </a>
                 <a href="https://proplum-ai-audit.netlify.app" class="btn-primary">🔍 Run Free AI Visibility Audit</a>
             </div>
@@ -367,7 +447,7 @@
             <div class="click-to-call-bar">
                 <p>📩 Text <strong>"Fix My Leak"</strong> for instant attention</p>
                 <a href="sms:813-491-3590" class="phone-number">(813) 491-3590</a>
-                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Or tap the voice wave above to hear our AI</p>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Or tap above to call our AI agent</p>
             </div>
 
             <div style="max-width: 720px; margin: 3rem auto 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
@@ -385,61 +465,61 @@
 
     <section id="solution">
         <div class="section-inner">
-            <div class="section-label">The Problem</div>
-            <h2 class="section-title">Ranking #1 on Google No Longer Means <span>You'll Be Found</span></h2>
-            <p class="section-subtitle">AI engines don't browse your website. They consume structured data, semantic embeddings, and citation graphs, then synthesize a single answer. Visibility is no longer about traffic — it's about being the entity the AI trusts enough to name.</p>
+            <div class="section-label" data-i18n="problem-label">The Problem</div>
+            <h2 class="section-title" data-i18n="problem-title">Ranking #1 on Google No Longer Means <span>You'll Be Found</span></h2>
+            <p class="section-subtitle" data-i18n="problem-sub">AI engines don't browse your website. They consume structured data, semantic embeddings, and citation graphs, then synthesize a single answer. Visibility is no longer about traffic — it's about being the entity the AI trusts enough to name.</p>
 
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number">92%</div>
-                    <div class="stat-label">Of businesses invisible to AI search</div>
+                    <div class="stat-label" data-i18n="stat-invisible">Of businesses invisible to AI search</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">4.4x</div>
-                    <div class="stat-label">Higher conversion for AI-discovered brands</div>
+                    <div class="stat-label" data-i18n="stat-conversion">Higher conversion for AI-discovered brands</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">77%</div>
-                    <div class="stat-label">Of mobile searches are zero-click</div>
+                    <div class="stat-label" data-i18n="stat-mobile">Of mobile searches are zero-click</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">$500K+</div>
-                    <div class="stat-label">Revenue leaking from ONE franchise's AI gaps</div>
+                    <div class="stat-label" data-i18n="stat-leak">Revenue leaking from ONE franchise's AI gaps</div>
                 </div>
             </div>
 
             <div class="capabilities-grid" style="margin-top: 3rem;">
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(6,182,212,0.1); color: var(--cyan);">🔍</div>
-                    <h3>AI Search Audit</h3>
-                    <p>Comprehensive visibility scoring across all locations. Identify ghost pages, missing schema, and technical debt.</p>
+                    <h3 data-i18n="cap-audit-title">AI Search Audit</h3>
+                    <p data-i18n="cap-audit-p">Comprehensive visibility scoring across all locations. Identify ghost pages, missing schema, and technical debt.</p>
                     <ul>
-                        <li>8-point AI visibility scorecard</li>
-                        <li>Ghost page detection</li>
-                        <li>Schema markup analysis</li>
-                        <li>Competitive benchmarking</li>
+                        <li data-i18n="cap-audit-li1">8-point AI visibility scorecard</li>
+                        <li data-i18n="cap-audit-li2">Ghost page detection</li>
+                        <li data-i18n="cap-audit-li3">Schema markup analysis</li>
+                        <li data-i18n="cap-audit-li4">Competitive benchmarking</li>
                     </ul>
                 </div>
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">⚡</div>
-                    <h3>Infrastructure Deployment</h3>
-                    <p>Deploy LocalBusiness schema, LLM crawler feeds, and structured data across your entire network — not just the homepage.</p>
+                    <h3 data-i18n="cap-infra-title">Infrastructure Deployment</h3>
+                    <p data-i18n="cap-infra-p">Deploy LocalBusiness schema, LLM crawler feeds, and structured data across your entire network — not just the homepage.</p>
                     <ul>
-                        <li>Network-wide schema deployment</li>
-                        <li>LLM crawler optimization</li>
-                        <li>Technical debt remediation</li>
-                        <li>Franchisee compliance dashboard</li>
+                        <li data-i18n="cap-infra-li1">Network-wide schema deployment</li>
+                        <li data-i18n="cap-infra-li2">LLM crawler optimization</li>
+                        <li data-i18n="cap-infra-li3">Technical debt remediation</li>
+                        <li data-i18n="cap-infra-li4">Franchisee compliance dashboard</li>
                     </ul>
                 </div>
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(16,185,129,0.1); color: var(--emerald);">📊</div>
-                    <h3>24/7 Virtual Receptionist</h3>
-                    <p>AI answers your calls, qualifies leads, and books appointments — even at 2 AM. Never miss another emergency call.</p>
+                    <h3 data-i18n="cap-receptionist-title">24/7 Virtual Receptionist</h3>
+                    <p data-i18n="cap-receptionist-p">AI answers your calls, qualifies leads, and books appointments — even at 2 AM. Never miss another emergency call.</p>
                     <ul>
-                        <li>24/7 AI phone answering</li>
-                        <li>Emergency call routing</li>
-                        <li>Lead qualification & booking</li>
-                        <li>Instant notification to your cell</li>
+                        <li data-i18n="cap-receptionist-li1">24/7 AI phone answering</li>
+                        <li data-i18n="cap-receptionist-li2">Emergency call routing</li>
+                        <li data-i18n="cap-receptionist-li3">Lead qualification & booking</li>
+                        <li data-i18n="cap-receptionist-li4">Instant notification to your cell</li>
                     </ul>
                 </div>
             </div>
@@ -448,30 +528,30 @@
 
     <section id="how-it-works" style="background: linear-gradient(180deg, var(--navy) 0%, rgba(6,182,212,0.03) 50%, var(--navy) 100%);">
         <div class="section-inner">
-            <div class="section-label">Process</div>
-            <h2 class="section-title">How It <span>Works</span></h2>
-            <p class="section-subtitle">From audit to AI search dominance in 48 hours. No tech knowledge needed. No disruption to your schedule.</p>
+            <div class="section-label" data-i18n="process-label">Process</div>
+            <h2 class="section-title" data-i18n="process-title">How It <span>Works</span></h2>
+            <p class="section-subtitle" data-i18n="process-sub">From audit to AI search dominance in 48 hours. No tech knowledge needed. No disruption to your schedule.</p>
 
             <div class="capabilities-grid">
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(245,158,11,0.1); color: var(--gold);">1</div>
-                    <h3>Free AI Visibility Audit</h3>
-                    <p>We scan your website, Google Business Profile, and competitors. You get the same 10-K style report we deliver to franchise HQs.</p>
+                    <h3 data-i18n="step1-title">Free AI Visibility Audit</h3>
+                    <p data-i18n="step1-p">We scan your website, Google Business Profile, and competitors. You get the same 10-K style report we deliver to franchise HQs.</p>
                 </div>
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(6,182,212,0.1); color: var(--cyan);">2</div>
-                    <h3>See What the Big Guys Miss</h3>
-                    <p>Our franchise case studies (1-Tom-Plumber, ARS) reveal exactly what multi-million-dollar operations get wrong.</p>
+                    <h3 data-i18n="step2-title">See What the Big Guys Miss</h3>
+                    <p data-i18n="step2-p">Our franchise case studies (1-Tom-Plumber, ARS) reveal exactly what multi-million-dollar operations get wrong.</p>
                 </div>
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(16,185,129,0.1); color: var(--emerald);">3</div>
-                    <h3>Fix It Fast</h3>
-                    <p>Schema markup, LLM crawler feeds, GBP optimization — most fixes deploy in 48 hours. No downtime. No learning curve.</p>
+                    <h3 data-i18n="step3-title">Fix It Fast</h3>
+                    <p data-i18n="step3-p">Schema markup, LLM crawler feeds, GBP optimization — most fixes deploy in 48 hours. No downtime. No learning curve.</p>
                 </div>
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">4</div>
-                    <h3>Own Your Market</h3>
-                    <p>Monthly visibility reports show you're climbing. When homeowners ask ChatGPT for a plumber, you're the name that comes up.</p>
+                    <h3 data-i18n="step4-title">Own Your Market</h3>
+                    <p data-i18n="step4-p">Monthly visibility reports show you're climbing. When homeowners ask ChatGPT for a plumber, you're the name that comes up.</p>
                 </div>
             </div>
         </div>
@@ -479,9 +559,9 @@
 
     <section id="pricing" style="background: linear-gradient(180deg, var(--navy) 0%, rgba(99,102,241,0.03) 50%, var(--navy) 100%);">
         <div class="section-inner">
-            <div class="section-label">Pricing</div>
-            <h2 class="section-title">Transparent Pricing <span>Built for the Trades</span></h2>
-            <p class="section-subtitle">Whether you're a single-truck operator or a multi-territory network — choose the exact tier built for your growth phase.</p>
+            <div class="section-label" data-i18n="pricing-label">Pricing</div>
+            <h2 class="section-title" data-i18n="pricing-title">Transparent Pricing <span>Built for the Trades</span></h2>
+            <p class="section-subtitle" data-i18n="pricing-sub">Whether you're a single-truck operator or a multi-territory network — choose the exact tier built for your growth phase.</p>
 
             <div class="capabilities-grid" style="margin-top: 3rem;">
                 <div class="cap-card" style="position: relative; overflow: hidden;">
@@ -554,71 +634,71 @@
             </div>
 
             <div class="click-to-call-bar" style="margin-top: 3rem; max-width: 700px; text-align: center; padding: 2rem;">
-                <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">💳 <strong>Prefer Direct Payment?</strong></p>
-                <p style="color: var(--text-dim); margin-bottom: 1rem; font-size: 0.9rem;">Limited clients. Personal service. No automated checkout — just direct Zelle to get started today.</p>
+                <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;" data-i18n="zelle-title">💳 <strong>Prefer Direct Payment?</strong></p>
+                <p style="color: var(--text-dim); margin-bottom: 1rem; font-size: 0.9rem;" data-i18n="zelle-sub">Limited clients. Personal service. No automated checkout — just direct Zelle to get started today.</p>
                 <div style="background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 1.5rem; margin: 1rem 0;">
-                    <p style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Zelle Email</p>
+                    <p style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;" data-i18n="zelle-label">Zelle Email</p>
                     <p style="font-size: 1.3rem; font-weight: 800; color: var(--cyan); font-family: 'JetBrains Mono', monospace;">jeffm6509@gmail.com</p>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Send payment → Text "Fix My Leak" to 813-491-3590 → You'''re live in 48 hours</p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;" data-i18n="zelle-instruct">Send payment → Text "Fix My Leak" to 813-491-3590 → You're live in 48 hours</p>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Questions? Text me. I personally handle every client.</p>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;" data-i18n="zelle-personal">Questions? Text me. I personally handle every client.</p>
             </div>
 
-            <p style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-size: 0.9rem;">Monitor subscribers get 20% off their first upgrade. Every plan includes a free AI visibility audit to start.</p>
+            <p style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-size: 0.9rem;" data-i18n="pricing-note">Monitor subscribers get 20% off their first upgrade. Every plan includes a free AI visibility audit to start.</p>
         </div>
     </section>
 
     <section id="audit">
         <div class="section-inner">
-            <div class="section-label">Free Tool</div>
-            <h2 class="section-title">Run Your <span>Free AI Visibility Audit</span></h2>
-            <p class="section-subtitle">Enter any website URL. Get an instant AI visibility score and see what's missing.</p>
+            <div class="section-label" data-i18n="audit-label">Free Tool</div>
+            <h2 class="section-title" data-i18n="audit-title">Run Your <span>Free AI Visibility Audit</span></h2>
+            <p class="section-subtitle" data-i18n="audit-sub">Enter any website URL. Get an instant AI visibility score and see what's missing.</p>
 
             <div style="max-width: 600px; margin: 2rem auto; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; text-align: center;">
-                <p style="color: var(--text-dim); margin-bottom: 1.5rem;">See how visible your business is to AI search platforms like ChatGPT, Claude, and Perplexity.</p>
-                <a href="https://proplum-ai-audit.netlify.app" class="btn-primary" style="width: 100%; justify-content: center;">🔍 Start Free Audit</a>
+                <p style="color: var(--text-dim); margin-bottom: 1.5rem;" data-i18n="audit-desc">See how visible your business is to AI search platforms like ChatGPT, Claude, and Perplexity.</p>
+                <a href="https://proplum-ai-audit.netlify.app" class="btn-primary" style="width: 100%; justify-content: center;" data-i18n="audit-btn">🔍 Start Free Audit</a>
             </div>
         </div>
     </section>
 
     <section id="about">
         <div class="section-inner">
-            <div class="section-label">About</div>
-            <h2 class="section-title">We Audit Billion-Dollar Franchises. <span>We Fix Local Plumbers.</span></h2>
-            <p class="section-subtitle">Our franchise case studies prove we understand AI search at scale. We bring that same infrastructure to your single-truck or multi-crew operation.</p>
+            <div class="section-label" data-i18n="about-label">About</div>
+            <h2 class="section-title" data-i18n="about-title">We Audit Billion-Dollar Franchises. <span>We Fix Local Plumbers.</span></h2>
+            <p class="section-subtitle" data-i18n="about-sub">Our franchise case studies prove we understand AI search at scale. We bring that same infrastructure to your single-truck or multi-crew operation.</p>
 
             <div class="capabilities-grid">
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(6,182,212,0.1); color: var(--cyan);">🔍</div>
-                    <h3>Free AI Visibility Audit</h3>
-                    <p>See exactly how visible your business is to ChatGPT, Claude, and Perplexity. Same audit we ran on 1-Tom-Plumber's 57 territories.</p>
+                    <h3 data-i18n="about-card1-title">Free AI Visibility Audit</h3>
+                    <p data-i18n="about-card1-p">See exactly how visible your business is to ChatGPT, Claude, and Perplexity. Same audit we ran on 1-Tom-Plumber's 57 territories.</p>
                     <ul>
-                        <li>8-point AI visibility scorecard</li>
-                        <li>Schema markup analysis</li>
-                        <li>Competitor benchmarking</li>
-                        <li>Google Business Profile health</li>
+                        <li data-i18n="about-card1-li1">8-point AI visibility scorecard</li>
+                        <li data-i18n="about-card1-li2">Schema markup analysis</li>
+                        <li data-i18n="about-card1-li3">Competitor benchmarking</li>
+                        <li data-i18n="about-card1-li4">Google Business Profile health</li>
                     </ul>
                 </div>
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(99,102,241,0.1); color: var(--indigo);">📊</div>
-                    <h3>Franchise-Level Intelligence</h3>
-                    <p>We study what the big guys do wrong — ghost pages, missing schema, weak LLM crawler signals — so you don't make the same $500K mistakes.</p>
+                    <h3 data-i18n="about-card2-title">Franchise-Level Intelligence</h3>
+                    <p data-i18n="about-card2-p">We study what the big guys do wrong — ghost pages, missing schema, weak LLM crawler signals — so you don't make the same $500K mistakes.</p>
                     <ul>
-                        <li>Case study: 1-Tom-Plumber audit</li>
-                        <li>ARS/Rescue Rooter analysis</li>
-                        <li>Competitor weakness mapping</li>
-                        <li>Threat detection alerts</li>
+                        <li data-i18n="about-card2-li1">Case study: 1-Tom-Plumber audit</li>
+                        <li data-i18n="about-card2-li2">ARS/Rescue Rooter analysis</li>
+                        <li data-i18n="about-card2-li3">Competitor weakness mapping</li>
+                        <li data-i18n="about-card2-li4">Threat detection alerts</li>
                     </ul>
                 </div>
                 <div class="cap-card">
                     <div class="cap-icon" style="background: rgba(16,185,129,0.1); color: var(--emerald);">⚡</div>
-                    <h3>Done-For-You Fixes</h3>
-                    <p>We deploy the same AI visibility infrastructure that franchise networks pay consultants $10K+/mo to build.</p>
+                    <h3 data-i18n="about-card3-title">Done-For-You Fixes</h3>
+                    <p data-i18n="about-card3-p">We deploy the same AI visibility infrastructure that franchise networks pay consultants $10K+/mo to build.</p>
                     <ul>
-                        <li>LocalBusiness schema deployment</li>
-                        <li>LLM crawler optimization</li>
-                        <li>GBP optimization</li>
-                        <li>Monthly visibility reports</li>
+                        <li data-i18n="about-card3-li1">LocalBusiness schema deployment</li>
+                        <li data-i18n="about-card3-li2">LLM crawler optimization</li>
+                        <li data-i18n="about-card3-li3">GBP optimization</li>
+                        <li data-i18n="about-card3-li4">Monthly visibility reports</li>
                     </ul>
                 </div>
             </div>
@@ -626,63 +706,57 @@
     </section>
 
     <section class="cta-section">
-        <h2>AI Search Is Winner-Take-Most</h2>
-        <p>The cost of catching up exceeds the cost of leading. One call to our AI receptionist and you'll know exactly what you're missing.</p>
+        <h2 data-i18n="cta-title">AI Search Is Winner-Take-Most</h2>
+        <p data-i18n="cta-p">The cost of catching up exceeds the cost of leading. One call to our AI receptionist and you'll know exactly what you're missing.</p>
         <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:2rem;">
-            <a href="sms:813-491-3590" class="btn-demo" style="font-size: 1.3rem; padding: 1.3rem 3.5rem;">📩 Text "Fix My Leak" to 813-491-3590</a>
-            <a href="https://proplum-ai-audit.netlify.app" class="btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">🔍 Run Free AI Audit</a>
+            <a href="sms:813-491-3590" class="btn-demo" style="font-size: 1.3rem; padding: 1.3rem 3.5rem;" data-i18n="hero-cta-text">📩 Text "Fix My Leak" to 813-491-3590</a>
+            <a href="https://proplum-ai-audit.netlify.app" class="btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;" data-i18n="hero-cta-audit">🔍 Run Free AI Audit</a>
         </div>
-        <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.9rem;">Real number. Real AI. Text and get an instant response.</p>
+        <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.9rem;" data-i18n="hero-phone-note">Real number. Real AI. Text and get an instant response.</p>
     </section>
 
     <footer>
             <div class="footer-cta">
-                <h3>🚀 Start Your Free Calculator</h3>
-                <p>Enter your mobile number. We'll text you your custom plumbing job pricing calculator instantly.</p>
+                <h3 data-i18n="footer-cta-title">🚀 Start Your Free Calculator</h3>
+                <p data-i18n="footer-cta-p">Enter your mobile number. We'll text you your custom plumbing job pricing calculator instantly.</p>
                 <form class="phone-input-group" onsubmit="handleFreeStart(event)">
                     <input type="tel" class="phone-input" placeholder="(555) 123-4567" required pattern="[0-9\(\)\-\s]{10,}">
-                    <button type="submit" class="btn-submit">Send Calculator</button>
+                    <button type="submit" class="btn-submit" data-i18n="footer-cta-btn">Send Calculator</button>
                 </form>
             </div>
         </div>
         <div class="footer-inner">
             <div class="footer-brand">
-                <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" color="white"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
-                    </div>
-                    <div class="logo-text">
-                        <span>Answers AI</span>
-                        <span>AI Search for Local Plumbers</span>
-                    </div>
+                <a href="/" class="logo">
+                    <img src="logo.png" alt="Answers AI" style="height: 40px; width: auto;">
                 </a>
-                <p>AI search visibility for local plumbers. We audit billion-dollar franchises. We fix your Google Business Profile, schema, and LLM crawler feeds so AI search recommends YOU.</p>
+                <p data-i18n="footer-brand">AI search visibility for local plumbers. We audit billion-dollar franchises. We fix your Google Business Profile, schema, and LLM crawler feeds so AI search recommends YOU.</p>
             </div>
             <div class="footer-col">
-                <h4>Product</h4>
-                <a href="https://proplum-ai-audit.netlify.app">AI Visibility Audit</a>
-                <a href="#">Schema Deployment</a>
-                <a href="#">24/7 Virtual Receptionist</a>
-                <a href="#">Franchise Dashboard</a>
+                <h4 data-i18n="footer-product">Product</h4>
+                <a href="https://proplum-ai-audit.netlify.app" data-i18n="footer-audit">AI Visibility Audit</a>
+                <a href="#" data-i18n="footer-schema">Schema Deployment</a>
+                <a href="#" data-i18n="footer-receptionist">24/7 Virtual Receptionist</a>
+                <a href="#" data-i18n="footer-dashboard">Franchise Dashboard</a>
             </div>
             <div class="footer-col">
-                <h4>Resources</h4>
-                <a href="/faq.html">Contractor FAQ</a>
-                <a href="https://proplum-franchise-case-study.netlify.app">Case Study: 1-Tom-Plumber</a>
-                <a href="/whitepaper.html">Whitepaper</a>
-                <a href="/blog-chatgpt-backlink.html">Blog</a>
+                <h4 data-i18n="footer-resources">Resources</h4>
+                <a href="/faq.html" data-i18n="footer-faq">Contractor FAQ</a>
+                <a href="https://proplum-franchise-case-study.netlify.app" data-i18n="footer-case">Case Study: 1-Tom-Plumber</a>
+                <a href="/whitepaper.html" data-i18n="footer-whitepaper">Whitepaper</a>
+                <a href="/blog-chatgpt-backlink.html" data-i18n="footer-blog">Blog</a>
             </div>
             <div class="footer-col">
-                <h4>Contact</h4>
+                <h4 data-i18n="footer-contact">Contact</h4>
                 <a href="sms:813-491-3590">📩 (813) 491-3590</a>
-                <a href="https://calendly.com/jeff-proplum">Book a Call</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
+                <a href="https://calendly.com/jeff-proplum" data-i18n="footer-book">Book a Call</a>
+                <a href="#" data-i18n="footer-privacy">Privacy</a>
+                <a href="#" data-i18n="footer-terms">Terms</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 Answers AI Inc. All rights reserved.</p>
-            <p>Built for the AI search era.</p>
+            <p data-i18n="footer-copy">© 2026 Answers AI Inc. All rights reserved.</p>
+            <p data-i18n="footer-built">Built for the AI search era.</p>
         </div>
     </footer>
 
@@ -691,13 +765,13 @@
         <div class="modal">
             <div class="modal-inner">
                 <button class="modal-close" onclick="closeFreeModal()">&times;</button>
-                <h3>🚀 Start Your Free Calculator</h3>
-                <p>Enter your mobile number. We'll text you your custom plumbing job pricing calculator instantly — no credit card, no sales call.</p>
+                <h3 data-i18n="modal-title">🚀 Start Your Free Calculator</h3>
+                <p data-i18n="modal-p">Enter your mobile number. We'll text you your custom plumbing job pricing calculator instantly — no credit card, no sales call.</p>
                 <form onsubmit="handleFreeStart(event)">
                     <input type="tel" class="phone-input" style="width:100%; margin-bottom:1rem;" placeholder="(555) 123-4567" required pattern="[0-9\(\)\-\s]{10,}">
-                    <button type="submit" class="btn-submit" style="width:100%;">Send My Free Calculator</button>
+                    <button type="submit" class="btn-submit" style="width:100%;" data-i18n="modal-btn">Send My Free Calculator</button>
                 </form>
-                <p style="margin-top:1rem; font-size:0.75rem; color:var(--text-muted);">By submitting, you agree to receive SMS. Reply STOP anytime.</p>
+                <p style="margin-top:1rem; font-size:0.75rem; color:var(--text-muted);" data-i18n="modal-terms">By submitting, you agree to receive SMS. Reply STOP anytime.</p>
             </div>
         </div>
     </div>
@@ -705,6 +779,341 @@
     <script>
     function openFreeModal() { document.getElementById('freeModal').classList.add('active'); }
     function closeFreeModal() { document.getElementById('freeModal').classList.remove('active'); }
+    // Language Toggle
+    const i18n = {
+        en: {
+            'hero-badge': '🚑 24/7 Emergency Dispatch AI',
+            'hero-h1': 'Savvy plumbers are increasing revenue $300K with one simple $99 a month tool 🔥',
+            'hero-p': 'Emergency dispatch AI that answers calls, books jobs, and never sleeps. While your competitors miss calls, you capture every emergency.',
+            'hero-cta-call': 'Call Our<br><strong>AI Agent</strong>',
+            'hero-cta-text': '📩 Text "Fix My Leak" to 813-491-3590',
+            'hero-cta-audit': '🔍 Run Free AI Audit',
+            'hero-phone-note': 'Real number. Real AI. Text and get an instant response.',
+            'section-visibility-label': 'The Visibility Gap',
+            'section-visibility-title': 'Your Competitors Are Invisible to AI. <span>You Don\'t Have to Be.</span>',
+            'section-visibility-sub': 'We fix the technical infrastructure that makes AI search recommend YOUR plumbing business.',
+            'cap-schema': 'Schema & Structured Data',
+            'cap-schema-p': 'AI crawlers read schema markup to understand your services, location, and business details.',
+            'cap-schema-li1': 'LocalBusiness + Service schema',
+            'cap-schema-li2': 'FAQPage schema for voice answers',
+            'cap-schema-li3': 'Review + AggregateRating markup',
+            'cap-schema-li4': 'Breadcrumb + HowTo structured data',
+            'cap-gbp': 'Google Business Profile AI Feed',
+            'cap-gbp-p': 'Your GBP is the #1 source for AI local search answers. We optimize it for AI consumption.',
+            'cap-gbp-li1': 'AI-optimized business descriptions',
+            'cap-gbp-li2': 'Strategic category + service selection',
+            'cap-gbp-li3': 'Review response automation',
+            'cap-gbp-li4': 'Photo + post optimization',
+            'cap-llm': 'LLM Crawler Optimization',
+            'cap-llm-p': 'We build llms.txt, crawler directives, and content that AI models use to answer plumbing questions.',
+            'cap-llm-li1': 'llms.txt deployment',
+            'cap-llm-li2': 'AI-readable service pages',
+            'cap-llm-li3': 'Answer-first content structure',
+            'cap-llm-li4': 'Citation-worthy content assets',
+            'stats-visible': 'of businesses',
+            'stats-visible-label': 'are invisible to AI search',
+            'stats-traffic': 'traffic drop',
+            'stats-traffic-label': 'for #1 organic when AI Overview shows',
+            'stats-convert': 'higher conversion',
+            'stats-convert-label': 'from LLM visitors vs traditional search',
+            'stats-year': '2026',
+            'stats-year-label': 'of US population will use generative AI search',
+            'section-proof-label': 'Proof of Concept',
+            'section-proof-title': 'We Audit Billion-Dollar Franchises. <span>We Fix Local Plumbers.</span>',
+            'section-proof-sub': 'Our case studies show how AI visibility gaps cost major brands millions — and how we fix them.',
+            'cap-audit': 'Franchise AI Audits',
+            'cap-audit-p': 'We map AI visibility across hundreds of locations to find the gaps costing brands millions.',
+            'cap-monitoring': 'AI Visibility Monitoring',
+            'cap-monitoring-p': 'Track when AI models mention your brand, your competitors, or your target keywords.',
+            'cap-fixes': 'Done-For-You Fixes',
+            'cap-fixes-p': 'We deploy the same AI visibility infrastructure that franchise networks pay consultants $10K+/mo to build.',
+            'cap-fixes-li1': 'LocalBusiness schema deployment',
+            'cap-fixes-li2': 'LLM crawler optimization',
+            'cap-fixes-li3': 'GBP optimization',
+            'cap-fixes-li4': 'Monthly visibility reports',
+            'cta-title': 'AI Search Is Winner-Take-Most',
+            'cta-p': 'The cost of catching up exceeds the cost of leading. One call to our AI receptionist and you\'ll know exactly what you\'re missing.',
+            'footer-cta-title': '🚀 Start Your Free Calculator',
+            'footer-cta-p': 'Enter your mobile number. We\'ll text you your custom plumbing job pricing calculator instantly.',
+            'footer-cta-btn': 'Send Calculator',
+            'footer-brand': 'AI search visibility for local plumbers. We audit billion-dollar franchises. We fix your Google Business Profile, schema, and LLM crawler feeds so AI search recommends YOU.',
+            'footer-product': 'Product',
+            'footer-audit': 'AI Visibility Audit',
+            'footer-schema': 'Schema Deployment',
+            'footer-receptionist': '24/7 Virtual Receptionist',
+            'footer-dashboard': 'Franchise Dashboard',
+            'footer-resources': 'Resources',
+            'footer-faq': 'Contractor FAQ',
+            'footer-case': 'Case Study: 1-Tom-Plumber',
+            'footer-whitepaper': 'Whitepaper',
+            'footer-blog': 'Blog',
+            'footer-contact': 'Contact',
+            'footer-book': 'Book a Call',
+            'footer-privacy': 'Privacy',
+            'footer-terms': 'Terms',
+            'footer-copy': '© 2026 Answers AI Inc. All rights reserved.',
+            'footer-built': 'Built for the AI search era.',
+            'modal-title': '🚀 Start Your Free Calculator',
+            'modal-p': 'Enter your mobile number. We\'ll text you your custom plumbing job pricing calculator instantly — no credit card, no sales call.',
+            'modal-btn': 'Send My Free Calculator',
+            'modal-terms': 'By submitting, you agree to receive SMS. Reply STOP anytime.',
+            'contact-btn': 'Contact',
+            'nav-research': 'Research',
+            'nav-faq': 'FAQ',
+            'nav-pricing': 'Pricing',
+            'nav-case': 'Case Study',
+            'nav-free-audit': 'Free Audit',
+            'nav-start': 'Start Free →',
+            'problem-label': 'The Problem',
+            'problem-title': 'Ranking #1 on Google No Longer Means <span>You\'ll Be Found</span>',
+            'problem-sub': 'AI engines don\'t browse your website. They consume structured data, semantic embeddings, and citation graphs, then synthesize a single answer. Visibility is no longer about traffic — it\'s about being the entity the AI trusts enough to name.',
+            'stat-invisible': 'Of businesses invisible to AI search',
+            'stat-conversion': 'Higher conversion for AI-discovered brands',
+            'stat-mobile': 'Of mobile searches are zero-click',
+            'stat-leak': 'Revenue leaking from ONE franchise\'s AI gaps',
+            'cap-audit-title': 'AI Search Audit',
+            'cap-audit-p': 'Comprehensive visibility scoring across all locations. Identify ghost pages, missing schema, and technical debt.',
+            'cap-audit-li1': '8-point AI visibility scorecard',
+            'cap-audit-li2': 'Ghost page detection',
+            'cap-audit-li3': 'Schema markup analysis',
+            'cap-audit-li4': 'Competitive benchmarking',
+            'cap-infra-title': 'Infrastructure Deployment',
+            'cap-infra-p': 'Deploy LocalBusiness schema, LLM crawler feeds, and structured data across your entire network — not just the homepage.',
+            'cap-infra-li1': 'Network-wide schema deployment',
+            'cap-infra-li2': 'LLM crawler optimization',
+            'cap-infra-li3': 'Technical debt remediation',
+            'cap-infra-li4': 'Franchisee compliance dashboard',
+            'cap-receptionist-title': '24/7 Virtual Receptionist',
+            'cap-receptionist-p': 'AI answers your calls, qualifies leads, and books appointments — even at 2 AM. Never miss another emergency call.',
+            'cap-receptionist-li1': '24/7 AI phone answering',
+            'cap-receptionist-li2': 'Emergency call routing',
+            'cap-receptionist-li3': 'Lead qualification & booking',
+            'cap-receptionist-li4': 'Instant notification to your cell',
+            'process-label': 'Process',
+            'process-title': 'How It <span>Works</span>',
+            'process-sub': 'From audit to AI search dominance in 48 hours. No tech knowledge needed. No disruption to your schedule.',
+            'step1-title': 'Free AI Visibility Audit',
+            'step1-p': 'We scan your website, Google Business Profile, and competitors. You get the same 10-K style report we deliver to franchise HQs.',
+            'step2-title': 'See What the Big Guys Miss',
+            'step2-p': 'Our franchise case studies (1-Tom-Plumber, ARS) reveal exactly what multi-million-dollar operations get wrong.',
+            'step3-title': 'Fix It Fast',
+            'step3-p': 'Schema markup, LLM crawler feeds, GBP optimization — most fixes deploy in 48 hours. No downtime. No learning curve.',
+            'step4-title': 'Own Your Market',
+            'step4-p': 'Monthly visibility reports show you\'re climbing. When homeowners ask ChatGPT for a plumber, you\'re the name that comes up.',
+            'pricing-label': 'Pricing',
+            'pricing-title': 'Transparent Pricing <span>Built for the Trades</span>',
+            'pricing-sub': 'Whether you\'re a single-truck operator or a multi-territory network — choose the exact tier built for your growth phase.',
+            'zelle-title': '💳 <strong>Prefer Direct Payment?</strong>',
+            'zelle-sub': 'Limited clients. Personal service. No automated checkout — just direct Zelle to get started today.',
+            'zelle-label': 'Zelle Email',
+            'zelle-instruct': 'Send payment → Text "Fix My Leak" to 813-491-3590 → You\'re live in 48 hours',
+            'zelle-personal': 'Questions? Text me. I personally handle every client.',
+            'pricing-note': 'Monitor subscribers get 20% off their first upgrade. Every plan includes a free AI visibility audit to start.',
+            'audit-label': 'Free Tool',
+            'audit-title': 'Run Your <span>Free AI Visibility Audit</span>',
+            'audit-sub': 'Enter any website URL. Get an instant AI visibility score and see what\'s missing.',
+            'audit-desc': 'See how visible your business is to AI search platforms like ChatGPT, Claude, and Perplexity.',
+            'audit-btn': '🔍 Start Free Audit',
+            'about-label': 'About',
+            'about-title': 'We Audit Billion-Dollar Franchises. <span>We Fix Local Plumbers.</span>',
+            'about-sub': 'Our franchise case studies prove we understand AI search at scale. We bring that same infrastructure to your single-truck or multi-crew operation.',
+            'about-card1-title': 'Free AI Visibility Audit',
+            'about-card1-p': 'See exactly how visible your business is to ChatGPT, Claude, and Perplexity. Same audit we ran on 1-Tom-Plumber\'s 57 territories.',
+            'about-card1-li1': '8-point AI visibility scorecard',
+            'about-card1-li2': 'Schema markup analysis',
+            'about-card1-li3': 'Competitor benchmarking',
+            'about-card1-li4': 'Google Business Profile health',
+            'about-card2-title': 'Franchise-Level Intelligence',
+            'about-card2-p': 'We study what the big guys do wrong — ghost pages, missing schema, weak LLM crawler signals — so you don\'t make the same $500K mistakes.',
+            'about-card2-li1': 'Case study: 1-Tom-Plumber audit',
+            'about-card2-li2': 'ARS/Rescue Rooter analysis',
+            'about-card2-li3': 'Competitor weakness mapping',
+            'about-card2-li4': 'Threat detection alerts',
+            'about-card3-title': 'Done-For-You Fixes',
+            'about-card3-p': 'We deploy the same AI visibility infrastructure that franchise networks pay consultants $10K+/mo to build.',
+            'about-card3-li1': 'LocalBusiness schema deployment',
+            'about-card3-li2': 'LLM crawler optimization',
+            'about-card3-li3': 'GBP optimization',
+            'about-card3-li4': 'Monthly visibility reports'
+        },
+        es: {
+            'hero-badge': '🚑 IA de Despacho de Emergencia 24/7',
+            'hero-h1': 'Plomeros astutos están aumentando ingresos $300K con una simple herramienta de $99 al mes 🔥',
+            'hero-p': 'IA de despacho de emergencia que responde llamadas, agenda trabajos y nunca duerme. Mientras tus competidores pierden llamadas, tú capturas cada emergencia.',
+            'hero-cta-call': 'Llama a Nuestro<br><strong>Agente de IA</strong>',
+            'hero-cta-text': '📩 Envía "Fix My Leak" al 813-491-3590',
+            'hero-cta-audit': '🔍 Auditoría de IA Gratuita',
+            'hero-phone-note': 'Número real. IA real. Envía un mensaje y recibe respuesta instantánea.',
+            'section-visibility-label': 'La Brecha de Visibilidad',
+            'section-visibility-title': 'Tus Competidores Son Invisibles para la IA. <span>Tú No Tienes por Qué Serlo.</span>',
+            'section-visibility-sub': 'Arreglamos la infraestructura técnica que hace que la búsqueda de IA recomiende TU negocio de plomería.',
+            'cap-schema': 'Schema y Datos Estructurados',
+            'cap-schema-p': 'Los rastreadores de IA leen el marcado schema para entender tus servicios, ubicación y detalles del negocio.',
+            'cap-schema-li1': 'Schema LocalBusiness + Service',
+            'cap-schema-li2': 'Schema FAQPage para respuestas por voz',
+            'cap-schema-li3': 'Marcado Review + AggregateRating',
+            'cap-schema-li4': 'Datos estructurados Breadcrumb + HowTo',
+            'cap-gbp': 'Feed de IA para Google Business Profile',
+            'cap-gbp-p': 'Tu GBP es la fuente #1 para respuestas de búsqueda local de IA. Lo optimizamos para consumo de IA.',
+            'cap-gbp-li1': 'Descripciones de negocio optimizadas para IA',
+            'cap-gbp-li2': 'Selección estratégica de categorías y servicios',
+            'cap-gbp-li3': 'Automatización de respuestas a reseñas',
+            'cap-gbp-li4': 'Optimización de fotos y publicaciones',
+            'cap-llm': 'Optimización para Rastreadores de LLM',
+            'cap-llm-p': 'Construimos llms.txt, directivas para rastreadores y contenido que los modelos de IA usan para responder preguntas de plomería.',
+            'cap-llm-li1': 'Despliegue de llms.txt',
+            'cap-llm-li2': 'Páginas de servicio legibles para IA',
+            'cap-llm-li3': 'Estructura de contenido con respuestas primero',
+            'cap-llm-li4': 'Activos de contenido con citas de valor',
+            'stats-visible': 'de negocios',
+            'stats-visible-label': 'son invisibles para la búsqueda de IA',
+            'stats-traffic': 'caída de tráfico',
+            'stats-traffic-label': 'para orgánico #1 cuando aparece AI Overview',
+            'stats-convert': 'conversión más alta',
+            'stats-convert-label': 'de visitantes de LLM vs búsqueda tradicional',
+            'stats-year': '2026',
+            'stats-year-label': 'de la población de EE.UU. usará búsqueda de IA generativa',
+            'section-proof-label': 'Prueba de Concepto',
+            'section-proof-title': 'Auditamos Franquicias de Miles de Millones. <span>Arreglamos Plomeros Locales.</span>',
+            'section-proof-sub': 'Nuestros casos de estudio muestran cómo las brechas de visibilidad de IA cuestan millones a las marcas — y cómo las arreglamos.',
+            'cap-audit': 'Auditorías de IA para Franquicias',
+            'cap-audit-p': 'Mapeamos la visibilidad de IA en cientos de ubicaciones para encontrar las brechas que cuestan millones a las marcas.',
+            'cap-monitoring': 'Monitoreo de Visibilidad de IA',
+            'cap-monitoring-p': 'Rastrea cuándo los modelos de IA mencionan tu marca, tus competidores o tus palabras clave objetivo.',
+            'cap-fixes': 'Soluciones Listas para Usar',
+            'cap-fixes-p': 'Desplegamos la misma infraestructura de visibilidad de IA que las redes de franquicias pagan $10K+/mes a consultores para construir.',
+            'cap-fixes-li1': 'Despliegue de schema LocalBusiness',
+            'cap-fixes-li2': 'Optimización de rastreadores LLM',
+            'cap-fixes-li3': 'Optimización de GBP',
+            'cap-fixes-li4': 'Reportes mensuales de visibilidad',
+            'cta-title': 'La Búsqueda de IA es el Que Lleva la Delantera',
+            'cta-p': 'El costo de alcanzar supera el costo de liderar. Una llamada a nuestro recepcionista de IA y sabrás exactamente qué te falta.',
+            'footer-cta-title': '🚀 Comienza Tu Calculadora Gratuita',
+            'footer-cta-p': 'Ingresa tu número móvil. Te enviaremos tu calculadora personalizada de precios de plomería al instante.',
+            'footer-cta-btn': 'Enviar Calculadora',
+            'footer-brand': 'Visibilidad en búsquedas de IA para plomeros locales. Auditamos franquicias de miles de millones. Arreglamos tu Google Business Profile, schema y feeds de rastreadores LLM para que la búsqueda de IA te recomiende.',
+            'footer-product': 'Producto',
+            'footer-audit': 'Auditoría de Visibilidad de IA',
+            'footer-schema': 'Despliegue de Schema',
+            'footer-receptionist': 'Recepcionista Virtual 24/7',
+            'footer-dashboard': 'Panel de Franquicias',
+            'footer-resources': 'Recursos',
+            'footer-faq': 'Preguntas Frecuentes del Contratista',
+            'footer-case': 'Caso de Estudio: 1-Tom-Plumber',
+            'footer-whitepaper': 'Whitepaper',
+            'footer-blog': 'Blog',
+            'footer-contact': 'Contacto',
+            'footer-book': 'Agendar una Llamada',
+            'footer-privacy': 'Privacidad',
+            'footer-terms': 'Términos',
+            'footer-copy': '© 2026 Answers AI Inc. Todos los derechos reservados.',
+            'footer-built': 'Construido para la era de la búsqueda de IA.',
+            'modal-title': '🚀 Comienza Tu Calculadora Gratuita',
+            'modal-p': 'Ingresa tu número móvil. Te enviaremos tu calculadora personalizada de precios de plomería al instante — sin tarjeta de crédito, sin llamada de ventas.',
+            'modal-btn': 'Enviar Mi Calculadora Gratuita',
+            'modal-terms': 'Al enviar, aceptas recibir SMS. Responde STOP en cualquier momento.',
+            'contact-btn': 'Contacto',
+            'nav-research': 'Investigación',
+            'nav-faq': 'Preguntas Frecuentes',
+            'nav-pricing': 'Precios',
+            'nav-case': 'Caso de Estudio',
+            'nav-free-audit': 'Auditoría Gratuita',
+            'nav-start': 'Comenzar Gratis →',
+            'problem-label': 'El Problema',
+            'problem-title': 'Estar #1 en Google Ya No Significa <span>Que te Encontrarán</span>',
+            'problem-sub': 'Los motores de IA no navegan tu sitio web. Consumen datos estructurados, embeddings semánticos y grafos de citas, luego sintetizan una sola respuesta. La visibilidad ya no se trata de tráfico — se trata de ser la entidad en la que la IA confía lo suficiente como para nombrarla.',
+            'stat-invisible': 'De negocios invisibles para la búsqueda de IA',
+            'stat-conversion': 'Mayor conversión para marcas descubiertas por IA',
+            'stat-mobile': 'De búsquedas móviles son de cero clics',
+            'stat-leak': 'De ingresos perdidos por brechas de IA de UNA franquicia',
+            'cap-audit-title': 'Auditoría de Búsqueda de IA',
+            'cap-audit-p': 'Puntuación integral de visibilidad en todas las ubicaciones. Identifica páginas fantasma, schema faltante y deuda técnica.',
+            'cap-audit-li1': 'Scorecard de visibilidad de IA de 8 puntos',
+            'cap-audit-li2': 'Detección de páginas fantasma',
+            'cap-audit-li3': 'Análisis de marcado schema',
+            'cap-audit-li4': 'Benchmarking competitivo',
+            'cap-infra-title': 'Despliegue de Infraestructura',
+            'cap-infra-p': 'Despliega schema LocalBusiness, feeds para rastreadores de LLM y datos estructurados en toda tu red — no solo la página principal.',
+            'cap-infra-li1': 'Despliegue de schema en toda la red',
+            'cap-infra-li2': 'Optimización para rastreadores de LLM',
+            'cap-infra-li3': 'Remediación de deuda técnica',
+            'cap-infra-li4': 'Panel de cumplimiento de franquicias',
+            'cap-receptionist-title': 'Recepcionista Virtual 24/7',
+            'cap-receptionist-p': 'La IA responde tus llamadas, califica leads y agenda citas — incluso a las 2 AM. Nunca pierdas otra llamada de emergencia.',
+            'cap-receptionist-li1': 'Respuesta telefónica con IA 24/7',
+            'cap-receptionist-li2': 'Enrutamiento de llamadas de emergencia',
+            'cap-receptionist-li3': 'Calificación de leads y reservas',
+            'cap-receptionist-li4': 'Notificación instantánea a tu celular',
+            'process-label': 'Proceso',
+            'process-title': 'Cómo <span>Funciona</span>',
+            'process-sub': 'De auditoría a dominio de búsqueda de IA en 48 horas. Sin conocimientos técnicos. Sin interrupciones a tu horario.',
+            'step1-title': 'Auditoría Gratuita de Visibilidad de IA',
+            'step1-p': 'Escaniamos tu sitio web, Google Business Profile y competidores. Recibes el mismo informe estilo 10-K que entregamos a los HQs de franquicias.',
+            'step2-title': 'Ve Lo Que Los Grandes Extrañan',
+            'step2-p': 'Nuestros casos de estudio de franquicias (1-Tom-Plumber, ARS) revelan exactamente qué hacen mal las operaciones multimillonarias.',
+            'step3-title': 'Arréglalo Rápido',
+            'step3-p': 'Marcado schema, feeds para rastreadores de LLM, optimización de GBP — la mayoría de las correcciones se despliegan en 48 horas. Sin tiempo de inactividad. Sin curva de aprendizaje.',
+            'step4-title': 'Domina Tu Mercado',
+            'step4-p': 'Los informes mensuales de visibilidad muestran que estás subiendo. Cuando los propietarios le pidan un plomero a ChatGPT, tu nombre será el que aparezca.',
+            'pricing-label': 'Precios',
+            'pricing-title': 'Precios Transparentes <span>Construidos para los Oficios</span>',
+            'pricing-sub': 'Ya seas operador de un solo camión o red multi-territorio — elige el nivel exacto construido para tu fase de crecimiento.',
+            'zelle-title': '💳 <strong>¿Prefieres Pago Directo?</strong>',
+            'zelle-sub': 'Clientes limitados. Servicio personal. Sin checkout automatizado — solo Zelle directo para empezar hoy.',
+            'zelle-label': 'Correo de Zelle',
+            'zelle-instruct': 'Envía pago → Envía "Fix My Leak" al 813-491-3590 → Estás activo en 48 horas',
+            'zelle-personal': '¿Preguntas? Envíame un mensaje. Personalmente atiendo a cada cliente.',
+            'pricing-note': 'Los suscriptores de Monitor obtienen 20% de descuento en su primera actualización. Cada plan incluye una auditoría gratuita de visibilidad de IA para empezar.',
+            'audit-label': 'Herramienta Gratuita',
+            'audit-title': 'Ejecuta Tu <span>Auditoría Gratuita de Visibilidad de IA</span>',
+            'audit-sub': 'Ingresa cualquier URL de sitio web. Obtén una puntuación instantánea de visibilidad de IA y ve qué falta.',
+            'audit-desc': 'Ve qué tan visible es tu negocio para plataformas de búsqueda de IA como ChatGPT, Claude y Perplexity.',
+            'audit-btn': '🔍 Iniciar Auditoría Gratuita',
+            'about-label': 'Nosotros',
+            'about-title': 'Auditamos Franquicias de Miles de Millones. <span>Arreglamos Plomeros Locales.</span>',
+            'about-sub': 'Nuestros casos de estudio de franquicias demuestran que entendemos la búsqueda de IA a escala. Traemos esa misma infraestructura a tu operación de un camión o multi-equipo.',
+            'about-card1-title': 'Auditoría Gratuita de Visibilidad de IA',
+            'about-card1-p': 'Ve exactamente qué tan visible es tu negocio para ChatGPT, Claude y Perplexity. La misma auditoría que ejecutamos en los 57 territorios de 1-Tom-Plumber.',
+            'about-card1-li1': 'Scorecard de visibilidad de IA de 8 puntos',
+            'about-card1-li2': 'Análisis de marcado schema',
+            'about-card1-li3': 'Benchmarking competitivo',
+            'about-card1-li4': 'Salud de Google Business Profile',
+            'about-card2-title': 'Inteligencia a Nivel de Franquicia',
+            'about-card2-p': 'Estudiamos lo que los grandes hacen mal — páginas fantasma, schema faltante, señales débiles de rastreadores de LLM — para que no cometas los mismos errores de $500K.',
+            'about-card2-li1': 'Caso de estudio: auditoría 1-Tom-Plumber',
+            'about-card2-li2': 'Análisis ARS/Rescue Rooter',
+            'about-card2-li3': 'Mapeo de debilidades de competidores',
+            'about-card2-li4': 'Alertas de detección de amenazas',
+            'about-card3-title': 'Correcciones Hechas Por Nosotros',
+            'about-card3-p': 'Desplegamos la misma infraestructura de visibilidad de IA que las redes de franquicias pagan $10K+/mes a consultores para construir.',
+            'about-card3-li1': 'Despliegue de schema LocalBusiness',
+            'about-card3-li2': 'Optimización de rastreadores de LLM',
+            'about-card3-li3': 'Optimización de GBP',
+            'about-card3-li4': 'Informes mensuales de visibilidad'
+        }
+    };
+    let currentLang = 'en';
+    function toggleLang() {
+        currentLang = currentLang === 'en' ? 'es' : 'en';
+        document.getElementById('langLabel').textContent = currentLang === 'en' ? 'Español' : 'English';
+        document.getElementById('langToggle').title = currentLang === 'en' ? 'Switch to Spanish' : 'Switch to English';
+        document.getElementById('langToggle').classList.toggle('active', currentLang === 'es');
+        document.documentElement.lang = currentLang;
+        applyTranslations();
+    }
+    function applyTranslations() {
+        const dict = i18n[currentLang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key]) {
+                if (key === 'hero-h1' || key === 'hero-cta-call' || key === 'section-visibility-title' || key === 'section-proof-title') {
+                    el.innerHTML = dict[key];
+                } else {
+                    el.textContent = dict[key];
+                }
+            }
+        });
+    }
     function handleFreeStart(e) {
         e.preventDefault();
         const phone = e.target.querySelector('input[type=tel]').value;
