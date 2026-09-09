@@ -1,0 +1,39 @@
+# Allow search grounding bots access
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Block AI bots from administrative or duplicate endpoints
+User-agent: *
+Disallow: /api/
+Disallow: /checkout/
+Disallow: /admin/
+Disallow: /tmp/
+Disallow: /private/
+Disallow: /*?*
+
+# Sitemap
+Sitemap: https://lever-ai.app/sitemap.xml
